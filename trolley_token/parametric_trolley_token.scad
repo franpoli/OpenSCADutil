@@ -11,12 +11,12 @@
  * *********/
 
 // Coins dimension variables
-c1t="5kr";		// String value for coin 1, (enter "" for no value)
-c1d=23.75;		// Diameter of coin 1
-c1h=1.95;		// thickness of coin 1
-c2t="10kr";		// String value for coin 2, (enter "" for no value)
-c2d=20.5;		// Diameter of coin 2
-c2h=2.9; 		// Thickness of coin 2
+c1t="5kr";		// [coin 1 text], enter "" for no value
+c1d=23.75;		// [coin 1 diameter]
+c1h=1.95;		// [coin 1 heigth (thickness)]
+c2t="10kr";		// [coin 2 text], enter "" for no value
+c2d=20.5;		// [coin 2 diameter]
+c2h=2.9; 		// [coin 2 heigth (thickness)]
  
 /* The following table contains the coin dimensions for some currencies.
 
