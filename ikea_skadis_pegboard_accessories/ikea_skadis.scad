@@ -198,7 +198,6 @@ module skadis_o_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
         skadis_pegs_position(length = d+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
 }
-//skadis_o_holder(d = 122, all_pegs = true);
 
 /* A U-profile takes up to four parameters:
  * 1. d (numerical) - Inner diameter
@@ -365,9 +364,6 @@ module skadis_box(l = 60, w = 40, h = 30, t = tol, filet = pw, all_pegs = ap, fu
     }
     skadis_plier(l = l+2*(t+minimum_wall()), w = w+2*(t+minimum_wall()), filet = 2*my_filet()+2*(t+minimum_wall()), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
 }
-
-//translate([0,-(15+2*pw+tol+minimum_wall()),0]) color("Red", 0.5) cube(size = [40, 30, 2*pw], center = true);
-//skadis_plier(40, 30);
  
 /* A round box takes up to 6 parameters:
  * 1. d (numerical) - diameter
