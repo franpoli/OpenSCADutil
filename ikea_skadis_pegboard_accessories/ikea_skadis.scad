@@ -7,7 +7,6 @@
  * - skadis_plier module fixed length reporting to skadis_pegs_position module
  * - modified the function filet_limits to works better with new comming modules
  * - added the skadis_bits_serie module
- * OpenSCAD version 2019.05 
  * This work is licensed under the Creative Commons - Attribution - Non-Commercial - ShareAlike license.
  * https://creativecommons.org/licenses/by-nc-sa/4.0/
  */

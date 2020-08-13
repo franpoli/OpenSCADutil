@@ -1,8 +1,7 @@
 /*
- * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
+ * Parametric trolley token generator
  * by François Polito
  * created 2019-04-22
- * OpenSCAD version 2019.05 
  * This work is licensed under the Creative Commons - CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication .
  * https://creativecommons.org/publicdomain/zero/1.0/
  */
