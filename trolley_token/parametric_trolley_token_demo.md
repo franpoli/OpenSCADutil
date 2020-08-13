@@ -26,4 +26,4 @@ translate([0, -45, 0])
 
 ## Preview:
 
-![Parametric trolley token generator preview](parametric_trolley_token_demo.png)
+![Parametric trolley token generator preview](images/parametric_trolley_token_demo.png)
