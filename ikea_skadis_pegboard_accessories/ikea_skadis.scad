@@ -49,8 +49,6 @@ function filet_limits(l, w, filet) = min(l, w) < filet ?
     min(l, w)/2 : filet/2 < tol+minimum_wall()+0.1 ?
         tol+minimum_wall()+0.1 : filet/2;
 function is_odd(int) = int%2;
-        
-//echo("filet_limits", filet_limits(l = 40.9468, w = 28.5, filet = 16.6+2*tol));
 
 /* Peg positionning requires two parameters:
  * 1. length (numerical)
@@ -537,8 +535,6 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
     }
     skadis_plier(l = skadis_bits_length+2*tolerance1, w = skadis_bits_width+2*tolerance1, filet = filet+2*tolerance1, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
 }
-
-
 
 // Curved hooks demmo
 //skadis_curved_hook(fullfill = false);
