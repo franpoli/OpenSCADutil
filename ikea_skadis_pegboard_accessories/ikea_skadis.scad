@@ -1,12 +1,7 @@
 /*
  * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
  * by François Polito
- * created 2020-07-17
- * updates:
- * 2020-08-12
- * - skadis_plier module fixed length reporting to skadis_pegs_position module
- * - modified the function filet_limits to works better with new comming modules
- * - added the skadis_bits_serie module
+ * created 2020-07-17, updated 2020-08-13
  * This work is licensed under the Creative Commons - Attribution - Non-Commercial - ShareAlike license.
  * https://creativecommons.org/licenses/by-nc-sa/4.0/
  */
@@ -57,12 +52,13 @@ function is_odd(int) = int%2;
  *    Set to false; a minimal number of pags will be generated. If the value is set to true
  *    all possible possible pegs will be generated for stronger support.
  */
-module skadis_pegs_position(length = 0, all_pegs) {
-    translate([-(length-(length%dbp))/2, 0, 0]) {
+module skadis_pegs_position(length = pt, all_pegs) {
+    al = length-pt; // axial length from 1st peg to last peg
+    translate([-(al-(al%dbp))/2, 0, 0]) {
         if ( all_pegs == true ) {
-            for (x = [0 : dbp : length]) { translate([x, 0, 0]) { children(); } }
+            for (x = [0 : dbp : al]) { translate([x, 0, 0]) { children(); } }
         } else {
-            for (x = [0 : (length < dbp ? dbp : length-(length%dbp)) : length]) { translate([x, 0, 0]) { children(); } }
+            for (x = [0 : (al < dbp ? dbp : al-(al%dbp)) : al]) { translate([x, 0, 0]) { children(); } }
         }
     }
 }
@@ -257,7 +253,7 @@ module skadis_plier(l = dbp+pt-2*pw, w = dbp/2, filet = chamfer(), all_pegs = ap
                 }
             }
         }
-        skadis_pegs_position(length = l+pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        skadis_pegs_position(length = l+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
 }
 
@@ -285,11 +281,11 @@ module skadis_plate(l = 80, w = 60, all_pegs = ap, fullfill = ff, retainer = ret
                 }
             }
         }
-        skadis_pegs_position(length = l+16*lh-pt, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        skadis_pegs_position(length = l+16*lh, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
 }
 
-/* A plate takes up to five parameters:
+/* A round plate takes up to four parameters:
  * 1. d (numerical) - diameter
  * 2. all_pegs (boolean)
  * 3. fullfill (boolean)
@@ -307,7 +303,7 @@ module skadis_round_plate(d = 80, all_pegs = ap, fullfill = ff, retainer = ret) 
                 translate([0, -((d+16*lh)/2+2*pw), pw-chamfer()/2]) cylinder(h = chamfer()/2, d = d-chamfer()/2);
             }
         }
-        skadis_pegs_position(length = d+16*lh-pt, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        skadis_pegs_position(length = d+16*lh, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
 }
 
@@ -364,7 +360,7 @@ module skadis_box(l = 60, w = 40, h = 30, t = tol, filet = pw, all_pegs = ap, fu
     }
     skadis_plier(l = l+2*(t+minimum_wall()), w = w+2*(t+minimum_wall()), filet = 2*my_filet()+2*(t+minimum_wall()), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
 }
- 
+
 /* A round box takes up to 6 parameters:
  * 1. d (numerical) - diameter
  * 2. h (numerical) - heigth
