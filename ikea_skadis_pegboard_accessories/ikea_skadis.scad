@@ -226,7 +226,7 @@ module skadis_u_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
  */
-module skadis_plier(l = dbp+pt-2*pw, w = dbp/2, filet = chamfer(), all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_plier(l = dbp+pt-2*pw, w = 2*dbp/5, filet = chamfer(), all_pegs = ap, fullfill = ff, retainer = ret) {
     union() {
         difference() {
             hull() {
@@ -369,7 +369,7 @@ module skadis_box(l = 60, w = 40, h = 30, t = tol, filet = pw, all_pegs = ap, fu
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
  */
-module skadis_round_box(d = 30, h = 40, t = tol, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_round_box(d = dbp+pt-2*(pw+tol+minimum_wall()), h = 40, t = tol, all_pegs = ap, fullfill = ff, retainer = ret) {
     translate([0, -(d/2+2*pw+minimum_wall()+t), 0]) difference() {
         union() {
             cylinder(h = h-2*minimum_wall(), d = d+2*minimum_wall());
