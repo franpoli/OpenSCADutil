@@ -434,7 +434,7 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = ap, f
     }
 }
 
-/* A skadis incrementedbits takes up to 13 parameters
+/* A skadis bits serie takes up to 13 parameters
  * 1. h (numerical) - the heigth of the bits holder
  * 2. d (numerical) - the diameter of the first bit
  * 3. step (numerical) - the incrementation step for each successive bit
