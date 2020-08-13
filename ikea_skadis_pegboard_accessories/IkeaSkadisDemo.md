@@ -1,6 +1,6 @@
 # Parametric Ikea Skådis Pegboard Accessories
 
-This can be used as an OpenSCAD library to generate accessories for the [IKEA Skådis pegboard](https://www.ikea.com/se/sv/p/skadis-foervaringstavla-vit-10321618/).
+The file `ikea_skadis.scad` can be used as an OpenSCAD library to generate accessories for the [IKEA Skådis pegboard](https://duckduckgo.com/?q=%22IKEA+Sk%C3%A5dis+pegboard%22&t=hk&ia=web).
 
 ```
 // Curved hooks demo
