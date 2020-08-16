@@ -539,10 +539,10 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
 
 // Straight hooks demo
-//translate([0, 0, 0])  skadis_straight_hook(30, fullfill = false);
-//translate([30, 0, 0])  skadis_straight_hook(60, fullfill = false);
-//translate([60, 0, 0])  skadis_straight_hook(90, fullfill = false);
-//translate([100, 0, 0])  skadis_straight_hook(120, fullfill = false);
+//translate([0, 0, 0]) skadis_straight_hook(30, fullfill = false);
+//translate([30, 0, 0]) skadis_straight_hook(60, fullfill = false);
+//translate([60, 0, 0]) skadis_straight_hook(90, fullfill = false);
+//translate([100, 0, 0]) skadis_straight_hook(120, fullfill = false);
 
 // O holders demo
 //skadis_o_holder();

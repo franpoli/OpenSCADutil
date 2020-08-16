@@ -6,78 +6,41 @@
  * https://creativecommons.org/publicdomain/zero/1.0/
  */
 
-/* VARIABLES
- * *********/
-
-// Coins dimension variables
-c1t="5kr";		// [coin 1 text], enter "" for no value
-c1d=23.75;		// [coin 1 diameter]
-c1h=1.95;		// [coin 1 heigth (thickness)]
-c2t="10kr";		// [coin 2 text], enter "" for no value
-c2d=20.5;		// [coin 2 diameter]
-c2h=2.9; 		// [coin 2 heigth (thickness)]
- 
-/* The following table contains the coin dimensions for some currencies.
-
-| Currency | Value | Diameter | Thickness |
-|----------+-------+----------+-----------|
-| SEK      | 1 kr  | 19.5 mm  | 1.79 mm   |
-| SEK      | 2 kr  | 22.5 mm  | 1.79 mm   |
-| SEK      | 5 kr  | 23.75 mm | 1.95 mm   |
-| SEK      | 10 kr | 20.5 mm  | 2.9 mm    |
-| EUR      | 0.2 € | 22.25 mm | 2.14 mm   |
-| EUR      | 0.5 € | 24.25 mm | 2.38 mm   |
-| EUR      | 1 €   | 23.25 mm | 2.33 mm   |
-| EUR      | 2 €   | 25.75 mm | 2.20 mm   |
-| CHF      | 1 Fr  | 23.20 mm | 1.55 mm   |
-| CHF      | 2 Fr  | 27.40 mm | 2.15 mm   |
-| CHF      | 5 fr  | 31.45 mm | 2.35 mm   |
-| GBP      | 1 £   | 23.43 mm | 2.8 mm    |
-| GBP      | 2 £   | 28.4 mm  | 2.5 mm    |
-| ...      | ...   | ...      | ...       | */
-
 // Resolution variables
 $fa=1;			// default minimum facet angle
 $fs=0.5;		// default minimum facet size
-
-
-/* BOOLEAN OPTIONS
-   ****************/
-sla=true;
-fdm=false;
-
 
 /* FUNCTIONS
    *********/
 function distance(diameter) = 3*diameter/4;
 function engravure_thickness(height) = 2*height/5;
-function engravure_z_position(height, boolean) = (boolean) ? 2*height/5 : 4*height/5;
-function grip_z_position(height, boolean) = (boolean) ? -2*height/5 : -4*height/5;
+function engravure_z_position(height, sla) = (sla) ? 2*height/5 : 4*height/5;
+function grip_z_position(height, sla) = (sla) ? -2*height/5 : -4*height/5;
 function grip_width(height, diameter) = diameter/sqrt(2) / 7;
-function minimum_height(height1, height2, boolean) = (boolean) ? 3*(min(height1, height2))/5 : 4*(min(height1, height2))/5;
+function minimum_height(height1, height2, sla) = (sla) ? 3*(min(height1, height2))/5 : 4*(min(height1, height2))/5;
 
 
 /* MODULES
    *******/
-module coin_position(diameter, angle, boolean) {
+module coin_position(diameter, angle, sla) {
      translate([distance(diameter), 0, 0])
-	  rotate([0, (boolean) ? 180 : 0, angle])
+	  rotate([0, (sla) ? 180 : 0, angle])
 	  	children();
 }
 
-module coin(height, diameter, boolean) {
-     cylinder(h = height,  d = diameter, center = boolean);
+module coin(height, diameter, sla) {
+     cylinder(h = height,  d = diameter, center = sla);
 }
 
-module string(height, diameter, string, boolean) {
-     translate([0, 0, engravure_z_position(height, boolean)])
-	  linear_extrude(engravure_thickness(height), center = boolean, convexity = 4)
+module string(height, diameter, string, sla) {
+     translate([0, 0, engravure_z_position(height, sla)])
+	  linear_extrude(engravure_thickness(height), center = sla, convexity = 4)
 	  	resize([diameter/sqrt(2), 0], auto = true)
 	  		text(string, valign = "center", halign = "center");
 }
 
-module grip(height, diameter, boolean) {
-     translate([0, 0, grip_z_position(height, boolean)]) intersection() {
+module grip(height, diameter, sla) {
+     translate([0, 0, grip_z_position(height, sla)]) intersection() {
 	  for (l = [0:1])
 	       mirror([0, 1*l, 0]) for (k = [grip_width(height, diameter)/2 : grip_width(height, diameter) : diameter/sqrt(2)/2])
 		    translate([0, k, -engravure_thickness(height)/6])
@@ -88,58 +51,79 @@ module grip(height, diameter, boolean) {
      }
 }
 
-module link(height1, height2, diameter1, diameter2, boolean) {
+module link(height1, height2, diameter1, diameter2, sla) {
      difference() {
 	  hull() {
 	       translate([-distance(diameter1), 0, 0]) rotate([0, 0, 180])
-		    cylinder(h = minimum_height(height1, height2, boolean),
-			     d = 7*diameter1/10, $fn = 3, center = boolean);
+		    cylinder(h = minimum_height(height1, height2, sla),
+			     d = 7*diameter1/10, $fn = 3, center = sla);
 	       translate([distance(diameter2), 0, 0])
-		    cylinder(h = minimum_height(height1, height2, boolean),
-			     d = 7*diameter2/10, $fn = 3, center = boolean);
+		    cylinder(h = minimum_height(height1, height2, sla),
+			     d = 7*diameter2/10, $fn = 3, center = sla);
 	  }
 	  translate([-distance(diameter1), 0, 0])
-	       cylinder(h = minimum_height(height1, height2, boolean),
-			d = 9*diameter1/10, center = boolean);
+	       cylinder(h = minimum_height(height1, height2, sla),
+			d = 9*diameter1/10, center = sla);
 	  translate([distance(diameter2), 0, 0])
-	       cylinder(h = minimum_height(height1, height2, boolean),
-			d = 9*diameter2/10, center = boolean);
+	       cylinder(h = minimum_height(height1, height2, sla),
+			d = 9*diameter2/10, center = sla);
      }
 }
 
-module trolley_token(height1, height2, diameter1, diameter2, string1, string2, boolean = true) {
+module trolley_token(height1 = 1.95, height2 = 2.9, diameter1 = 23.75, diameter2 = 20.5, string1 = "", string2 = "", sla = false) {
      union() {
 	  coin_position(-diameter1, 90) difference() {
-	       coin(height1, diameter1, boolean);
-	       grip(height1, diameter1, boolean);
-	       string(height1, diameter1, string1, boolean);
+	       coin(height1, diameter1, sla);
+	       grip(height1, diameter1, sla);
+	       string(height1, diameter1, string1, sla);
 	  }
-	  coin_position(diameter2, -90, boolean) difference() {
-	       coin(height2, diameter2, boolean);
-	       grip(height2, diameter2, boolean);
-	       string(height2, diameter2, string2, boolean);
+	  coin_position(diameter2, -90, sla) difference() {
+	       coin(height2, diameter2, sla);
+	       grip(height2, diameter2, sla);
+	       string(height2, diameter2, string2, sla);
 	  }
-	  link(height1, height2, diameter1, diameter2, boolean);
+	  link(height1, height2, diameter1, diameter2, sla);
      }
 }
 
-/* TOKEN GENERATION
-   ****************
-   Usage: trolley_token(coin_1_height, coin_2_height, coin_1_diameter, coin_2_diameter, coin_1_text, coin_2_text, true_or_false);
+/* USAGE
+   *****
+   To generate a token you must invoke the module trolley_token() which takes up to 7 parameters:
 
-   The boolean parameter is optional. When it's undefined it will act as false. This boolean option permits to switch
-   beetween two designs.
+   1. height1 (numerical) - the thickness of the 1st coin
+   2. height2 (numerical) - the thickness of the 2nd coin
+   3. diameter1 (numerical) - the diameter of the 1st coin
+   4. diameter2 (numerical) - the diameter of the 2nd coin
+   5. string1 (string) - text field to enter the value of the 1st coin
+   6. string2 (string) - text field to enter the value of the 2nd coin
+   7. sla (boolean) - set to false the model will have a flat base convenient for fused filament fabrication
 
-      1. a flat design appropraite for FDM prnters, exampel:
+   The table below shows the coin dimensions of different currencies:
 
-         trolley_token(c1h, c2h, c1d, c2d, c1t, c2t);
-         trolley_token(c1h, c2h, c1d, c2d, c1t, c2t, fdm);
-         trolley_token(2.14, 2.38, 22.25, 24.25, "0.2€", "0.5€", fdm);
-         trolley_token(2.33, 2.38, 23.25, 24.25, "1€", "0.5€", false);
-         
-      2. a centered design appropriate for SLA printers 
+   | Currency | Value | Diameter | Thickness |
+   |----------+-------+----------+-----------|
+   | SEK      | 1 kr  | 19.5 mm  | 1.79 mm   |
+   | SEK      | 2 kr  | 22.5 mm  | 1.79 mm   |
+   | SEK      | 5 kr  | 23.75 mm | 1.95 mm   |
+   | SEK      | 10 kr | 20.5 mm  | 2.9 mm    |
+   | EUR      | 0.2 € | 22.25 mm | 2.14 mm   |
+   | EUR      | 0.5 € | 24.25 mm | 2.38 mm   |
+   | EUR      | 1 €   | 23.25 mm | 2.33 mm   |
+   | EUR      | 2 €   | 25.75 mm | 2.20 mm   |
+   | CHF      | 1 Fr  | 23.20 mm | 1.55 mm   |
+   | CHF      | 2 Fr  | 27.40 mm | 2.15 mm   |
+   | CHF      | 5 fr  | 31.45 mm | 2.35 mm   |
+   | GBP      | 1 £   | 23.43 mm | 2.8 mm    |
+   | GBP      | 2 £   | 28.4 mm  | 2.5 mm    |
+   | ...      | ...   | ...      | ...       |
 
-         trolley_token(c1h, c2h, c1d, c2d, c1t, c2t, sla);
-         trolley_token(c1h, c2h, c1d, c2d, c1t, c2t, true);
-         trolley_token(2.8, 2.5, 23.43, 28.4, "1£", "2£t", sla);
+   Usage:
+   translate([0, 15, 0])
+       trolley_token(string1 = "$$", string1 = "€€",);
+   translate([0, 45, 0])
+       trolley_token(2.15, 2.35, 23.2, 27.4, "2Fr", "5Fr", true);
+   translate([0, -15, 0])
+       trolley_token(2.14, 2.38, 22.25, 24.25, "0.2€", "0.5€", true);
+   translate([0, -45, 0])
+       trolley_token(2.33, 2.38, 23.25, 24.25, "1€", "0.5€", flase);
 */

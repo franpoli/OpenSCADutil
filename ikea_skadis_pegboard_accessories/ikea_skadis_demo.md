@@ -2,6 +2,8 @@
 
 The file `ikea_skadis.scad` can be used as an OpenSCAD library to generate accessories for the [IKEA Skådis pegboard](https://duckduckgo.com/?q=%22IKEA+Sk%C3%A5dis+pegboard%22&t=hk&ia=web).
 
+## Usage:
+
 ```
 // Curved hooks demo
 skadis_curved_hook(fullfill = false);
@@ -100,3 +102,7 @@ translate([0, 235, 0]) skadis_bits_serie(h = 18, d = 10, step = 2, n = 6, facets
 ```
 
 ![Ikea Skådis bits serie](images/IkeaSkadisBitsSerie.png)
+
+## Photographs of some 3D printed accessories:
+
+![3D printed Ikea Skådis accessories](images/IkeaSkadis3dPrintedAccessories.jpg)
