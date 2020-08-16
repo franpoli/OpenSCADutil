@@ -1,51 +1,51 @@
 /*
  * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
  * by François Polito
- * created 2020-07-17, updated 2020-08-14
+ * created 2020-07-17, updated 2020-08-16
  * GNU General Public License v3.0
  * Permissions of this strong copyleft license are conditioned on making available complete source
  * code of licensed works and modifications, which include larger works using a licensed work, under
  * the same license. Copyright and license notices must be preserved. Contributors provide an express
  * grant of patent rights.
  */
- 
- // Resolution variables
+
+// 3D printer parameters
+nozzle_width = 0.4; // nozzle width
+tolerance = 0.6; // 3D printer tolerance
+
+// Pegs and pegboard parameters
+peg_default_width = 5; // peg default width
+peg_default_thickness = 4.6; // peg default thickness
+distance_between_pegs = 40; // distance between pegs
+
+// pegs options
+all_pegs = false; // all_pegs [false/true] defines whether or not all pegs should be generated
+fullfill = true; // fullfill [false/true] defines wether ot not a peg should be full filled
+retainer = false; // retainer [false/true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
+
+// Resolution parameters
 $fa=2; // default minimum facet angle
 $fs=0.5; // default minimum facet size
 
-// 3D printer parameters
-nw = 0.4; // nozzle width
-tol = 0.6; // 3D printer tolerance
-
-// Pegs and pegboard parameters
-pdw = 5; // peg default width
-pdt = 4.6; // peg default thickness
-dbp = 40; // distance between pegs
-
-// pegs options
-ap = false; // all_pegs [false/true] defines whether or not all pegs should be generated
-ff = true; // fullfill [false/true] defines wether ot not a peg should be full filled
-ret = false; // retainer [false/true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
-
 // Optimal dimensions
-lh = (nw / 2); // layer height (half the nozzle width)
-pw = floor(pdw / nw) * nw; // peg width (a multiple of the nozzle width)
-pt = floor(pdt / lh) * lh; // peg thickness (a multiple of the layer height)
+lh = (nozzle_width / 2); // layer height (half the nozzle width)
+pw = floor(peg_default_width / nozzle_width) * nozzle_width; // peg width (a multiple of the nozzle width)
+pt = floor(peg_default_thickness / lh) * lh; // peg thickness (a multiple of the layer height)
 ptw = 3*pw; // peg total width
 ptl = 4*pw; // peg total length
 
 // Output in the console the recommended print settings for fuse filament printers
 echo("Recommended print settings:");
-echo("--> Nozzle width", nw);
+echo("--> Nozzle width", nozzle_width);
 echo("--> Layer height", lh);
-echo("--> Perimeters", ceil((pw/nw)/2));
+echo("--> Perimeters", ceil((pw/nozzle_width)/2));
 
 // functions
-function chamfer() = floor(0.2*pw/nw)*nw;
-function minimum_wall() = ceil(1.2/nw)*nw;
+function chamfer() = floor(0.2*pw/nozzle_width)*nozzle_width;
+function minimum_wall() = ceil(1.2/nozzle_width)*nozzle_width;
 function filet_limits(l, w, filet) = min(l, w) < filet ?
-    min(l, w)/2 : filet/2 < tol+minimum_wall()+0.1 ?
-        tol+minimum_wall()+0.1 : filet/2;
+    min(l, w)/2 : filet/2 < tolerance+minimum_wall()+0.1 ?
+        tolerance+minimum_wall()+0.1 : filet/2;
 function is_odd(int) = int%2;
 
 /* Peg positionning requires two parameters:
@@ -57,11 +57,11 @@ function is_odd(int) = int%2;
  */
 module skadis_pegs_position(length = pt, all_pegs) {
     al = length-pt; // axial length from 1st peg to last peg
-    translate([-(al-(al%dbp))/2, 0, 0]) {
+    translate([-(al-(al%distance_between_pegs))/2, 0, 0]) {
         if ( all_pegs == true ) {
-            for (x = [0 : dbp : al]) { translate([x, 0, 0]) { children(); } }
+            for (x = [0 : distance_between_pegs : al]) { translate([x, 0, 0]) { children(); } }
         } else {
-            for (x = [0 : (al < dbp ? dbp : al-(al%dbp)) : al]) { translate([x, 0, 0]) { children(); } }
+            for (x = [0 : (al < distance_between_pegs ? distance_between_pegs : al-(al%distance_between_pegs)) : al]) { translate([x, 0, 0]) { children(); } }
         }
     }
 }
@@ -143,7 +143,7 @@ module skadis_driver_hole(d, d1, d2) {
  * 2. fullfill (boolean)
  * 3. retainer (boolean)
  */
-module skadis_curved_hook(d = 20, fullfill = ff, retainer = ret) {
+module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
     translate([0, 0, pt/2]) rotate([0, -90, 0]) union() {
         translate([-pt/2, -(d+2*pw)/2, 0]) {
             difference() {
@@ -163,7 +163,7 @@ module skadis_curved_hook(d = 20, fullfill = ff, retainer = ret) {
  * 2. fullfill (boolean)
  * 3. retainer (boolean)
  */
-module skadis_straight_hook(l = 60, fullfill = ff, retainer = ret) {
+module skadis_straight_hook(l = 60, fullfill = fullfill, retainer = retainer) {
     translate([0, 0, pt/2]) rotate([0, -90, 0]) union() {
         translate([-pt/2, -(l+2*pw), 0]) cube(size = [pt, l+2*pw, pw]);
         translate([-pt/2, -(l+1.5*pw), pw]) rotate([0, 90, 0]) cylinder(h = pt, d = pw, center = false);
@@ -184,7 +184,7 @@ module skadis_straight_hook(l = 60, fullfill = ff, retainer = ret) {
  * 3. fullfill (boolean)
  * 4. retainer (boolean)
  */
-module skadis_o_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_o_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
         union() {
         difference() {
             union() {
@@ -204,7 +204,7 @@ module skadis_o_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
  * 3. fullfill (boolean)
  * 4. retainer (boolean)
  */
-module skadis_u_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     union() {
         difference() {
             translate([0, -(3*pw+d)/2, pw/2]) cube(size = [d+2*pw, 3*pw+d, pw], center = true);
@@ -229,7 +229,7 @@ module skadis_u_holder(d = 16, all_pegs = ap, fullfill = ff, retainer = ret) {
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
  */
-module skadis_plier(l = dbp+pt-2*pw, w = 2*dbp/5, filet = chamfer(), all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pegs/5, filet = chamfer(), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     union() {
         difference() {
             hull() {
@@ -267,7 +267,7 @@ module skadis_plier(l = dbp+pt-2*pw, w = 2*dbp/5, filet = chamfer(), all_pegs = 
  * 4. fullfill (boolean)
  * 5. retainer (boolean)
  */
-module skadis_plate(l = 80, w = 60, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_plate(l = 80, w = 60, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     union() {
         difference() {
             hull() {
@@ -294,7 +294,7 @@ module skadis_plate(l = 80, w = 60, all_pegs = ap, fullfill = ff, retainer = ret
  * 3. fullfill (boolean)
  * 4. retainer (boolean)
  */
-module skadis_round_plate(d = 80, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_round_plate(d = 80, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     union() {
         difference() {
             hull() {
@@ -320,7 +320,7 @@ module skadis_round_plate(d = 80, all_pegs = ap, fullfill = ff, retainer = ret) 
  * 7. fullfill (boolean)
  * 8. retainer (boolean)
  */
-module skadis_box(l = 60, w = 40, h = 30, t = tol, filet = pw, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_box(l = 60, w = 40, h = 30, t = tolerance, filet = pw, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     function my_filet() = filet_limits(l, w, filet);
     translate([0, -w/2-(2*pw+t+minimum_wall()), 0]) {
         difference() {
@@ -372,7 +372,7 @@ module skadis_box(l = 60, w = 40, h = 30, t = tol, filet = pw, all_pegs = ap, fu
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
  */
-module skadis_round_box(d = dbp+pt-2*(pw+tol+minimum_wall()), h = 40, t = tol, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_round_box(d = distance_between_pegs+pt-2*(pw+tolerance+minimum_wall()), h = 40, t = tolerance, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     translate([0, -(d/2+2*pw+minimum_wall()+t), 0]) difference() {
         union() {
             cylinder(h = h-2*minimum_wall(), d = d+2*minimum_wall());
@@ -394,7 +394,7 @@ module skadis_round_box(d = dbp+pt-2*(pw+tol+minimum_wall()), h = 40, t = tol, a
  * 7. fullfill (boolean)
  * 8. retainer (boolean)
  */
-module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     function rack_length() = (compact) ? ((d == undef) ? ((n+1)*(d1+pw)/2)+pw : ((n+1)*(d+pw)/2)+pw) : ((d == undef) ? (n*(d1+pw))+pw : (n*(d+pw))+pw);
     union() {
         difference() {
@@ -452,7 +452,7 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = ap, f
  * 12. fullfill (boolean)
  * 13. retainer (boolean)
 */
-module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0, bottom = true, tolerance1 = tol, tolerance2 = tol, compact = false, all_pegs = ap, fullfill = ff, retainer = ret) {
+module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0, bottom = true, tolerance1 = tolerance, tolerance2 = tolerance, compact = false, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     last_diameter = (n-1)*step+d;
     filet = last_diameter+2*pw;
     skadis_bits_length = (compact) ?
@@ -520,7 +520,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
         translate([d/2+pw, 0, 0]) for (diameter = [d:step:d+(n-1)*step+0.01]) {
             count = round((diameter-d)*(1/step));
             distance = count * (diameter-(count*step/2)+pw);
-            echo("skadis_bits_serie -> diameter", count+1, "=", diameter, "+", tolerance2, "Is odd?", is_odd(count), "count%2:", count%2);
+            echo("skadis_bits_serie -> diameter", count+1, "=", diameter, "+", tolerance2); // output diameters
             translate([(compact) ? distance*sqrt(1/3) : distance,
                 (compact) ? -(last_diameter+pw)*is_odd(count) : 0,
                 (bottom) ? minimum_wall() : 0])
