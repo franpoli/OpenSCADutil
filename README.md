@@ -14,7 +14,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 
 # Libraries
 
-## Ikea Skådis pegboard accessories
+## Ikea Skadis pegboard accessories
 
 Customizable pegboard accessories designed for convenient 3D printing [🔗](ikea_skadis_pegboard_accessories).
 
