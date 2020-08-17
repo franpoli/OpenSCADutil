@@ -18,8 +18,8 @@ coin_2_string = ""; // Coin 2 value
 sla_printer = false;
 
 // Resolution 
-$fa=1;			// default minimum facet angle
-$fs=0.5;		// default minimum facet size
+$fa=1; // default minimum facet angle
+$fs=0.5; // default minimum facet size
 
 /* FUNCTIONS
    *********/
@@ -29,7 +29,6 @@ function engravure_z_position(height, sla) = (sla) ? 2*height/5 : 4*height/5;
 function grip_z_position(height, sla) = (sla) ? -2*height/5 : -4*height/5;
 function grip_width(height, diameter) = diameter/sqrt(2) / 7;
 function minimum_height(height1, height2, sla) = (sla) ? 3*(min(height1, height2))/5 : 4*(min(height1, height2))/5;
-
 
 /* MODULES
    *******/
@@ -138,5 +137,3 @@ module trolley_token(height1 = coin_1_thickness, height2 = coin_2_thickness, dia
    translate([0, -45, 0])
        trolley_token(2.33, 2.38, 23.25, 24.25, "1€", "0.5€", false);
 */
-
-
