@@ -9,7 +9,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 # Table of Contents
 
 - [Libraries](#libraries)
-	- [IKEA Skådis pegboard accessories](ikea-skådis-pegboard-accessories-dir)
+	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories-dir)
 	- [Trolley token generator](#trolley-token-generator-dir)
 
 # Libraries
