@@ -1,7 +1,7 @@
 /*
  * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
  * by François Polito
- * created 2020-07-17, updated 2020-08-16
+ * created 2020-07-17, updated 2020-08-23
  * GNU General Public License v3.0
  * Permissions of this strong copyleft license are conditioned on making available complete source
  * code of licensed works and modifications, which include larger works using a licensed work, under
@@ -183,29 +183,66 @@ module skadis_driver_hole(d, d1, d2) {
  */
 module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
     translate([0, 0, pt/2]) {
-        rotate([0, -90, 0]) union() {
-            translate([-pt/2, -(d+2*pw)/2, 0]) {
-                difference() {
-                    rotate([0, 90, 0]) {
-                        cylinder(h = pt, r = (d+2*pw)/2, center = false);
-                    }
-                    rotate([0, 90, 0]) {
-                        cylinder(h = pt, r = d/2, center = false);
+        rotate([0, -90, 0]) {
+            union() {
+                translate([-pt/2, -(d+2*pw)/2, 0]) {
+                    difference() {
+                        rotate([0, 90, 0]) {
+                            cylinder(h = pt, r = (d+2*pw)/2, center = false);
+                        }
+                        rotate([0, 90, 0]) {
+                            cylinder(h = pt, r = d/2, center = false);
+                        }
+                        translate([0, -(d+2*pw)/2, 0]) {
+                            cube(size = [pt, d+2*pw, (d+2*pw)/2]);
+                        }
                     }
                     translate([0, -(d+2*pw)/2, 0]) {
-                        cube(size = [pt, d+2*pw, (d+2*pw)/2]);
+                        cube(size = [pt, pw, pw/2]);
+                    }
+                    translate([0, -(d+pw)/2, pw/2]) {
+                        rotate([0, 90, 0]) {
+                            cylinder(h = pt, d = pw, center = false);
+                        }
+                    }
+                    if (d > 80) {
+                        X = (d+pw)/2;
+                        Y = 1.15*(d+pw)/2;
+                        A = asin(X/Y);
+                        B = acos(X/Y);
+                        rotate([0, 90, 0]) {
+                            hull() {
+                                translate([0, d/2, 0]) {
+                                    cube(size = [pw, pw, pt]);
+                                }
+                                translate([sqrt(pow(Y,2)-pow(X,2)), X, 0]) {
+                                    cylinder(h = pt, d = pw, center = false);
+                                }
+                            }
+                        }
+                        rotate([-90, B, 90]) {
+                            translate([0, 0, -pt/2]) {
+                                rotate_extrude(angle = 180-B) {
+                                    translate([Y, 0, 0]) {
+                                        square(size = [pw, pt], center = true);
+                                    }
+                                }
+                            }
+                        }
+                        hull() {
+                            rotate([0, 90, 0]) {
+                                translate([0, -Y, 0]) {
+                                    cylinder(h = pt, d = pw, center = false);
+                                }
+                                translate([-pw/2, -(d+pw)/2, 0]) {
+                                    cylinder(h = pt, d = pw, center = false);
+                                }
+                            }
+                        }
                     }
                 }
-                translate([0, -(d+2*pw)/2, 0]) {
-                    cube(size = [pt, pw, pw/2]);
-                }
-                translate([0, -(d+pw)/2, pw/2]) {
-                    rotate([0, 90, 0]) {
-                        cylinder(h = pt, d = pw, center = false);
-                    }
-                }
+                skadis_peg(fullfill = fullfill, retainer = retainer);
             }
-            skadis_peg(fullfill = fullfill, retainer = retainer);
         }
     }
 }
@@ -227,8 +264,8 @@ module skadis_straight_hook(l = 60, fullfill = fullfill, retainer = retainer) {
                         cylinder(h = pt, d = pw, center = false);
                     }
                 }
-                translate([-pt/2, -pw, -l/5]) {
-                    cube(size = [pt, pw, l/4]);
+                translate([-pt/2, -pw, (l/5) < pw ? -pw : -l/5]) {
+                    cube(size = [pt, pw, (l/5) < pw ? pw : l/5]);
                 }
                 if (l/5 > 1.5*pw) {
                     hull() {
@@ -719,12 +756,15 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
 //translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
 //translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
+//translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 
 // Straight hooks demo
+//translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
 //translate([0, 0, 0]) skadis_straight_hook(30, fullfill = false);
 //translate([30, 0, 0]) skadis_straight_hook(60, fullfill = false);
-//translate([60, 0, 0]) skadis_straight_hook(90, fullfill = false);
-//translate([100, 0, 0]) skadis_straight_hook(120, fullfill = false);
+//translate([60, 0, 0]) skadis_straight_hook(90, fullfill = false, retainer=true);
+//translate([100, 0, 0]) skadis_straight_hook(120, fullfill = true, retainer=true);
+//translate([150, 0, 0]) skadis_straight_hook(150, fullfill = true, retainer=false);
 
 // O holders demo
 //skadis_o_holder();
@@ -768,6 +808,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //translate([0, 55, 0]) skadis_rack(d = 24, all_pegs = true);
 //translate([0, 110, 0]) skadis_rack(d1 = 20, d2 = 12, all_pegs = false);
 //translate([0, 180, 0]) skadis_rack(d1 = 20, d2 = 12, n = 12, compact = true, all_pegs = false);
+//translate([0, 250, 0]) skadis_rack(d1 = 20, d2 = 0, n = 12, compact = true, all_pegs = false);
 
 // bits serie demo
 //skadis_bits_serie(all_pegs = true);
