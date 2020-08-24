@@ -208,8 +208,10 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
                     if (d > 80) {
                         X = (d+pw)/2;
                         Y = 1.15*(d+pw)/2;
+                        Z = Y-X;
                         A = asin(X/Y);
                         B = acos(X/Y);
+                        C = asin(Z*sin(135)/Y);
                         rotate([0, 90, 0]) {
                             hull() {
                                 translate([0, d/2, 0]) {
@@ -222,7 +224,7 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
                         }
                         rotate([-90, B, 90]) {
                             translate([0, 0, -pt/2]) {
-                                rotate_extrude(angle = 180-B) {
+                                rotate_extrude(angle = 180-B-C) {
                                     translate([Y, 0, 0]) {
                                         square(size = [pw, pt], center = true);
                                     }
@@ -231,11 +233,25 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
                         }
                         hull() {
                             rotate([0, 90, 0]) {
-                                translate([0, -Y, 0]) {
+                                translate([Z/sqrt(2), -Y*cos(C), 0]) {
                                     cylinder(h = pt, d = pw, center = false);
                                 }
                                 translate([-pw/2, -(d+pw)/2, 0]) {
                                     cylinder(h = pt, d = pw, center = false);
+                                }
+                            }
+                        }
+                        for (x = [0:1:1]) mirror([0, x, 0]) {
+                            rotate([30, 0, 0]) {
+                                hull() {
+                                    rotate([0, 90, 0]) {
+                                        translate([X, 0, 0]) {
+                                            cylinder(h = pt, d = pw, center = false);
+                                        }
+                                        translate([Y, 0, 0]) {
+                                            cylinder(h = pt, d = pw, center = false);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -751,12 +767,12 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 }
 
 // Curved hooks demmo
-//skadis_curved_hook(fullfill = false);
-//translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
-//translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
-//translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
-//translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
-//translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
+skadis_curved_hook(fullfill = false);
+translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
+translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
+translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
+translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
+translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 
 // Straight hooks demo
 //translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
