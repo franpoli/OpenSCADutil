@@ -767,12 +767,12 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 }
 
 // Curved hooks demmo
-skadis_curved_hook(fullfill = false);
-translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
-translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
-translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
-translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
-translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
+//skadis_curved_hook(fullfill = false);
+//translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
+//translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
+//translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
+//translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
+//translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 
 // Straight hooks demo
 //translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
