@@ -1,7 +1,7 @@
 /*
  * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
  * by François Polito
- * created 2020-07-17, updated 2020-08-24
+ * created 2020-07-17, updated 2020-08-27
  * GNU General Public License v3.0
  * Permissions of this strong copyleft license are conditioned on making available complete source
  * code of licensed works and modifications, which include larger works using a licensed work, under
@@ -744,10 +744,12 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
                     }
                 }
             }
-            // +0.01 safety measure to ensure number of steps against rounding issue
             translate([d/2+pw, 0, 0]) {
-                for (diameter = [d:step:d+(n-1)*step+0.01]) {
-                    count = round((diameter-d)*(1/step));
+                for (count = [0:1:n-1]) {
+                    diameter = d+count*step;
+//                for (diameter = [d:step:d+(n-1)*step+step/2]) {
+//                    count = round((diameter-d)*(1/step));
+//                    echo("count", count);
                     distance = count * (diameter-(count*step/2)+pw);
                     echo("skadis_bits_serie -> diameter", count+1, "=", diameter, "+", tolerance2); // output diameters
                     translate(
@@ -828,6 +830,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 
 // bits serie demo
 //skadis_bits_serie(all_pegs = true);
+//translate([0, -60, 0]) skadis_bits_serie(d = 8, facets = 6, step = 0, n = 10, h = 20, compact = true);
 //translate([0, 70, 0]) skadis_bits_serie(compact = true);
 //translate([0, 120, 0]) skadis_bits_serie(h = 32, d = 1.2, step = 1.2, tolerance2 = 3.2, n = 9, compact = false);
 //translate([0, 170, 0]) skadis_bits_serie(h = 28, d = 2.3, step = 1.5, n = 8, facets = 6, angle = 30, bottom = false, compact = false, tolerance2 = 0.2);
