@@ -747,9 +747,6 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
             translate([d/2+pw, 0, 0]) {
                 for (count = [0:1:n-1]) {
                     diameter = d+count*step;
-//                for (diameter = [d:step:d+(n-1)*step+step/2]) {
-//                    count = round((diameter-d)*(1/step));
-//                    echo("count", count);
                     distance = count * (diameter-(count*step/2)+pw);
                     echo("skadis_bits_serie -> diameter", count+1, "=", diameter, "+", tolerance2); // output diameters
                     translate(
