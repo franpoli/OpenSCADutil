@@ -11,16 +11,19 @@ translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
 translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
 translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
 translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
+translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 ```
 
 ![Ikea Skådis curved hooks](images/IkeaSkadisCurvedHooksDemo.png)
 
 ```
 // Straight hooks demo
-translate([0, 0, 0])  skadis_straight_hook(30, fullfill = false);
-translate([30, 0, 0])  skadis_straight_hook(60, fullfill = false);
-translate([60, 0, 0])  skadis_straight_hook(90, fullfill = false);
-translate([100, 0, 0])  skadis_straight_hook(120, fullfill = false);
+translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
+translate([0, 0, 0]) skadis_straight_hook(30, fullfill = false);
+translate([30, 0, 0]) skadis_straight_hook(60, fullfill = false);
+translate([60, 0, 0]) skadis_straight_hook(90, fullfill = false, retainer=true);
+translate([100, 0, 0]) skadis_straight_hook(120, fullfill = true, retainer=true);
+translate([150, 0, 0]) skadis_straight_hook(150, fullfill = true, retainer=false);
 ```
 
 ![Ikea Skådis straight hooks](images/IkeaSkadisStraightHooksDemo.png)
@@ -88,6 +91,7 @@ skadis_rack(d = 20);
 translate([0, 55, 0]) skadis_rack(d = 24, all_pegs = true);
 translate([0, 110, 0]) skadis_rack(d1 = 20, d2 = 12, all_pegs = false);
 translate([0, 180, 0]) skadis_rack(d1 = 20, d2 = 12, n = 12, compact = true, all_pegs = false);
+translate([0, 250, 0]) skadis_rack(d1 = 20, d2 = 0, n = 12, compact = true, all_pegs = false);
 ```
 
 ![Ikea Skådis racks Demo](images/IkeaSkadisRacksDemo.png)
@@ -95,10 +99,11 @@ translate([0, 180, 0]) skadis_rack(d1 = 20, d2 = 12, n = 12, compact = true, all
 ```
 // bits serie demo
 skadis_bits_serie(all_pegs = true);
+translate([0, -60, 0]) skadis_bits_serie(d = 8, facets = 6, step = 0, n = 10, h = 20, compact = true);
 translate([0, 70, 0]) skadis_bits_serie(compact = true);
-translate([0, 120, 0]) skadis_bits_serie(h = 32, d = 1, step = 1, tolerance2 = 3.2, n = 9, compact = false);
-translate([0, 170, 0]) skadis_bits_serie(h = 28, d = 2, step = 1, n = 7, facets = 6, angle = 30, bottom = false, compact = false);
-translate([0, 235, 0]) skadis_bits_serie(h = 18, d = 10, step = 2, n = 6, facets = 4, angle = 45);
+translate([0, 120, 0]) skadis_bits_serie(h = 32, d = 1.2, step = 1.2, tolerance2 = 3.2, n = 9, compact = false);
+translate([0, 170, 0]) skadis_bits_serie(h = 28, d = 2.3, step = 1.5, n = 8, facets = 6, angle = 30, bottom = false, compact = false, tolerance2 = 0.2);
+translate([0, 235, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45):
 ```
 
 ![Ikea Skådis bits serie](images/IkeaSkadisBitsSerie.png)
