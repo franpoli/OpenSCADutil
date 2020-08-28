@@ -102,3 +102,11 @@ translate([0, 235, 0]) skadis_bits_serie(h = 18, d = 10, step = 2, n = 6, facets
 ```
 
 ![Ikea Skådis bits serie](images/IkeaSkadisBitsSerie.png)
+
+## Pictures of some 3D printed accessories
+
+![Ikea Skådis bits serie](images/photographs_ikea_skadis_pegboard_accessories_001.jpg)
+
+![Ikea Skådis bits serie](images/photographs_ikea_skadis_pegboard_accessories_002.jpg)
+
+![Ikea Skådis bits serie](images/photographs_ikea_skadis_pegboard_accessories_003.jpg)
