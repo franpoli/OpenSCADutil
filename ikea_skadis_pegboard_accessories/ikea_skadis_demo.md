@@ -1,8 +1,8 @@
 # Parametric Ikea Skådis Pegboard Accessories
 
-The file `ikea_skadis.scad` can be used as an OpenSCAD library to generate accessories for the [IKEA Skådis pegboard](https://duckduckgo.com/?q=%22IKEA+Sk%C3%A5dis+pegboard%22&t=hk&ia=web).
+The file [ikea_skadis.scad](ikea_skadis.scad) can be used as an [OpenSCAD](http://www.openscad.org/) library to generate accessories for the [IKEA Skådis pegboards](https://www.ikea.com/se/sv/search/products/?q=sk%C3%A5dis). These accessories are designed to be 3D printed with ease on [fused filament printers](https://en.wikipedia.org/wiki/Fused_filament_fabrication#Fused_deposition_modeling).  
 
-## Usage:
+## Usage
 
 ```
 // Curved hooks demo
