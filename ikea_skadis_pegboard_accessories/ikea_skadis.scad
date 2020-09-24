@@ -1,7 +1,7 @@
 /*
  * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
  * by François Polito
- * created 2020-07-17, updated 2020-08-27
+ * created 2020-07-17, updated 2020-09-24
  * GNU General Public License v3.0
  * Permissions of this strong copyleft license are conditioned on making available complete source
  * code of licensed works and modifications, which include larger works using a licensed work, under
@@ -263,6 +263,112 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
     }
 }
 
+/* A squared hook takes up to four parameters:
+ * 1. l (numerical) - the length of the squared hook
+ * 2. h (numerical) - the height of the squared hook
+ * 3. fullfill (boolean)
+ * 4. retainer (boolean)
+ */
+module skadis_squared_hook(l = 10, h = 30, fullfill = false, retainer = false) {
+    function radius(my_angle, my_height) = my_height * tan(my_angle);
+    function support(my_length, my_heigth) = max(my_length, my_heigth) > 45 ? true : false;
+    A = 7; // support angle alpha
+    sH = h + pw/2; // sypport vertical height
+    translate([0, 0, pt/2]) {
+        rotate([0, -90, 0]) {
+            union() {
+                difference() {
+                    hull() {
+                        translate([-pt/2, -pw, -pw-h]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -pw, -pw]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -2*pw-l, -pw]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -(l+1.5*pw), -pw/2-h]) {
+                            rotate([0, 90, 0]) {
+                                cylinder(h = pt, d = pw, center = false);
+                            }
+                        }
+                    }
+                    hull() {
+                        translate([-pt/2, -2*pw, -h]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -2*pw, -pw]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -pw-l, -pw]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                        translate([-pt/2, -pw-l, -h]) {
+                            cube(size = [pt, pw, pw]);
+                        }
+                    }
+                }
+                hull() {
+                    #translate([-pt/2, -(l+1.5*pw), 0]) {
+                        rotate([0, 90, 0]) {
+                            cylinder(h = pt, d = pw, center = false);
+                        }
+                    }
+                    if (support(l, h)) {
+                        translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
+                            #rotate([270-A, 0, 0]) rotate([90, 90, 90])
+                                translate([radius(A, sH), 0, 0]) cylinder(h = pt, d = pw);
+                        }
+                    }
+                }
+                if (support(l, h)) {
+                    translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
+                        rotate([270-A, 0, 0]) rotate([90, 90, 90])
+                            rotate_extrude(angle = 90, convexity = 2)
+                                translate([radius(A, sH)-pw/2, 0, 0]) square([pw, pt]);
+                    }
+                    hull() {
+                        translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
+                            #rotate([0, 90, 0]) {
+                                cylinder(h = pt, d = pw, center = false);
+                            }
+                        }
+                        translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
+                            #rotate([270-A, 0, 0]) rotate([90, 90, 90]) rotate([0, 0, -45]) 
+                                translate([0, radius(A, sH), 0]) cylinder(h = pt, d = pw);
+                        }
+                    }
+                    hull() {
+                        translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
+                            rotate([270-A, 0, 0]) rotate([90, 90, 90])
+                                translate([0, radius(A, sH), 0]) cylinder(h = pt, d = pw);
+                        }
+                        translate([-pt/2, -pw/2, -h-pw/2-(radius(A, sH)*cos(A)+(l+radius(A, sH)*sin(A))*sin(A))]) {
+                            rotate([0, 90, 0]) {
+                                cylinder(h = pt, d = pw, center = false);
+                            }
+                        }
+                    }
+                    hull() {
+                        translate([-pt/2, -pw/2, -h-pw/2]) {
+                            rotate([0, 90, 0]) {
+                                cylinder(h = pt, d = pw, center = false);
+                            }
+                        }
+                        translate([-pt/2, -pw/2, -h-pw/2-(radius(A, sH)*cos(A)+(l+radius(A, sH)*sin(A))*sin(A))]) {
+                            rotate([0, 90, 0]) {
+                                cylinder(h = pt, d = pw, center = false);
+                            }
+                        }
+                    }
+                }
+            }
+            skadis_peg(fullfill = fullfill, retainer = retainer);
+        }
+    } echo("Support:", support(l, h));
+}
+
 /* A straight hook takes up to three parameters:
  * 1. l (numerical) - the length of th straight hook
  * 2. fullfill (boolean)
@@ -299,7 +405,7 @@ module skadis_straight_hook(l = 60, fullfill = fullfill, retainer = retainer) {
     }
 }
 
-/* A O-profile takes up to four parameters:
+/* A O-holder takes up to four parameters:
  * 1. d (numerical) - Inner diameter
  * 2. all_pegs (boolean)
  * 3. fullfill (boolean)
@@ -327,7 +433,7 @@ module skadis_o_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
     }
 }
 
-/* A U-profile takes up to four parameters:
+/* A U-holder takes up to four parameters:
  * 1. d (numerical) - Inner diameter
  * 2. all_pegs (boolean)
  * 3. fullfill (boolean)
@@ -657,7 +763,7 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_p
  * 4. n (numerical) - the number of bits the holder shall contain
  * 5. facets (numerical) - the number of sides of the regular polygon (e.g. use 4 a square key, 6 for a hex key)
  * 6. angle (numerical) - provide a way to orient regular polygons
- * 7. bootom (bollean) - set to true each bit will have a bottom holder, set to false a pocket is generated through all the holder
+ * 7. bottom (bollean) - set to true a pocket is generated, set to false a hole will be created.
  * 8. tolerance1 (numerical) - the tolerance allowing the container to slide easily through its support
  * 9. tolerance2 (numerical) - the tolerance allowing each bit to slide into a pocket
  * 10. compact (boolean) - set to true, the generated holder will be shorter
@@ -765,13 +871,19 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
     skadis_plier(l = skadis_bits_length+2*tolerance1, w = skadis_bits_width+2*tolerance1, filet = filet+2*tolerance1, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
 }
 
-// Curved hooks demmo
+// Curved hooks demo
 //skadis_curved_hook(fullfill = false);
 //translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
 //translate ([60, 0, 0]) skadis_curved_hook(fullfill = false, retainer = true);
 //translate ([0, 55, 0]) skadis_curved_hook(28, fullfill = true);
 //translate ([0, 120, 0]) skadis_curved_hook(36, fullfill = true, retainer = true);
 //translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
+
+// Squared hooks demo
+//translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
+//skadis_squared_hook();
+//translate([0, -40, 0]) skadis_squared_hook(6, 50);
+//translate([0, -80, 0]) skadis_squared_hook(62, 76, true, true);
 
 // Straight hooks demo
 //translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
@@ -785,12 +897,14 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //skadis_o_holder();
 //translate([30, 0, 0]) skadis_o_holder(retainer = true);
 //translate([60, 0, 0]) skadis_o_holder(fullfill = false, retainer = true);
-//translate([30, -50, 0]) skadis_o_holder(70);
+//translate([30, -50, 0]) skadis_o_holder(d = 70);
 
 // U holders demo
 //skadis_u_holder();
-//translate([30, 0, 0]) skadis_u_holder(retainer = true);
-//translate([60, 0, 0]) skadis_u_holder(fullfill = false, retainer = true);
+//translate([35, 0, 0]) skadis_u_holder(d = 20, retainer = true);
+//translate([75, 0, 0]) skadis_u_holder(d = 25, fullfill = false, retainer = true);
+//translate([120, 0, 0]) skadis_u_holder(d = 30);
+//translate([170, 0, 0]) skadis_u_holder(35);
 
 // Pliers demo
 //skadis_plier(filet = 0);
@@ -800,23 +914,24 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 
 // Plates demo
 //skadis_plate();
-//translate([0, 80, 0]) skadis_plate(l = 90, w = 40);
+//translate([0, 80, 0]) skadis_plate(90, 40, false, false, true);
 //translate([0, 180, 0]) skadis_plate(l = 90, w = 60, all_pegs = true);
-//translate([120, 0, 0]) {
-//    skadis_round_plate();
-//    translate([0, 80, 0]) skadis_round_plate(50);
-//    translate([0, 200, 0]) skadis_round_plate(90, all_pegs = true);
-//}
+
+// Round plates demo
+//skadis_round_plate();
+//translate([0, -120, 0]) skadis_round_plate(d = 50, fullfill = false);
+//translate([0, 130, 0]) skadis_round_plate(90, true, false, true);
 
 // Boxes demo
 //skadis_box();
-//translate([0, 80, 0]) skadis_box(l = 90, w = 40, h = 30);
-//translate([0, 180, 0]) skadis_box(l = 90, w = 60, h = 40, filet = 12, all_pegs = true);
-//translate([120, 0, 0]) {
-//    skadis_round_box();
-//    translate([0, 80, 0]) skadis_round_box(d = 50, h = 40);
-//    translate([0, 200, 0]) skadis_round_box(d = 90, h = 45, all_pegs = true);
-//}
+//translate([0, 80, 0]) skadis_box(90, 40, 30);
+//translate([0, 160, 0]) skadis_box(90, 40, 12, filet = 40, t = 0.8);
+//translate([0, 260, 0]) skadis_box(l = 90, w = 60, h = 40, filet = 12, all_pegs = true);
+
+// Round boxes demo
+//skadis_round_box();
+//translate([0, 100, 0]) skadis_round_box(d = 50, h = 50);
+//translate([0, 240, 0]) skadis_round_box(d = 90, h = 80, all_pegs = true);
 
 // Racks demo
 //skadis_rack(d = 20);

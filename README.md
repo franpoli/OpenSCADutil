@@ -15,8 +15,8 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 ## IKEA Skådis pegboard accessories
 
 
-[🔗](ikea_skadis_pegboard_accessories) Customizable pegboard accessories designed for convenient 3D printing.
+[🔗](ikea_skadis_pegboard_accessories "Link") Customizable pegboard accessories designed for convenient 3D printing.
 
 ## Trolley token generator
 
-[🔗](trolley_token) Parametric dual tokens generator intended to be 3D printed and used in place of coins.
+[🔗](trolley_token "Link") Parametric dual tokens generator intended to be 3D printed and used in place of coins.

@@ -7,7 +7,7 @@
  */
 
 /* PARAMETERS
- * **********/
+   **********/
 // Trolley token
 coin_1_thickness = 1.95;
 coin_2_thickness = 2.9;
