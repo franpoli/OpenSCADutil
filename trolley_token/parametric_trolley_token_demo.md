@@ -32,7 +32,7 @@ translate([0, -45, 0])
 ## Coins dimension table
 
 | Currency | Value | Diameter | Thickness |
-|----------+-------+----------+-----------|
+|:--------:|------:|---------:|----------:|
 | SEK      | 1 kr  | 19.5 mm  | 1.79 mm   |
 | SEK      | 2 kr  | 22.5 mm  | 1.79 mm   |
 | SEK      | 5 kr  | 23.75 mm | 1.95 mm   |
