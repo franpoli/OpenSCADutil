@@ -24,7 +24,7 @@ The file [ikea_skadis.scad](ikea_skadis.scad) can be used as an [OpenSCAD](http:
 
 ## Library usage
 
-Put the [ikea_skadis.scad](ikea_skadis.scad) in your [environment path](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries) then to include the library in your path use either the command ``include <ikea_skadis.scad>`` or ``use <ikea_skadis.scad>`` according to [OpenSCAD include statement](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Include_Statement).
+Place the [ikea_skadis.scad](ikea_skadis.scad) in your [environment path](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries) then use either the command ``include <ikea_skadis.scad>`` or the command ``use <ikea_skadis.scad>`` according to [OpenSCAD include statement manual](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Include_Statement).
 
 ## Pegboard accessories modules
 
