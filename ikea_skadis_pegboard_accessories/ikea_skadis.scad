@@ -310,14 +310,14 @@ module skadis_squared_hook(l = 10, h = 30, fullfill = false, retainer = false) {
                     }
                 }
                 hull() {
-                    #translate([-pt/2, -(l+1.5*pw), 0]) {
+                    translate([-pt/2, -(l+1.5*pw), 0]) {
                         rotate([0, 90, 0]) {
                             cylinder(h = pt, d = pw, center = false);
                         }
                     }
                     if (support(l, h)) {
                         translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
-                            #rotate([270-A, 0, 0]) rotate([90, 90, 90])
+                            rotate([270-A, 0, 0]) rotate([90, 90, 90])
                                 translate([radius(A, sH), 0, 0]) cylinder(h = pt, d = pw);
                         }
                     }
@@ -330,12 +330,12 @@ module skadis_squared_hook(l = 10, h = 30, fullfill = false, retainer = false) {
                     }
                     hull() {
                         translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
-                            #rotate([0, 90, 0]) {
+                            rotate([0, 90, 0]) {
                                 cylinder(h = pt, d = pw, center = false);
                             }
                         }
                         translate([-pt/2, -(l+1.5*pw), -h-pw/2]) {
-                            #rotate([270-A, 0, 0]) rotate([90, 90, 90]) rotate([0, 0, -45]) 
+                            rotate([270-A, 0, 0]) rotate([90, 90, 90]) rotate([0, 0, -45]) 
                                 translate([0, radius(A, sH), 0]) cylinder(h = pt, d = pw);
                         }
                     }
@@ -366,7 +366,7 @@ module skadis_squared_hook(l = 10, h = 30, fullfill = false, retainer = false) {
             }
             skadis_peg(fullfill = fullfill, retainer = retainer);
         }
-    } echo("Support:", support(l, h));
+    }
 }
 
 /* A straight hook takes up to three parameters:
@@ -880,10 +880,10 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 
 // Squared hooks demo
-//translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
-//skadis_squared_hook();
-//translate([0, -40, 0]) skadis_squared_hook(6, 50);
-//translate([0, -80, 0]) skadis_squared_hook(62, 76, true, true);
+translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
+skadis_squared_hook();
+translate([0, -40, 0]) skadis_squared_hook(6, 50);
+translate([0, -80, 0]) skadis_squared_hook(62, 76, true, true);
 
 // Straight hooks demo
 //translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
