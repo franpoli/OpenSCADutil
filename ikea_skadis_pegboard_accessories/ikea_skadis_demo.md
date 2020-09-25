@@ -67,8 +67,8 @@ translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = fa
 
 ### Module skadis_squared_hook()
 
-1. **l** = [numerical] - the length of the squared hook
-2. **h** = [numerical] - the height of the squared hook
+1. **l** = [numerical]
+2. **h** = [numerical]
 3. **fullfill** = [boolean]
 4. **retainer** = [boolean]
 

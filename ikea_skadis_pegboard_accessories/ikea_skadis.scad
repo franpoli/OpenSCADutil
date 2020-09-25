@@ -880,10 +880,10 @@ module skadis_bits_serie(h = 28, d = 2, step = 1, n = 12, facets = 36, angle = 0
 //translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = false);
 
 // Squared hooks demo
-translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
-skadis_squared_hook();
-translate([0, -40, 0]) skadis_squared_hook(6, 50);
-translate([0, -80, 0]) skadis_squared_hook(62, 76, true, true);
+//translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
+//skadis_squared_hook();
+//translate([0, -40, 0]) skadis_squared_hook(6, 50);
+//translate([0, -80, 0]) skadis_squared_hook(62, 76, true, true);
 
 // Straight hooks demo
 //translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
