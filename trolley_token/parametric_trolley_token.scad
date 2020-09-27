@@ -1,7 +1,7 @@
 /*
  * Parametric trolley token generator
  * by François Polito
- * created 2019-04-22, updated 2020-06-16
+ * created 2019-04-22, updated 2020-09-27
  * This work is licensed under the Creative Commons - CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication.
  * https://creativecommons.org/publicdomain/zero/1.0/
  */
@@ -13,8 +13,8 @@ coin_1_thickness = 1.95;
 coin_2_thickness = 2.9;
 coin_1_diameter = 23.75;
 coin_2_diameter = 20.5;
-coin_1_string = ""; // Coin 1 value
-coin_2_string = ""; // Coin 2 value
+coin_1_string = "5kr"; // Coin 1 value
+coin_2_string = "10kr"; // Coin 2 value
 sla_printer = false;
 
 // Resolution 
@@ -80,7 +80,14 @@ module link(height1, height2, diameter1, diameter2, sla) {
      }
 }
 
-module trolley_token(height1 = coin_1_thickness, height2 = coin_2_thickness, diameter1 = coin_1_diameter, diameter2 = coin_1_diameter, string1 = "", string2 = "", sla = sla_printer) {
+module trolley_token(
+     height1 = coin_1_thickness,
+     height2 = coin_2_thickness,
+     diameter1 = coin_1_diameter,
+     diameter2 = coin_1_diameter,
+     string1 = coin_1_string,
+     string2 = coin_2_string,
+     sla = sla_printer) {
      union() {
 	  coin_position(-diameter1, 90) difference() {
 	       coin(height1, diameter1, sla);
@@ -137,3 +144,7 @@ module trolley_token(height1 = coin_1_thickness, height2 = coin_2_thickness, dia
    translate([0, -45, 0])
        trolley_token(2.33, 2.38, 23.25, 24.25, "1€", "0.5€", false);
 */
+
+// Thingiverse customizer call
+// https://www.thingiverse.com/thing:3586719
+// trolley_token();
