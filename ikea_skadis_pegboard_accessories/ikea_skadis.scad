@@ -466,6 +466,62 @@ module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
     }
 }
 
+
+
+/* A Squared holder takes up to five parameters:
+ * 1. l (numerical) - the length of th straight hook
+ * 2. w (numerical) - the separation between hooks 
+ * 3. all_pegs (boolean)
+ * 4. fullfill (boolean)
+ * 5. retainer (boolean)
+ */
+
+module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
+    
+    
+    
+        union() {
+            translate([0, -(2*pw)/2, pw/2]) {
+                cube(size = [w+2*pw, 2*pw, pw], center = true);
+            }
+            
+            translate([(w+2*pw)/2, 0, 0]) {    
+               union() {
+                    translate([-pt/2, -(l+2*pw), 0]) {
+                        cube(size = [pt, l+2*pw, pw]);
+                    }
+                    translate([-pt/2, -(l+1.5*pw), pw]) {
+                        rotate([0, 90, 0]) {
+                            cylinder(h = pt, d = pw, center = false);
+                    }
+                 }
+              }
+          }
+                 
+          translate([(w+2*pw)/-2, 0, 0]) {    
+            union() {
+                translate([-pt/2, -(l+2*pw), 0]) {
+                    cube(size = [pt, l+2*pw, pw]);
+                    }
+                translate([-pt/2, -(l+1.5*pw), pw]) {
+                    rotate([0, 90, 0]) {
+                        cylinder(h = pt, d = pw, center = false);
+                   }
+                }
+            }
+            
+        }
+          
+              
+        skadis_pegs_position(length = w+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+    }
+    
+}
+
+
+
+
+
 /* A plier takes up to six parameters:
  * 1. l (numerical) - length
  * 2. w (numerical) - width
