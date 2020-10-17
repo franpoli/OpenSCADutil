@@ -485,7 +485,7 @@ module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fu
                 cube(size = [w+2*pw, 2*pw, pw], center = true);
             }
             
-            translate([(w+2*pw)/2, 0, 0]) {    
+            translate([(w+pw)/2, 0, 0]) {    
                union() {
                     translate([-pt/2, -(l+2*pw), 0]) {
                         cube(size = [pt, l+2*pw, pw]);
@@ -498,7 +498,7 @@ module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fu
               }
           }
                  
-          translate([(w+2*pw)/-2, 0, 0]) {    
+          translate([(w+pw)/-2, 0, 0]) {    
             union() {
                 translate([-pt/2, -(l+2*pw), 0]) {
                     cube(size = [pt, l+2*pw, pw]);
@@ -1003,3 +1003,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //translate([0, 130, 0]) skadis_bits_serie(h = 32, d = 1.2, step = 1.2, tolerance2 = 3.2, n = 9, compact = false);
 //translate([0, 190, 0]) skadis_bits_serie(h = 28, d = 2.3, step = 1.5, n = 8, facets = 6, angle = 30, bottom = false, compact = false, tolerance2 = 0.2);
 //translate([0, 260, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45);
+
+
+
+skadis_squared_holder(l = 7, w = 15);
