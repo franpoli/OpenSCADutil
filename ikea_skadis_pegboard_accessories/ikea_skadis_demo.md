@@ -26,6 +26,10 @@ The file [ikea_skadis.scad](ikea_skadis.scad) can be used as an [OpenSCAD](http:
 
 Place the [ikea_skadis.scad](ikea_skadis.scad) in your [environment path](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries) then use either the command ``include <ikea_skadis.scad>`` or the command ``use <ikea_skadis.scad>`` according to [OpenSCAD include statement manual](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Include_Statement).
 
+If you need to, you can override default parameters such as the tolerance. Example:
+
+![Ovveride tolerance parameter](images/skadis_ovveride_tolerance_parameter.gif)
+
 ## Pegboard accessories modules
 
 All accessories have two parameters in common:
