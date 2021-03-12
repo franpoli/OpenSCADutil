@@ -39,9 +39,9 @@ fullfill = [true/false]
 retainer = [true/false]
 ```
 
-Where the parameter **fullfine** let you decide if a peg should be full filled or hollowed.  **Retainers** lock the pegs on the board.
+Where the parameter **fullfill** let you decide if a peg should be full filled or hollowed.  The **retainer** parameter let you enlarged the end of the fastener in order to lock the pegs on the board.
 
-Wider accessories may cover many holes on the pegboard. These accessories need at least two pegs in order to be attached properly. Setting the parameter **all_pegs** to *true* will generate peg for each holes covered by the accessory.
+Wider accessories may cover many holes on the pegboard. These accessories need at least two pegs in order to be attached properly. Setting the parameter **all_pegs** to *true* will generate a peg for each hole covered by the accessory.
 
 ```
 all_pegs = [true/false]
@@ -70,6 +70,8 @@ translate ([90, 160, 0]) skadis_curved_hook(120, fullfill = false, retainer = fa
 ![Ikea Skådis curved hooks](images/IkeaSkadisCurvedHooksDemo.png)
 
 ### Module skadis_squared_hook()
+
+Takes up to 4 paramaters:
 
 1. **l** = [numerical]
 2. **h** = [numerical]
@@ -276,7 +278,7 @@ Takes up to 8 parameters:
 7. **fullfill** = [boolean]
 8. **retainer** = [boolean]
 
-Where **d** is the unique diameter.to be used if defined. The parameter **d1** is the first diameter and the parameter **d2** is the second diameter. The parameter **n** is the number of units per rack. If set to true, the parameter **compact** will generate a shorter rack with units placed ontwo rows.
+Where **d** is the unique diameter to be used if defined. The parameter **d1** is the first diameter and the parameter **d2** is the second diameter. The parameter **n** is the number of units per rack. If set to true, the parameter **compact** will generate a shorter rack with units placed ontwo rows.
 
 ```
 // Racks demo
