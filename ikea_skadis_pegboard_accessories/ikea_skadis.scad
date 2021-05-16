@@ -473,8 +473,9 @@ module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
  * 4. all_pegs (boolean)
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
+ * 7. add_pegs (boolean) - default_true
  */
-module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pegs/5, filet = chamfer(), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
+module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pegs/5, filet = chamfer(), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer, add_pegs = true) {
     union() {
         difference() {
             hull() {
@@ -525,7 +526,9 @@ module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pe
                 }
             }
         }
-        skadis_pegs_position(length = l+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        if (add_pegs) {
+            skadis_pegs_position(length = l+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        }
     }
 }
 
@@ -770,8 +773,9 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_p
  * 11. all_pegs (boolean)
  * 12. fullfill (boolean)
  * 13. retainer (boolean)
+ * 14. hole_depth_skew (boolean) - skew the depth of the holes to make them oblong/ellipse-like. < 1 will make them wide, > 1 will make them deep/long
 */
-module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0, bottom = true, tolerance1 = tolerance, tolerance2 = tolerance, compact = false, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
+module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0, bottom = true, tolerance1 = tolerance, tolerance2 = tolerance, compact = false, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer, hole_depth_skew=1) {
     last_diameter = (n-1)*step+d;
     filet = last_diameter+2*pw;
     skadis_bits_length = (compact) ?
@@ -779,7 +783,8 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
         (1/2)*n*(2*d+(n-1)*step)+(n+1)*pw;
     skadis_bits_width = (compact) ? 2*last_diameter+3*pw : last_diameter+2*pw;
     holder_height = (bottom) ? h+minimum_wall() : h;
-    translate([-skadis_bits_length/2, -((last_diameter+2*pw)/2+2*pw+tolerance1), 0]) {
+
+    scale([1.0, hole_depth_skew, 1.0]) translate([-skadis_bits_length/2, -((last_diameter+2*pw)/2+2*pw+tolerance1), 0]) {
         difference() {
             union () {
                 hull() {
@@ -868,7 +873,11 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
             }
         }
     }
-    skadis_plier(l = skadis_bits_length+2*tolerance1, w = skadis_bits_width+2*tolerance1, filet = filet+2*tolerance1, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
+    scale([1.0, hole_depth_skew, 1.0]) {
+        skadis_plier(l = skadis_bits_length+2*tolerance1, w = skadis_bits_width+2*tolerance1, filet = filet+2*tolerance1, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer, add_pegs=false);
+   }
+   skadis_pegs_position(length = skadis_bits_length+2*tolerance1+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+
 }
 
 // Curved hooks demo
@@ -946,4 +955,6 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //translate([0, 75, 0]) skadis_bits_serie(step = 1, compact = true);
 //translate([0, 130, 0]) skadis_bits_serie(h = 32, d = 1.2, step = 1.2, tolerance2 = 3.2, n = 9, compact = false);
 //translate([0, 190, 0]) skadis_bits_serie(h = 28, d = 2.3, step = 1.5, n = 8, facets = 6, angle = 30, bottom = false, compact = false, tolerance2 = 0.2);
-//translate([0, 260, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45);
+// translate([0, 260, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45,hole_depth_skew=0.5);
+// translate([0, 370, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45,hole_depth_skew=1.5);
+
