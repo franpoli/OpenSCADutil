@@ -99,7 +99,6 @@ module escutcheon_template(h=escutcheon_height, w=escutcheon_width, d=escutcheon
 }
 
 // Generate final estruchon piece
-//                h,                   w,                                                                                  nw,              pt, tolerance=true
 module escutcheon(h=escutcheon_height, w=escutcheon_width, d=escutcheon_hole_diameter, s=separation_between_pipes, e=edge, nw=nozzle_width, pt=printer_tolerance) {
      // Warning messsage!
      if ((is_two_pipes_escutcheon(d, s) != "true") && (s > 0)) {echo("WARNING: not enough distance between pipes, generating single pipe escutcheon");}
@@ -141,4 +140,3 @@ module escutcheon(h=escutcheon_height, w=escutcheon_width, d=escutcheon_hole_dia
 //translate([0, 50, 0]) escutcheon(s=36, e="chamfer");
 //translate([0, 90, 0]) escutcheon(h=4, w=6, d=16, s=24, e="none", nw=0.2, pt=0.2);
 //translate([0, 125, 0]) escutcheon(h=3, w=8, d=10, s=0, e="chamfer", nw=0.6, pt=0.3);
-
