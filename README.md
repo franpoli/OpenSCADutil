@@ -9,11 +9,11 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 - [Libraries](#libraries)
 	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories)
 	- [Trolley token generator](#trolley-token-generator)
+	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
 
 # Libraries
 
 ## IKEA Skådis pegboard accessories
-
 
 Customizable pegboard accessories designed for convenient 3D printing.
 
@@ -24,3 +24,9 @@ Customizable pegboard accessories designed for convenient 3D printing.
 Parametric dual tokens generator intended to be 3D printed and used in place of coins.
 
 [Project directory](trolley_token "dir") | [documentation](trolley_token/parametric_trolley_token_demo.md "doc")
+
+## Radiator escutcheon generator
+
+Parametric single pipe or double pipes escutcheon generator convenient to cover gaps around radiator pipes.
+
+[Project directory](escutcheon "dir") | [documentation](escutcheon/escutcheon_demo.md "doc")

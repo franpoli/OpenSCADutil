@@ -34,7 +34,7 @@ If you need to, you can override default parameters such as the tolerance. Examp
 
 All accessories have two parameters in common:
 
-```
+```scad
 fullfill = [true/false]
 retainer = [true/false]
 ```
@@ -43,7 +43,7 @@ Where the parameter **fullfill** let you decide if a peg should be full filled o
 
 Wider accessories may cover many holes on the pegboard. These accessories need at least two pegs in order to be attached properly. Setting the parameter **all_pegs** to *true* will generate a peg for each hole covered by the accessory.
 
-```
+```scad
 all_pegs = [true/false]
 ```
 
@@ -57,7 +57,7 @@ Takes up to 3 paramaters:
 
 Where **d** is the curved hook inner diameter.
 
-```
+```scad
 // Curved hooks demo
 skadis_curved_hook(fullfill = false);
 translate ([30, 0, 0]) skadis_curved_hook(fullfill = false);
@@ -80,7 +80,7 @@ Takes up to 4 paramaters:
 
 Where **l** is the inner length, **h** is the inner height of the squared hook.
 
-```
+```scad
 // Squared hooks demo
 translate([0, 40, 0]) skadis_squared_hook(8, 10, false, true);
 skadis_squared_hook();
@@ -100,7 +100,7 @@ Takes up to 3 paramaters:
 
 Where **l** is the straight hook inner length.
 
-```
+```scad
 // Straight hooks demo
 translate([-25, 0, 0]) skadis_straight_hook(10, fullfill = false, retainer=true);
 translate([0, 0, 0]) skadis_straight_hook(30, fullfill = false);
@@ -123,7 +123,7 @@ Takes up to 4 paramaters:
 
 Where **d** is the o-holder inner diameter.
 
-```
+```scad
 // O holders demo
 skadis_o_holder();
 translate([30, 0, 0]) skadis_o_holder(retainer = true);
@@ -144,7 +144,7 @@ Takes up to 4 paramaters:
 
 Where **d** is the u-holder inner diameter.
 
-```
+```scad
 // U holders demo
 skadis_u_holder();
 translate([35, 0, 0]) skadis_u_holder(d = 20, retainer = true);
@@ -168,7 +168,7 @@ Takes up to 6 paramaters:
 
 Where **l** is the inner length and **w** is the inner width of the plier. The set value for the **filet** rounds the inner corners of the plier.
 
-```
+```scad
 // Pliers demo
 skadis_plier();
 translate([0, 65, 0]) skadis_plier(60, 35, fullfill = false);
@@ -190,7 +190,7 @@ Takes up to 5 paramaters:
 
 Where **l** is the inner length and **w** is the inner width of the plate.
 
-```
+```scad
 // Plates demo
 skadis_plate();
 translate([0, 80, 0]) skadis_plate(90, 40, false, false, true);
@@ -210,7 +210,7 @@ Takes up to 4 paramaters:
 
 Where **d** is the round plate inner diameter.
 
-```
+```scad
 // Round plates demo
 skadis_round_plate();
 translate([0, -120, 0]) skadis_round_plate(d = 50, fullfill = false);
@@ -234,7 +234,7 @@ Takes up to 8 paramaters:
 
 Where **l** is the inner length, **w** the inner width, **h** the inner height of the box. The parameter **t** is the tolerance of the box with regards to its holder. The set value for the **filet** rounds the inner corners of the box.
 
-```
+```scad
 // Boxes demo
 skadis_box();
 translate([0, 80, 0]) skadis_box(90, 40, 30);
@@ -257,7 +257,7 @@ Takes up to 6 paramaters:
 
 Where **d** is the inner diameter, **h** is the inner height of the round box. The parameter **t** is the tolerance of the round box with regards to its holder.
 
-```
+```scad
 skadis_round_box();
 translate([0, 100, 0]) skadis_round_box(d = 50, h = 50);
 translate([0, 240, 0]) skadis_round_box(d = 90, h = 80, all_pegs = true);
@@ -280,7 +280,7 @@ Takes up to 8 parameters:
 
 Where **d** is the unique diameter to be used if defined. The parameter **d1** is the first diameter and the parameter **d2** is the second diameter. The parameter **n** is the number of units per rack. If set to true, the parameter **compact** will generate a shorter rack with units placed ontwo rows.
 
-```
+```scad
 // Racks demo
 skadis_rack(d = 20);
 translate([0, 55, 0]) skadis_rack(d = 24, all_pegs = true);
@@ -311,7 +311,7 @@ Takes up to 13 parameters:
 
 Where **h** is the inner height of the bits holder. The parameter **d** is the diameter of the smallest bit. The parameter **step** store the increment value to be added for each new bit. The parameter **n** stores the number of bits contained in the serie. The parameter **facets** stores the bumber of side of a regular polygon (e.g. use 4 a square key, 6 for a hex key). The parameter **angle** provide a way to orient our bits if they are polygons. If the parameter **bottom** is set to false a hole will be created; set to false a pocket is than generated. The **parameter1** is the tolerance allowing the container to slide easily through its support. The **parameter2** is the tolerance allowing each bit to slide easily into a pocket or through a hole.
 
-```
+```scad
 // bits serie demo
 skadis_bits_serie(step = 1, all_pegs = true);
 translate([0, -60, 0]) skadis_bits_serie(d = 8, facets = 6, n = 10, h = 20, compact = true);

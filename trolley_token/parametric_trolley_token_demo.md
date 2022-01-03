@@ -16,7 +16,7 @@ The module `trolley_token()` takes up to 7 parameters:
 
 ## Demo
 
-```
+```scad
 translate([0, 15, 0])
     trolley_token(string1 = "$$", string2 = "€€");
 translate([0, 45, 0])
