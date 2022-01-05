@@ -10,9 +10,9 @@
  */
 
 // Usage
-// estanchon(h = height, d = diameter, type_of_angle = filet);
+// estanchon(h = height, d = diameter, e = decoration);
 // estanchon(h = height, d = diameter, s = separation, e = decoration);
-// estanchon(h = height, d = diameter, s = separation, e = decoration, nw=nozzle_width, pt=printer_tolerance);
+// estanchon(h = height, d = diameter, s = separation, e = decoration, nw = nozzle_width, pt = printer_tolerance);
 
 // Variables default values
 escutcheon_height = 6;
