@@ -62,6 +62,7 @@ module escutcheon_attachment(h=escutcheon_height, w=escutcheon_width, nw=nozzle_
      }
 }
 
+// Positions attachments where they might be needed
 module place_escutcheon_attachments(w=escutcheon_width, d=escutcheon_hole_diameter, s=separation_between_pipes) {
      if (is_two_pipes_escutcheon(d, s) == "false") {
           for (i = [0:1:1]) mirror([i*1, 0, 0]) translate([(d+w)/2, 0, 0]) children();
