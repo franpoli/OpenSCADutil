@@ -1,5 +1,5 @@
 /*
- * radiator_pipe_escutcheon.scad - split ring escutcheons to cover jagged holes or open spaces around radiator pipes.
+ * escutcheon.scad - split ring escutcheons to cover jagged holes or open spaces around radiator pipes.
  * by François Polito
  * created 2021-12-20
  * GNU General Public License v3.0
