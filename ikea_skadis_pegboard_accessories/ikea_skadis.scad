@@ -19,9 +19,9 @@ peg_default_thickness = 4.6;
 distance_between_pegs = 40;
 
 // pegs options
-all_pegs = false; // all_pegs [false/true] defines whether or not all pegs should be generated
-fullfill = true; // fullfill [false/true] defines wether ot not a peg should be full filled
-retainer = false; // retainer [false/true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
+all_pegs = false; // [false,true] defines whether or not all pegs should be generated
+fullfill = true; // [false,true] defines wether ot not a peg should be full filled
+retainer = false; // [false,true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
 
 // Resolution parameters
 $fa=2; // default minimum facet angle

@@ -17,8 +17,8 @@ escutcheon_height = 6;
 escutcheon_width = 12;
 escutcheon_hole_diameter = 18;
 separation_between_pipes = 40; // from pipe center to pipe center
-edge = "filet"; // ["none"|"filet"|"chamfer"]
-parts = "both"; // ["both"|"male"|"female"]
+edge = "filet"; // ["none","filet","chamfer"]
+parts = "both"; // ["both","male","female"]
 
 // FDM 3D printer parameters
 nozzle_width = 0.4; 
