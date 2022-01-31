@@ -10,6 +10,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories)
 	- [Trolley token generator](#trolley-token-generator)
 	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
+    - [Cable ties generator](#cable-ties-generator)
 
 # Libraries
 
@@ -30,3 +31,8 @@ Parametric dual tokens generator intended to be 3D printed and used in place of 
 Parametric single pipe or double pipes escutcheon generator convenient to cover gaps around radiator pipes.
 
 [Project directory](escutcheon "dir") | [documentation](escutcheon/escutcheon_demo.md "doc")
+
+## Cable ties generator
+
+Generate simple, quick and easy to print TPU cable ties.
+[Project directory](cabletie "dir") | [documentation](cabletie/cabletie.md "doc")
