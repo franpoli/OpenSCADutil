@@ -1,6 +1,6 @@
 # Cable ties generator
 
-The file cabletie.scad can be used as an OpenSCAD library to generate cable ties of different sizes.
+The file [cabletie.scad](cabletie.scad) can be used as an OpenSCAD library to generate cable ties of different sizes.
 
 Once tight, the cable tie get locked. It can be released by a slight hand pressure.
 
