@@ -116,7 +116,7 @@ module cabletie(w=cabletie_width,
      difference() {
           // Positive shapes
           linear_extrude(cabletie_thickness(t, cabletie_maximum_thickness(w, nw))) {
-               offset(r = nozzle_width) {
+               offset(r = nw) {
                     union() {
                          cabletie_links();
                          hull() {
@@ -134,7 +134,7 @@ module cabletie(w=cabletie_width,
                     }
                }
                linear_extrude(cabletie_thickness(t, cabletie_maximum_thickness(w, nw))) {
-                    offset(r = nozzle_width) {
+                    offset(r = nw) {
                          cabletie_lock_hole();
                     }
                }
@@ -158,6 +158,9 @@ module cabletie(w=cabletie_width,
 //translate([0, -150, 0]) cabletie(w=10, d=60, t=1.6, l="Label");
 //translate([0, -170, 0]) cabletie(w=10, d=65, t=1.6, l="Cabletie");
 //translate([0, -190, 0]) cabletie(w=10, d=70, t=1.6, l="OpenSCAD");
+
+// All parameters demo
+//cabletie(w=16, d=80, t=1.8, l="Demo", nw=0.6, pt=0.3);
 
 // Customizer
 cabletie();
