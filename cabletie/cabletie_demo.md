@@ -6,7 +6,7 @@ Once tight, the cable tie get locked. It can be released by a slight hand pressu
 
 ## Usage
 
-The module `cabletie()` takes up to 5 parameters:
+The module `cabletie()` takes up to 6 parameters:
 
 1. cabletie_width (w) = [numerical];
 2. cabletie_wrapping_diameter (d) = [numerical];
