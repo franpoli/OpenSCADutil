@@ -5,7 +5,7 @@
 // Variables default values
 cabletie_width = 9;
 cabletie_wrapping_diameter = 40;
-cabletie_minimum_thickness = 1.2; // would be overrided if to large
+cabletie_minimum_thickness = 1.2; // would be overrided if too large
 label="";
 label_font="Liberation Sans:style=Bold";
 
