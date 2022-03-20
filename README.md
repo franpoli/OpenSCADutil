@@ -32,7 +32,7 @@ Parametric single pipe or double pipes escutcheon generator convenient to cover 
 
 [Project directory](escutcheon "dir") | [documentation](escutcheon/escutcheon_demo.md "doc")
 
-## Cable ties generator
+## Identification cable ties generator
 
 Generate simple, quick and easy to print TPU cable ties.
 
