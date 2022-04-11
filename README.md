@@ -10,7 +10,8 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories)
 	- [Trolley token generator](#trolley-token-generator)
 	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
-    - [Cable ties generator](#cable-ties-generator)
+    - [Identification cable ties generator](#identification-cable-ties-generator)
+    - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
 
 # Libraries
 
@@ -37,3 +38,9 @@ Parametric single pipe or double pipes escutcheon generator convenient to cover 
 Generate simple, quick and easy to print TPU cable ties.
 
 [Project directory](cabletie "dir") | [documentation](cabletie/cabletie_demo.md "doc")
+
+## Knurled knobs generator for bolts and nuts
+
+Generate knurled knobs
+
+[Project directory](knurled_knob "dir") | [documentation](knurled_knob/knurled_knob_demo.md "doc")

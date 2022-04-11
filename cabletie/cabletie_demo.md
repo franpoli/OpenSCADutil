@@ -48,7 +48,7 @@ You may also use the OpenSCAD customizer utility to conveniently chenge the para
 
 ### Cable ties without labels
 
-![Cable ties without labels](images/cable_ties_photo_without_labels.jpg "Cable ties without labelsn")
+![Cable ties without labels](images/cable_ties_photo_without_labels.jpg "Cable ties without labels")
 
 ### Cable ties with labels
 
