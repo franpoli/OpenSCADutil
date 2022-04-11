@@ -50,20 +50,20 @@ layer_height = 0.2;
 $fa=2; // default minimum facet angle
 $fs=0.2; // default minimum facet size
 
-module knurled_knob(h=knob_preferred_height,
-                    d=knob_preferred_diameter,
-                    cd=knob_preferred_contact_diameter,
-                    ks=knob_preferred_knurling_step,
-                    kd=knurling_depth,
-                    bnl=bolt_nominal_length,
-                    bgl=bolt_grip_length,
-                    bhh=bolt_head_height,
-                    bhw=bolt_head_width, 
-                    btd=bolt_thread_diameter,
-                    co=cover,
-                    pt=printer_tolerance,
-                    nw=nozzle_width,
-                    lh=layer_height) {
+module knurled_knob(h = knob_preferred_height,
+                    d = knob_preferred_diameter,
+                    cd = knob_preferred_contact_diameter,
+                    ks = knob_preferred_knurling_step,
+                    kd = knurling_depth,
+                    bnl = bolt_nominal_length,
+                    bgl = bolt_grip_length,
+                    bhh = bolt_head_height,
+                    bhw = bolt_head_width, 
+                    btd = bolt_thread_diameter,
+                    co = cover,
+                    pt = printer_tolerance,
+                    nw = nozzle_width,
+                    lh = layer_height) {
 
      function minimum_space() // Spacer value 
           = 3*nw;     
