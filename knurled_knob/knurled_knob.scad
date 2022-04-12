@@ -98,7 +98,7 @@ module knurled_knob(h = knob_preferred_height,
      function twist(n)
           = 360/n*knob_heigth()/knob_diameter();
 
-     // Generates a paired list of step values associated and corresponding arc circle lengths
+     // Generates a paired list of step values and circle arc lengths
      function pair_steps_and_lengths()
           = [ for (i = [1 : 360]) if (90 % i == 0) [90/i, knob_diameter()*3.14/i/4] ];
 

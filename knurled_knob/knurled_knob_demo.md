@@ -49,7 +49,7 @@ knurled_knob(h=24, d=38, cd=24, ks=32, kd=15, bnl=25, bgl=7, bhh=4.2, bhw=10, bt
 
 ## Using OpenSCAD customizer
 
-As there are several parameters to generate a knurled knob, it might be more conveninent to use the OpenSAD customizer to parametrize and visualize the effects of each parameter.
+As there are several parameters to generate a knurled knob, it might be more conveninent to use the OpenSCAD customizer to parametrize and to visualize the effects of each parameter.
 
 ![Knurled knob customizer demo](images/knurled_knob_customizer_animation.gif "Knurled knob customizer demo")
 
