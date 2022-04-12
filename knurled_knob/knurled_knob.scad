@@ -177,7 +177,7 @@ module knurled_knob(h = knob_preferred_height,
                "difference from preference",
                knob_diameter()*3.14/(get_ideal_step(pair_steps_and_lengths(), ks))-ks);
 
-          echo("BOLT THREAD LENGTH", bolt_nominal_length-grip_length());
+          echo("BOLT REMAINING THREAD LENGTH", bolt_nominal_length-grip_length());
      };
 
      // Main
