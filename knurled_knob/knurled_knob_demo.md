@@ -24,6 +24,8 @@ The module `knurled_knob()` takes up to 13 parameters:
 A knob builts around bolt dimensions. Additionally you provide the desired dimensions for the knob. The script will accomodate these dimensions as far as possible.
 The script will output to the console the final knob dimensions.
 
+![Knurled knobs dimensions](images/knurled_knob_dimensions.png "Knurled knobs dimensions")
+
 ## Demo
 
 ```sacd
@@ -47,7 +49,7 @@ knurled_knob(h=24, d=38, cd=24, ks=32, kd=15, bnl=25, bgl=7, bhh=4.2, bhw=10, bt
 
 ## Using OpenSCAD customizer
 
-As there are several parameters to generate knurled knob, it might be more conveninet to use the OpenSAD customizer to parametrize and visualize the effects of the parameters.
+As there are several parameters to generate a knurled knob, it might be more conveninent to use the OpenSAD customizer to parametrize and visualize the effects of each parameter.
 
 ![Knurled knob customizer demo](images/knurled_knob_customizer_animation.gif "Knurled knob customizer demo")
 
