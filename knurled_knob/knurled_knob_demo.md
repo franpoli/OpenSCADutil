@@ -4,7 +4,7 @@ The file [knurled_knob.scad](knurled_knob.scad) can be used to generate knurled 
 
 ## Usage
 
-The module `knurled_knob()` takes up to 13 parameters:
+The module `knurled_knob()` takes up to 14 parameters:
 
  1. knob_preferred_height (h)
  2. knob_preferred_diameter (d)
