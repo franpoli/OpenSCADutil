@@ -16,10 +16,10 @@ The module `knurled_knob()` takes up to 13 parameters:
  8. bolt_head_width (bhw)
  9. bolt_thread_diameter (btd)
 10. knurling_depth (kd)
-10. cover (co)
-11. printer_tolerance (pt)
-12. nozzle_width (nw)
-13. layer_height (lh)
+11. cover (co)
+12. printer_tolerance (pt)
+13. nozzle_width (nw)
+14. layer_height (lh)
 
 A knob builts around bolt dimensions. Additionally you provide the desired dimensions for the knob. The script will accomodate these dimensions as far as possible.
 The script will output to the console the final knob dimensions.
