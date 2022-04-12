@@ -94,7 +94,7 @@ module knurled_knob(h = knob_preferred_height,
      function bevel()
           = min(knob_heigth(), (knob_diameter()-head_diameter())/2) * kd/100;
 
-     // Nth turn of a cylinder of the same height as its knob_preferred_diameter
+     // Nth turn of a cylinder of the same height as its diameter
      function twist(n)
           = 360/n*knob_heigth()/knob_diameter();
 
