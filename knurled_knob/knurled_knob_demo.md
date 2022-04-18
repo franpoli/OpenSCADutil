@@ -30,7 +30,6 @@ The script will output to the console the final knob dimensions.
 
 ```sacd
 // File knurled_knob_demo.scad
-
 use <knurled_knob.scad>;
 
 // Instantiate a knob with the default parameters
