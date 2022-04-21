@@ -19,9 +19,10 @@ knob_preferred_contact_diameter = 13;
 // Preferred knurling step (will be overridden if too small or too large)
 knob_preferred_knurling_step = 2.6;
 
-// Preferred bolt grip length (will be overridden if too small or too large)
+// Used to compute and the final thread length (it does not affect the knob dimension) 
 bolt_nominal_length = 20.32;
 
+// Preferred bolt grip length (will be overridden if too small or too large)
 bolt_grip_length = 4;
 
 bolt_head_height = 3.72;
