@@ -152,12 +152,12 @@ module escutcheon(
 }
 
 // DEMO
-translate([0, -60, 0]) escutcheon(p="female");
-translate([0, -50, 0]) escutcheon(p="male");
-escutcheon(6, 12, 18, 40);
-translate([0, 48, 0]) escutcheon(s=36, e="chamfer");
-translate([0, 90, 0]) escutcheon(h=4, w=6, d=16, s=24, e="none", nw=0.2, pt=0.2);
-translate([0, 125, 0]) escutcheon(h=3, w=8, d=10, s=0, e="chamfer", nw=0.6, pt=0.3);
+//translate([0, -60, 0]) escutcheon(p="female");
+//translate([0, -50, 0]) escutcheon(p="male");
+//escutcheon(6, 12, 18, 40);
+//translate([0, 48, 0]) escutcheon(s=36, e="chamfer");
+//translate([0, 90, 0]) escutcheon(h=4, w=6, d=16, s=24, e="none", nw=0.2, pt=0.2);
+//translate([0, 125, 0]) escutcheon(h=3, w=8, d=10, s=0, e="chamfer", nw=0.6, pt=0.3);
 
 // CUSTOMIZER
-//escutcheon();
+escutcheon();
