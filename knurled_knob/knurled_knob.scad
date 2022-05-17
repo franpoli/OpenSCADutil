@@ -9,40 +9,27 @@
 
 // Preferred knob heigth (will be overridden if too small)
 knob_preferred_height = 12;
-
 // Preferred knob diameter (will be overridden if too small)
 knob_preferred_diameter = 16;
-
 // Preferred knob contact diameter (will be overridden if too small or tool large)
 knob_preferred_contact_diameter = 13;
-
 // Preferred knurling step (will be overridden if too small or too large)
 knob_preferred_knurling_step = 2.6;
-
 // Used to compute and output the remaining thread length (it does not affect the knob dimensions) 
 bolt_nominal_length = 20.32;
-
 // Preferred bolt grip length (will be overridden if too small or too large)
 bolt_grip_length = 4;
-
 bolt_head_height = 3.72;
-
 bolt_head_width = 7.89;
-
 bolt_thread_diameter = 4.78;
-
 // Knurling depth in percent of the available space
 knurling_depth = 50; // [1:100]
-
 // Cover hidding the bolt head
 cover = "L"; // [N:None, S:Small, M:Medium, L:Large]
-
 // Printer tolerance
 printer_tolerance = 0.3;
-
 // Printer nozzle diameter
 nozzle_width = 0.4;
-
 // Printer layer height
 layer_height = 0.2;
 
