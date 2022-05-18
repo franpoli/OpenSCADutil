@@ -12,7 +12,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
     - [Identification cable ties generator](#identification-cable-ties-generator)
     - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
-    - [Kita-Boshi](#Kita-Boshi-mechanical-pencil-barrel-generator)
+    - [Kita-Boshi mechanical pencil barrel generator](#Kita-Boshi-mechanical-pencil-barrel-generator)
 
 # Libraries
 
