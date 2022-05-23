@@ -1,26 +1,22 @@
 /*
- * kitaboshi.scad generates barrel for the Kita-Boshi 2mm mechanical pencil
- * GNU General Public License v3.0
- * Permissions of this strong copyleft license are conditioned on making available complete source
- * code of licensed works and modifications, which include larger works using a licensed work, under
- * the same license. Copyright and license notices must be preserved. Contributors provide an express
- * grant of patent rights.
- */
+kitaboshi.scad generates barrel for the Kita-Boshi 2mm mechanical pencil
+GNU General Public License v3.0
+Permissions of this strong copyleft license are conditioned on making available complete source
+code of licensed works and modifications, which include larger works using a licensed work, under
+the same license. Copyright and license notices must be preserved. Contributors provide an express
+grant of patent rights.
+*/
 
 // Pen shape
-cylindric = "N"; // [N:No, Y:Yes]
+cylindric = false;
 // Pen grip
-grip = "N"; // [N:No, Y:Yes]
+grip = false;
 
 // Printer tolerance
 printer_tolerance = 0.2;
-// Printer nozzle diameter
-nozzle_width = 0.4;
-// Printer layer height
-layer_height = 0.2;
 
 /* [Hidden] */
-// Main barrel dimensions
+// Default barrel dimensions
 barrel_length = 132.5;
 barrel_diameter = 8.7;
 lead_chamber_diameter = 4.5;
@@ -33,13 +29,11 @@ $fs=0.2; // default minimum facet size
 
 module kitaboshi( cy = cylindric,
                   gr = grip,
-                  pt = printer_tolerance,
-                  nw = nozzle_width,
-                  lh = layer_height) {
+                  pt = printer_tolerance ) {
 
      // Barrel
      module barrel() {
-          sides = ((cy == "Y") || (cy == "YES")) ? 180 : 6;
+          sides = cy ? 180 : 6;
           difference() {
 
                // External shape
@@ -70,7 +64,7 @@ module kitaboshi( cy = cylindric,
      // Main
      difference() {
           color("Goldenrod", 1) barrel();
-          if ((gr == "Y") || (gr == "YES")) {
+          if (gr) {
                color("YellowGreen", 1) grip();
           }
      }
