@@ -12,7 +12,8 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
     - [Identification cable ties generator](#identification-cable-ties-generator)
     - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
-    - [Kita-Boshi mechanical pencil barrel generator](#Kita-Boshi-mechanical-pencil-barrel-generator)
+    - [Kita-Boshi mechanical pencil barrel generator](#kita-boshi-mechanical-pencil-barrel-generator)
+    - [Thumb drive housing generator](Thumb-drive-housing-generator)
 
 # Libraries
 
@@ -51,3 +52,9 @@ Generate knurled knobs
 Generate a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
 
 [Project directory](kitaboshi "dir")
+
+## Thumb drive housing generator
+
+Generate thumd/USB drive cases
+
+[Project directory](thumb_drive_housing "dir")
