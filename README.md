@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
     - [Identification cable ties generator](#identification-cable-ties-generator)
     - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
     - [Kita-Boshi mechanical pencil barrel generator](#kita-boshi-mechanical-pencil-barrel-generator)
-    - [Thumb drive housing generator](Thumb-drive-housing-generator)
+    - [Thumb drive housing generator](#thumb-drive-housing-generator)
 
 # Libraries
 
