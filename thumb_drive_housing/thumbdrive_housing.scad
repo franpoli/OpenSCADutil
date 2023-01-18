@@ -22,7 +22,6 @@ pcb_width = 14.0;
 
 printer_tolerance = 0.2;
 nozzle_width = 0.4;
-layer_height = 0.2;
 
 /* [Hidden] */
 // Resolution
