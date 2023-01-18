@@ -22,13 +22,14 @@ pcb_width = 14.0;
 
 printer_tolerance = 0.2;
 nozzle_width = 0.4;
+layer_height = 0.2;
 
 /* [Hidden] */
 // Resolution
 $fa=2; // default minimum facet angle
 $fs=0.2; // default minimum facet size
 
-// oversize for preview rendering
+// oversize for preview rendering of negative shapes
 oversize = 0.1;
 
 module thumbdrive_housing( l = label,
@@ -42,27 +43,27 @@ module thumbdrive_housing( l = label,
                            tol = printer_tolerance,
                            nw = nozzle_width ) {
 
-  function key_bow_size()
+  function key_bow_hole_size()
     = ((kb == "S") || (kb == "Small")) ? pw/3
     : ((kb == "M") || (kb == "Medium")) ? pw/2
-    : ((kb == "L") || (kb == "Medium")) ? 3*pw/4
-    : 0; // None default value
-
+    : ((kb == "L") || (kb == "Large")) ? 3*pw/4
+    : 0; // Default value 0 for N, None or anything else
+  
   function chamfer() = ucl/4;
-
+  
   module add_key_bow(chamfer = 0) {
     if ((kb != "N") && (kb != "None")) {
-      translate([pl/2+tol+(key_bow_size()+ucl), 0, 0]) {
-        circle(r=key_bow_size()+ucl-chamfer);
+      translate([pl/2+tol+(key_bow_hole_size()+ucl), 0, 0]) {
+        circle(r=key_bow_hole_size()+ucl-chamfer);
       }
     }
   }
-
+  
   module substract_key_bow_hole() {
     if ((kb != "N") && (kb != "None")) {
       linear_extrude(height = uh+2*tol+ucl+oversize, center = true, convexity = 10, twist = 0) {
-        translate([pl/2+tol+(key_bow_size()+ucl), 0, 0]) {
-          circle(r=key_bow_size());
+        translate([pl/2+tol+(key_bow_hole_size()+ucl), 0, 0]) {
+          circle(r=key_bow_hole_size());
         }
       }
     }
@@ -73,29 +74,34 @@ module thumbdrive_housing( l = label,
       square(size = [ul, uw], center = true);
     }
   }
-
+  
   module pcb_area() {
     square(size = [pl, pw], center = true);
+  }
+  
+  module extrude(size_h) {
+    linear_extrude(height = size_h, center = true, convexity = 10, twist = 0) {
+      children();
+    }
+  }
+
+  module thumbdrive_shape(size_h, size_o, size_x, size_y, size_r) {
+    extrude(size_h) {
+      offset(r = size_o) {
+        square(size = [size_x, size_y], center = true);
+      }
+      add_key_bow(size_r);
+    }
   }
 
   module housing_cover() {
     translate([0, 0, -uh/2-chamfer()-tol]) {
       hull() {
         translate([0, 0, chamfer()/2]) {
-          linear_extrude(height = chamfer(), center = true, convexity = 10, twist = 0) {
-            offset(r = ucl) {
-              square(size = [pl+tol, pw+tol], center = true);
-            }
-            add_key_bow();
-          }
+          thumbdrive_shape(chamfer(), ucl, pl+tol, pw+tol, 0);
         }
         translate([0, 0, -chamfer()/2]) {
-          linear_extrude(height = chamfer(), center = true, convexity = 10, twist = 0) {
-            offset(r = ucl-chamfer()) {
-              square(size = [pl+tol, pw+tol], center = true);
-            }
-            add_key_bow(chamfer());
-          }
+          thumbdrive_shape(chamfer(), ucl-chamfer(), pl+tol, pw+tol, chamfer());
         }
       }
     }
@@ -104,7 +110,7 @@ module thumbdrive_housing( l = label,
   module label(l) {
     mirror([1, 0, 0]) {
       translate([0, 0, -5*chamfer()-tol/4-oversize/2]) {
-        linear_extrude(height = chamfer()+oversize, center = true, convexity = 10, twist = 0) {
+        extrude(chamfer()) {
           resize([0.8*pl, 0.6*pw, 0], auto=true) {
             text(l, valign = "center", halign = "center", font = label_font);
           }
@@ -114,26 +120,22 @@ module thumbdrive_housing( l = label,
   }
   
   module frame() {
-    linear_extrude(height = uh+2*tol, center = true, convexity = 10, twist = 0) {
-      difference() {
-        hull() {
-          offset(r = ucl) {
-            square(size = [pl+tol, pw+tol], center = true);
-          }
-          add_key_bow();
-        }
+    difference() {
+      hull() thumbdrive_shape(uh+2*tol, ucl, pl+tol, pw+tol, 0);
+      extrude(uh+2*tol+oversize) {
         offset(r = tol) pcb_area();
         offset(r = tol) usb_area();
       }
     }
   }
-
+  
   module print_settings() {
     perimeters = floor(ucl/nw/2);
     echo("SUGGESTED FDM PRINTER SETTINGS:");
     echo(nozzel_width=nw, number_of_perimeters=perimeters);
   }
-
+  
+  // Main
   module thumdrive() {
     // Distance between cover and PCB holder
     dist = 5;
@@ -148,24 +150,23 @@ module thumbdrive_housing( l = label,
     }
     
     // Housing cover
-    //translate([0, (pl+2*ucl+tol)+key_bow_size()/2, 0]) {
-    translate([0, (pw > 2*key_bow_size()) ? pw+2*(ucl+tol) + dist : 2*key_bow_size()+2*(ucl+tol) + dist , 0]) {
+    translate([0, (pw > 2*key_bow_hole_size()) ? pw+2*(ucl+tol) + dist : 2*key_bow_hole_size()+2*(ucl+tol) + dist, 0]) {
       difference() {
         housing_cover();
         substract_key_bow_hole();
       }
     }
-
+    
     // Nude USB drive
     if ($preview) {
       color("Green", 0.5) {
-        linear_extrude(height = uh, center = true, convexity = 10, twist = 0) {
+        extrude(uh) {
           pcb_area();
           usb_area();
         }
       }
     }
-
+    
     // Print suggested printer settings */
     print_settings();
   }
