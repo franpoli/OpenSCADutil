@@ -10,7 +10,8 @@ grant of patent rights.
 label="";
 label_font="Liberation Sans:style=Bold";
 
-key_bow = "N"; //[N:None, S:Small, M:Medium, L:Large]
+key_bow = "N"; //[N:None, T:Tiny, S:Small, M:Medium, L:Large]
+interlocking = false; //[true, false]
 
 usb_covered_length = 2.8;
 usb_length = 14.8;
@@ -22,6 +23,7 @@ pcb_width = 14.0;
 
 printer_tolerance = 0.2;
 nozzle_width = 0.4;
+leyer_height = 0.2;
 
 /* [Hidden] */
 // Resolution
@@ -33,6 +35,7 @@ oversize = 0.1;
 
 module thumbdrive_housing( l = label,
                            kb = key_bow,
+                           il = interlocking,
                            uw = usb_width,
                            ul = usb_length,
                            uh = usb_height,
@@ -40,7 +43,8 @@ module thumbdrive_housing( l = label,
                            pl = pcb_length,
                            ucl = usb_covered_length,
                            tol = printer_tolerance,
-                           nw = nozzle_width ) {
+                           nw = nozzle_width,
+                           lh = leyer_height ) {
 
   function key_bow_hole_size()
     = ((kb == "S") || (kb == "Small")) ? pw/3
@@ -150,9 +154,19 @@ module thumbdrive_housing( l = label,
     
     // Housing cover
     translate([0, (pw > 2*key_bow_hole_size()) ? pw+2*(ucl+tol) + dist : 2*key_bow_hole_size()+2*(ucl+tol) + dist, 0]) {
-      difference() {
-        housing_cover();
-        substract_key_bow_hole();
+      union() {
+        difference() {
+          housing_cover();
+          substract_key_bow_hole();
+        }
+        if (il) {
+          translate([0, 0, -uh/2]) {
+            extrude(2*lh) difference() {
+              pcb_area();
+              offset(r = -2*nw) pcb_area();
+            }
+          }
+        }
       }
     }
     
