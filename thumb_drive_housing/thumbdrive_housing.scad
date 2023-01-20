@@ -23,7 +23,7 @@ pcb_width = 14.0;
 
 printer_tolerance = 0.2;
 nozzle_width = 0.4;
-leyer_height = 0.2;
+layer_height = 0.2;
 
 /* [Hidden] */
 // Resolution
@@ -44,7 +44,7 @@ module thumbdrive_housing( l = label,
                            ucl = usb_covered_length,
                            tol = printer_tolerance,
                            nw = nozzle_width,
-                           lh = leyer_height ) {
+                           lh = layer_height ) {
 
   function key_bow_hole_size()
     = ((kb == "S") || (kb == "Small")) ? pw/3
@@ -135,7 +135,7 @@ module thumbdrive_housing( l = label,
   module print_settings() {
     perimeters = floor(ucl/nw/2);
     echo("SUGGESTED FDM PRINTER SETTINGS:");
-    echo(nozzel_width=nw, number_of_perimeters=perimeters);
+    echo(nozzel_width=nw, layer_height=lh, number_of_perimeters=perimeters);
   }
   
   // Main
