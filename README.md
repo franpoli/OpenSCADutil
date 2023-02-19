@@ -14,6 +14,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
     - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
     - [Kita-Boshi mechanical pencil barrel generator](#kita-boshi-mechanical-pencil-barrel-generator)
     - [Thumb drive housing generator](#thumb-drive-housing-generator)
+    - [Hakko FX-888 soldering sponge template](#hakko-fx-888-soldering-sponge-template)
 
 # Libraries
 
@@ -58,3 +59,9 @@ Generate a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
 Generate thumd/USB drive cases
 
 [Project directory](thumb_drive_housing "dir")
+
+## Hakko FX-888 soldering sponge template
+
+Generate a cutting soldering sponge template for the Hakko FX-888/FX-888D
+
+[Project directory](hakko_fx_888_soldering_sponge_template "dir")
