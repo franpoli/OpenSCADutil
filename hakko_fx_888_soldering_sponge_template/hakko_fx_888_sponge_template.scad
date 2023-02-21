@@ -59,7 +59,7 @@ module fx888_sponge_template( sf = scaling_factor,
   module scalling_factor_label() {
     translate([0, 0, ceil(nl/2)*lh/2]) {
       linear_extrude(height = ceil(nl/2)*lh, center = true, convexity = 10, twist = 0) {
-        rotate([0, 0, 180]) resize([0, filet], auto=true) {
+        scale([sf/100, sf/100, 0]) rotate([0, 0, 180]) resize([0, filet], auto=true) {
           text(str(sf, "%"), valign = "center", halign = "center", font = label_font);
         }
       }
@@ -67,9 +67,9 @@ module fx888_sponge_template( sf = scaling_factor,
   }
 
   // Main
-  scale([sf/100, sf/100, 0]) difference() {
+  difference() {
     linear_extrude(height = nl*lh, center = true, convexity = 10, twist = 0) {
-      difference() {
+     scale([sf/100, sf/100, 0])  difference() {
         sponge_surface();
         sponge_holes();
       }
