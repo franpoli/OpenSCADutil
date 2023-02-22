@@ -58,7 +58,7 @@ module fx888_sponge_template( sf = scaling_factor,
 
   module scalling_factor_label() {
     preview_offset = 0.1;
-    translate([0, 0, ceil(nl/2)*lh/2+preview_offset]) {
+    translate([0, 0, (ceil(nl/2)*lh+preview_offset)/2]) {
       linear_extrude(height = ceil(nl/2)*lh+preview_offset, center = true, convexity = 10, twist = 0) {
         scale([sf/100, sf/100, 0]) rotate([0, 0, 180]) resize([0, filet], auto=true) {
           text(str(sf, "%"), valign = "center", halign = "center", font = label_font);

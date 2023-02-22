@@ -1,12 +1,12 @@
 /*
- * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
- * by François Polito
- * created 2020-07-17, updated 2020-10-03
- * GNU General Public License v3.0
- * Permissions of this strong copyleft license are conditioned on making available complete source
- * code of licensed works and modifications, which include larger works using a licensed work, under
- * the same license. Copyright and license notices must be preserved. Contributors provide an express
- * grant of patent rights.
+ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
+
+created 2020-07-17, updated 2020-10-03
+GNU General Public License v3.0
+Permissions of this strong copyleft license are conditioned on making available complete source
+code of licensed works and modifications, which include larger works using a licensed work, under
+the same license. Copyright and license notices must be preserved. Contributors provide an express
+grant of patent rights.
  */
 
 // 3D printer parameters
