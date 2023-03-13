@@ -398,7 +398,7 @@ module milka_radius_gauge( rstep = radius_step,
     echo("Radius step", str(rstep));
     echo("-----------------------------------------");
     echo("PRINTER SETTINGS:");
-    echo("Layer eight", str(plh));
+    echo("Layer height", str(plh));
     echo("Printer tolerance", str(pt));
     echo("-----------------------------------------");
     echo("HARDWARE");

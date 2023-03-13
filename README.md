@@ -15,6 +15,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
     - [Kita-Boshi mechanical pencil barrel generator](#kita-boshi-mechanical-pencil-barrel-generator)
     - [Thumb drive housing generator](#thumb-drive-housing-generator)
     - [Hakko FX-888 soldering sponge template](#hakko-fx-888-soldering-sponge-template)
+    - [Milka's Radius Gauge generator](#milkas-radius-gauge-generator)
 
 # Libraries
 
@@ -44,24 +45,30 @@ Generate simple, quick and easy to print TPU cable ties.
 
 ## Knurled knobs generator for bolts and nuts
 
-Generate knurled knobs
+Generates knurled knobs
 
 [Project directory](knurled_knob "dir") | [documentation](knurled_knob/knurled_knob_demo.md "doc")
 
 ## Kita-Boshi mechanical pencil barrel generator
 
-Generate a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
+Generates a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
 
 [Project directory](kitaboshi "dir")
 
 ## Thumb drive housing generator
 
-Generate thumd/USB drive cases
+Generates thumd/USB drive cases
 
 [Project directory](thumb_drive_housing "dir")
 
 ## Hakko FX-888 soldering sponge template
 
-Generate a cutting soldering sponge template for the Hakko FX-888/FX-888D
+Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D
 
 [Project directory](hakko_fx_888_soldering_sponge_template "dir")
+
+## Milka's Radius Gauge generator
+
+Generates radius gauges
+
+[Project directory](milka_s_radius_gauge "dir")
