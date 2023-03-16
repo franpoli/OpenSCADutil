@@ -390,7 +390,7 @@ module milka_radius_gauge( rstep = radius_step,
   }
 
   // Returns information about the generates models
-  module info() {
+  module gauge_information() {
     echo("*****************************************");
     echo("GAUGE DETAILS:");
     echo("Lowest radius", str(minir));
@@ -410,7 +410,6 @@ module milka_radius_gauge( rstep = radius_step,
 
   // Generates parts
   module render_parts() {
-
     if (parts == "All" || parts == "Inward_radius_gauges") {
       color("Gold", 1.0) gauges(inward_radius = true);
     } else if ($preview) {
@@ -428,11 +427,11 @@ module milka_radius_gauge( rstep = radius_step,
     } else if ($preview) {
       color("Olive", 0.5) covers();
     }
-    info();
   }
 
   // Main
   render_parts();
+  gauge_information();
 }
 
 /* Customizer instance */

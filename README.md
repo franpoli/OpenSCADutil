@@ -57,18 +57,18 @@ Generates a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
 
 ## Thumb drive housing generator
 
-Generates thumd/USB drive cases
+Generates thumd/USB drive cases 
 
 [Project directory](thumb_drive_housing "dir")
 
 ## Hakko FX-888 soldering sponge template
 
-Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D
+Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D,
 
 [Project directory](hakko_fx_888_soldering_sponge_template "dir")
 
 ## Milka's Radius Gauge generator
 
-Generates radius gauges
+Generates inward/outward radius gauges.
 
 [Project directory](milka_s_radius_gauge "dir")
