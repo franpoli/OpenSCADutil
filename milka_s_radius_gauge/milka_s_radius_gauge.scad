@@ -37,6 +37,9 @@ cover_cutting_circle_y_position = 25;
 // Constraint values
 minimum_target_thickness = 0.8;
 
+// Offset for negative shape to solve some rendering issues;
+cutting_offset = 0.01;
+
 // screw and bolts dimensions table where:
 FHD = 0; // Flat head diameter
 SHD = 1; // Socket head diameter
@@ -50,9 +53,6 @@ TD  = 5; // Thread diameter
 dimensions = [ [  6.72,  5.68,  3.00, 2.40, 5.50, 3.0 ],   // M3=0
                [  8.96,  7.22,  4.00, 3.20, 7.00, 4.0 ],   // M4=1
                [ 11.20,  8.72,  5.00, 4.00, 8.00, 5.0 ] ]; // M5=2
-
-//echo("M", dimensions);
-//echo("M3:BH", dimensions[M3][BH]);
 
 // Default redering resolution
 $fa=1; // default minimum facet angle
@@ -219,7 +219,7 @@ module milka_radius_gauge( rstep = radius_step,
   // Generates top cover label
   module cover_label() {
     cover_label = (custom_cover_label != "") ? custom_cover_label : str("Radius ", minir, ":", rstep, ":", highest_radius);
-    translate([0, 0, minimum_thickness/(-2)]) rotate([0, 0, -90]) label(minimum_thickness, 0, 6, cover_label, 0);
+    translate([0, 0, minimum_thickness/(-2)]) rotate([0, 0, -90]) label(minimum_thickness+cutting_offset, 0, 6, cover_label, 0);
   }
 
   // Generates screw heads negatives shape
@@ -230,11 +230,11 @@ module milka_radius_gauge( rstep = radius_step,
           cylinder(h=minimum_thickness, d=thread_diameter, center=false);
           if (!support) {
             translate([0, 0, minimum_thickness]) {
-              cylinder(h=screw_head_height+minimum_thickness, d=screw_head_diameter, center=false);
+              cylinder(h=screw_head_height+minimum_thickness+cutting_offset, d=screw_head_diameter, center=false);
             }
           } else {
             translate([0, 0, minimum_thickness+plh]) {
-              cylinder(h=screw_head_height+minimum_thickness-plh, d=screw_head_diameter, center=false);
+              cylinder(h=screw_head_height+minimum_thickness-plh+cutting_offset, d=screw_head_diameter, center=false);
             }
           }
         }
@@ -244,10 +244,10 @@ module milka_radius_gauge( rstep = radius_step,
         translate([cover_ellipse_body_long_radius, 0, (2*minimum_thickness+screw_head_height)/(-2)]) {
           cylinder(h=minimum_thickness, d=thread_diameter, center=false);
           translate([0, 0, minimum_thickness]) {
-            cylinder(h=screw_head_height, d1=thread_diameter, d2=screw_head_diameter, center=false);
+            cylinder(h=screw_head_height+cutting_offset, d1=thread_diameter, d2=screw_head_diameter, center=false);
           }
           translate([0, 0, minimum_thickness+screw_head_height]) {
-            cylinder(h=minimum_thickness, d=screw_head_diameter, center=false);
+            cylinder(h=minimum_thickness+cutting_offset, d=screw_head_diameter, center=false);
           }
         }
       }
@@ -261,18 +261,18 @@ module milka_radius_gauge( rstep = radius_step,
         cylinder(h=minimum_thickness, d=thread_diameter, center=false);
         if (!support) {
           translate([0, 0, minimum_thickness]) {
-            cylinder(h=nut_height+minimum_thickness, d=nut_diameter, center=false, $fn=6);
+            cylinder(h=nut_height+minimum_thickness+cutting_offset, d=nut_diameter, center=false, $fn=6);
           }
         } else {
           translate([0, 0, minimum_thickness+plh]) {
-            cylinder(h=nut_height+minimum_thickness-plh, d=nut_diameter, center=false, $fn=6);
+            cylinder(h=nut_height+minimum_thickness-plh+cutting_offset, d=nut_diameter, center=false, $fn=6);
           }
         }
       }
     }
   }
 
-    // Generates a single inward or outward radius gauge 2D shape
+  // Generates a single inward or outward radius gauge 2D shape
   module gauge(radius, inward_radius = true) {
     difference() {
       union() {
@@ -345,11 +345,11 @@ module milka_radius_gauge( rstep = radius_step,
 
   // Generates a cover
   module cover(bottom_cover = false) {
-    cover_height = (bottom_cover) ? minimum_thickness+nut_height : minimum_thickness+screw_head_height;
+    cover_height = (bottom_cover) ? 2*minimum_thickness+nut_height : 2*minimum_thickness+screw_head_height;
     difference() {
       union() {
-        translate([0, 0, -minimum_thickness/2]) extrude(cover_height) cover_2d_shape();
-        translate([0, 0, (cover_height-minimum_thickness)/2]) {
+        translate([0, 0, minimum_thickness/(-2)]) extrude(cover_height-minimum_thickness) cover_2d_shape();
+        translate([0, 0, cover_height/2-minimum_thickness]) {
           for (i = [plh:plh:minimum_thickness]) {
             translate([0, 0, i-plh/2]) extrude(plh) {
               offset(-i) cover_2d_shape();
@@ -379,10 +379,10 @@ module milka_radius_gauge( rstep = radius_step,
       }
     } else if (parts == "All" || parts == "Covers") {
       rotate([0, 0, -45]) {
-        translate([2*cover_ellipse_body_long_radius, 0, screw_head_height/2+minimum_thickness]) {
+        translate([5/3*cover_ellipse_body_long_radius, 0, screw_head_height/2+minimum_thickness]) {
             cover(bottom_cover = false);
         }
-        translate([(-2)*cover_ellipse_body_long_radius, 0, nut_height/2+minimum_thickness]) {
+        translate([(-5/3)*cover_ellipse_body_long_radius, 0, nut_height/2+minimum_thickness]) {
           mirror([0, 1, 0]) cover(bottom_cover = true);
         }
       }
