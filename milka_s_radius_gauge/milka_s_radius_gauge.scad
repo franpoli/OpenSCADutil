@@ -80,7 +80,7 @@ module milka_radius_gauge( rstep = radius_step,
     : (screw_metric_size == "M4") ? 1 : 2; // 2 -> M5
 
   function highest_radius()
-    = maxir-(maxir-minir)%rstep;
+    = minir+rstep*floor((maxir-minir)/rstep);
 
   function screw_head_height()
     = (screw_head_type == "Socket") ? thickness(dimensions[metric_size][SHH], plh)
@@ -389,7 +389,7 @@ module milka_radius_gauge( rstep = radius_step,
     }
   }
 
-  // Returns information about the generates models
+  // Returns information about the generated models
   module gauge_information() {
     echo("*****************************************");
     echo("GAUGE DETAILS:");
