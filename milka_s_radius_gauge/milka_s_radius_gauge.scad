@@ -22,7 +22,7 @@ printer_tolerance = 0.20; // [0,05, 0.10, 0.15, 0.20, 0.25, 0.30]
 screw_head_type = "Socket"; // ["Flat", "Socket"]
 screw_metric_size = "M3"; // ["M3", "M4", "M5"]
 label_font="Fira Sans:style=Bold";
-parts = "All"; // ["All", "Inward_radius_gauges", "Outward_radius_gauges", "Covers"]
+parts = "All"; // ["All", "Inward_radius_gauges", "Outward_radius_gauges", "Covers", "Top_cover", "Bottom_cover"]
 custom_cover_label = "";
 support_material = false; // [true:false]
 
@@ -426,6 +426,18 @@ module milka_radius_gauge( rstep = radius_step,
       color("Olive", 1.0) covers();
     } else if ($preview) {
       color("Olive", 0.5) covers();
+    }
+
+    if (parts == "Top_cover" && !$preview) {
+      color("Olive", 1.0) translate([0, 0, screw_head_height/2+minimum_thickness]) cover(bottom_cover = false);
+    } else if ($preview) {
+      color("Olive", 1.0) covers();
+    }
+
+    if (parts == "Bottom_cover" && !$preview) {
+      color("Olive", 1.0) translate([0, 0, nut_height/2+minimum_thickness]) cover(bottom_cover = true);
+    } else if ($preview) {
+      color("Olive", 1.0) covers();
     }
   }
 
