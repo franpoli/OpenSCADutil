@@ -3,7 +3,7 @@ Customisable radius gauge. An OpenSCAD variant of Milka's radius gauge 1-20 (v1)
 The original designed available at https://www.printables.com/model/137696-radius-gauge-1-20-mm/
 is licensed under the Creative Commons - CC0 "No Rights Reserved" - Public Domain Dedication.
 
-Milka was inspired by the "Radius Template" from _sibmaker_ released under CC BY-NC 4.0 license.
+Milka's radius gauge was inspired by the "Radius Template" from _sibmaker_ released under CC BY-NC 4.0 license.
 His model is available at https://www.thingiverse.com/thing:5205494
 
 This code is released under GNU General Public License v3.0
