@@ -165,13 +165,13 @@ Takes up to 5 paramaters:
 4. **fullfill** = [boolean]
 5. **retainer** = [boolean]
 
----scad
+```scad
 skadis_squared_holder();
 translate([45, 0, 0]) skadis_squared_holder(l = 20, retainer = true);
 translate([90, 0, 0]) skadis_squared_holder(l = 25, fullfill = false, retainer = true);
 translate([150, 0, 0]) skadis_squared_holder(l = 60, w = 60);
 translate([210, 0, 0]) skadis_squared_holder(35);
----
+```
 
 ![Ikea Skådis Squared holders](images/IkeaSkadisSquaredHoldersDemo.png)
 
