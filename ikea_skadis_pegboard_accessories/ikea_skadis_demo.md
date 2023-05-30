@@ -10,6 +10,7 @@ The file [ikea_skadis.scad](ikea_skadis.scad) can be used as an [OpenSCAD](http:
 	- [Module skadis_straight_hook()](#module-skadis_straight_hook)
 	- [Module skadis_o_holder()](#module-skadis_o_holder)
 	- [Module skadis_u_holder()](#module-skadis_u_holder)
+	- [Module skadis_squared_holder()](#module-skadis_squared_holder)
 	- [Module skadis_plier()](#module-skadis_plier)
 	- [Module skadis_plate()](#module-skadis_plate)
 	- [Module skadis_round_plate()](#module-skadis_round_plate)

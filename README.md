@@ -1,6 +1,6 @@
 # Libraries, modules, or scripts related to OpenSCAD 
 
-This is an individual git repository where you will find [OpenSCAD](http://www.openscad.org/) utilities. Each directory contains a small project with examples or instructions if necessary.
+This is an independent git repository where you'll find [OpenSCAD](http://www.openscad.org/) utilities. Each directory contains a small project with examples or instructions if necessary.
 
 If you are looking for the official OpenSCAD git repository, please visit [https://github.com/openscad/openscad/](https://github.com/openscad/openscad/).
 
