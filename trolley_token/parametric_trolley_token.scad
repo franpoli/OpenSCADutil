@@ -1,10 +1,9 @@
 /*
- * Parametric trolley token generator
- * by François Polito
- * created 2019-04-22, updated 2020-09-27
- * This work is licensed under the Creative Commons - CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication.
- * https://creativecommons.org/publicdomain/zero/1.0/
- */
+Parametric trolley token generator
+
+This work is licensed under the Creative Commons - CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication.
+https://creativecommons.org/publicdomain/zero/1.0/
+*/
 
 /* PARAMETERS
    **********/

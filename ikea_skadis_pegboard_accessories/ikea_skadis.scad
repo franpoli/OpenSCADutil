@@ -1,12 +1,11 @@
 /*
- * ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
- * by François Polito
- * created 2020-07-17, updated 2020-10-03
- * GNU General Public License v3.0
- * Permissions of this strong copyleft license are conditioned on making available complete source
- * code of licensed works and modifications, which include larger works using a licensed work, under
- * the same license. Copyright and license notices must be preserved. Contributors provide an express
- * grant of patent rights.
+ikea_skadis.scad - IKEA Skådis pegboard library to generate 3D printable accessories
+
+GNU General Public License v3.0
+Permissions of this strong copyleft license are conditioned on making available complete source
+code of licensed works and modifications, which include larger works using a licensed work, under
+the same license. Copyright and license notices must be preserved. Contributors provide an express
+grant of patent rights.
  */
 
 // 3D printer parameters
@@ -19,13 +18,13 @@ peg_default_thickness = 4.6;
 distance_between_pegs = 40;
 
 // pegs options
-all_pegs = false; // all_pegs [false/true] defines whether or not all pegs should be generated
-fullfill = true; // fullfill [false/true] defines wether ot not a peg should be full filled
-retainer = false; // retainer [false/true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
+all_pegs = false; // [false,true] defines whether or not all pegs should be generated
+fullfill = true; // [false,true] defines wether ot not a peg should be full filled
+retainer = false; // [false,true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
 
 // Resolution parameters
-$fa=2; // default minimum facet angle
-$fs=0.5; // default minimum facet size
+$fa = $preview ? $fa : 1;
+$fs = $preview ? $fs : 0.2;
 
 // Optimal dimensions
 lh = (nozzle_width / 2); // layer height (half the nozzle width)
@@ -39,6 +38,9 @@ echo("Recommended print settings:");
 echo("--> Nozzle width", nozzle_width);
 echo("--> Layer height", lh);
 echo("--> Perimeters", ceil((pw/nozzle_width)/2));
+
+// Value to force OpenSCAD to don't show artifacts in the preview
+extra = $preview ? 0.01 : 0;
 
 // functions
 function chamfer() = floor(0.2*pw/nozzle_width)*nozzle_width;
@@ -93,22 +95,22 @@ module skadis_peg(fullfill, retainer) {
                     }
                 }
                 hull() {
-                    translate([-pt/2, -pw, ptl-pw]) {
-                        cube(size = [pt, pw, pw], center = false);
+                    translate([-pt/2 - extra, -pw - extra, ptl-pw + extra]) {
+                        cube(size = [pt + 2*extra, pw + 2*extra, pw + 2*extra], center = false);
                     }
-                    translate([-pt/2, -2*pw, pw]) {
-                        cube(size = [pt, pw, pw], center = false);
+                    translate([-pt/2 - extra, -2*pw - extra, pw + extra]) {
+                        cube(size = [pt + extra, pw + extra, pw + extra], center = false);
                     }
-                    translate([-pt/2, ptw-3*pw, ptl-pw]) {
-                        cube(size = [pt, pw, pw], center = false);
+                    translate([-pt/2 - extra, ptw-3*pw - extra, ptl-pw + extra]) {
+                        cube(size = [pt + extra, pw + extra, pw + extra], center = false);
                     }
                 }
                 if (fullfill == false) {
                     difference() {
                         hull() {
-                            translate([-pt/2, (ptw-pw)-2*pw, 2*pw/sqrt(2)]) {
+                            translate([-pt/2 - extra, (ptw-pw)-2*pw, 2*pw/sqrt(2)]) {
                                 rotate([0, 90, 0]) {
-                                    cylinder(h = pt, r = 1.5*pw, center = false);
+                                    cylinder(h = pt + 2*extra, r = 1.5*pw, center = false);
                                 }
                             }
                             translate([-pt/2, pw/2, 2*pw]) {
@@ -157,12 +159,12 @@ module skadis_driver_hole(d, d1, d2) {
     if (d == undef) {
         union() {
             translate([0, 0, pw-chamfer()]) {
-                cylinder(h = chamfer(), d1 = d1, d2 = d1+2*chamfer());
+                cylinder(h = chamfer() + extra, d1 = d1, d2 = d1+2*chamfer());
             }
             translate([0, 0, pw-(floor(pw/2/lh)*lh)]) {
                 cylinder(h = floor(pw/2/lh)*lh, d = d1);
             }
-            cylinder(h = pw-(floor(pw/2/lh)*lh), d = d2);
+            cylinder(h = pw-(floor(pw/2/lh)*lh) + extra, d = d2);
         }
     }
     else {
@@ -170,7 +172,7 @@ module skadis_driver_hole(d, d1, d2) {
             translate([0, 0, pw-chamfer()]) {
                 cylinder(h = chamfer(), d1 = d, d2 = d+2*chamfer());
             }
-            cylinder(h = pw, d = d);
+            cylinder(h = pw + extra, d = d);
         }
     }
 }
@@ -190,11 +192,11 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
                         rotate([0, 90, 0]) {
                             cylinder(h = pt, r = (d+2*pw)/2, center = false);
                         }
-                        rotate([0, 90, 0]) {
-                            cylinder(h = pt, r = d/2, center = false);
+                        translate([-extra, 0, 0]) rotate([0, 90, 0]) {
+                            cylinder(h = pt + 2*extra, r = d/2, center = false);
                         }
-                        translate([0, -(d+2*pw)/2, 0]) {
-                            cube(size = [pt, d+2*pw, (d+2*pw)/2]);
+                        translate([-extra, -(d+2*pw)/2, 0]) {
+                            cube(size = [pt + 2*extra, d+2*pw, (d+2*pw)/2]);
                         }
                     }
                     translate([0, -(d+2*pw)/2, 0]) {
@@ -202,7 +204,7 @@ module skadis_curved_hook(d = 20, fullfill = fullfill, retainer = retainer) {
                     }
                     translate([0, -(d+pw)/2, pw/2]) {
                         rotate([0, 90, 0]) {
-                            cylinder(h = pt, d = pw, center = false);
+                            cylinder(h = pt + extra, d = pw, center = false);
                         }
                     }
                     if (d > 80) {
@@ -295,17 +297,17 @@ module skadis_squared_hook(l = 10, h = 30, fullfill = false, retainer = false) {
                         }
                     }
                     hull() {
-                        translate([-pt/2, -2*pw, -h]) {
-                            cube(size = [pt, pw, pw]);
+                        translate([-pt/2 - extra, -2*pw, -h]) {
+                            cube(size = [pt + 2*extra, pw + 2*extra, pw + 2*extra]);
                         }
-                        translate([-pt/2, -2*pw, -pw]) {
-                            cube(size = [pt, pw, pw]);
+                        translate([-pt/2 - extra, -2*pw, -pw]) {
+                            cube(size = [pt + 2*extra, pw + 2*extra, pw + 2*extra]);
                         }
-                        translate([-pt/2, -pw-l, -pw]) {
-                            cube(size = [pt, pw, pw]);
+                        translate([-pt/2 - extra, -pw-l, -pw]) {
+                            cube(size = [pt + 2*extra, pw + 2*extra, pw + 2*extra]);
                         }
                         translate([-pt/2, -pw-l, -h]) {
-                            cube(size = [pt, pw, pw]);
+                            cube(size = [pt + 2*extra, pw + 2*extra, pw + 2*extra]);
                         }
                     }
                 }
@@ -422,11 +424,11 @@ module skadis_o_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
                     cylinder(h = pw, d = d+2*pw, center = false);
                 }
             }
-            translate([0, -d/2-2*pw, 0]) {
-                cylinder(h = pw, d = d, center = false);
+            translate([0, -d/2-2*pw, -extra]) {
+                cylinder(h = pw + 2*extra, d = d, center = false);
             }
-            translate([0, -d/2-2*pw, pw-chamfer()]) {
-                cylinder(h = chamfer(), d1 = d, d2 = d+2*chamfer(), center = false);
+            translate([0, -d/2-2*pw, pw-chamfer() + extra]) {
+                cylinder(h = chamfer() + extra, d1 = d, d2 = d+2*chamfer(), center = false);
             }
         }
         skadis_pegs_position(length = d+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
@@ -446,19 +448,19 @@ module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
                 cube(size = [d+2*pw, 3*pw+d, pw], center = true);
             }
             hull() {
-                translate([0, -d/2-2*pw, 0]) {
-                    cylinder(h = pw, d = d, center = false);
+                translate([0, -d/2-2*pw, -extra]) {
+                    cylinder(h = pw + extra, d = d, center = false);
                 }
-                translate([0, -(3*pw+d), 0]) {
-                    cylinder(h = pw, d = d-8*lh, center = false);
+                translate([0, -(3*pw+d), -extra]) {
+                    cylinder(h = pw + extra, d = d-8*lh, center = false);
                 }
             }
             hull() {
-                translate([0, -d/2-2*pw, pw-chamfer()]) {
-                    cylinder(h = chamfer(), d1 = d, d2 = d+8*lh, center = false);
+                translate([0, -d/2-2*pw, pw-chamfer() + extra]) {
+                    cylinder(h = chamfer() + extra, d1 = d, d2 = d+8*lh, center = false);
                 }
                 translate([0, -(3*pw+d), pw-chamfer()]) {
-                    cylinder(h = chamfer(), d1 = d-2*chamfer(), d2 = d, center = false);
+                    cylinder(h = chamfer() + extra, d1 = d-2*chamfer(), d2 = d, center = false);
                 }
             }
         }
@@ -467,9 +469,8 @@ module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
 }
 
 
-
 /* A Squared holder takes up to five parameters:
- * 1. l (numerical) - the length of th straight hook
+ * 1. l (numerical) - the length of the straight hook
  * 2. w (numerical) - the separation between hooks 
  * 3. all_pegs (boolean)
  * 4. fullfill (boolean)
@@ -477,15 +478,13 @@ module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
  */
 
 module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
-    
-    
-    
+
         union() {
             translate([0, -(2*pw)/2, pw/2]) {
                 cube(size = [w+2*pw, 2*pw, pw], center = true);
             }
-            
-            translate([(w+pw)/2, 0, 0]) {    
+
+            translate([(w+2*pw)/2, 0, 0]) {    
                union() {
                     translate([-pt/2, -(l+2*pw), 0]) {
                         cube(size = [pt, l+2*pw, pw]);
@@ -497,8 +496,8 @@ module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fu
                  }
               }
           }
-                 
-          translate([(w+pw)/-2, 0, 0]) {    
+
+          translate([(w+2*pw)/-2, 0, 0]) {    
             union() {
                 translate([-pt/2, -(l+2*pw), 0]) {
                     cube(size = [pt, l+2*pw, pw]);
@@ -509,17 +508,12 @@ module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fu
                    }
                 }
             }
-            
+
         }
-          
-              
+
         skadis_pegs_position(length = w+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
-    
 }
-
-
-
 
 
 /* A plier takes up to six parameters:
@@ -549,8 +543,8 @@ module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pe
                 hull() for (y = [0:1:1]) {
                     mirror([0, y, 0]) for (x = [0:1:1]) {
                         mirror([x, 0, 0]) {
-                            translate([l/2-filet_limits(l, w, filet), w/2-filet_limits(l, w, filet), 0]) {
-                                cylinder(h = pw, r = filet_limits(l, w, filet));
+                            translate([l/2-filet_limits(l, w, filet), w/2-filet_limits(l, w, filet), -extra]) {
+                                cylinder(h = pw + extra, r = filet_limits(l, w, filet));
                             }
                         }
                     }
@@ -607,13 +601,13 @@ module skadis_plate(l = 80, w = 60, all_pegs = all_pegs, fullfill = fullfill, re
                     }
                 }
             }
-            translate([0, -(w/2+2*pw), 0]) {
+            translate([0, -(w/2+2*pw), -extra]) {
                 hull() {
                     for (y = [0:1:1]) {
                          mirror([0, y, 0]) for (x = [0:1:1]) {
                             mirror([x, 0, 0]) {
                                 translate([(l/2)-pw, -((w/2)-pw), pw-chamfer()/2]) {
-                                    cylinder(h = chamfer()/2, r1 = pw - chamfer()/2, r2 = pw);
+                                    cylinder(h = chamfer()/2 + 2*extra, r1 = pw - chamfer()/2, r2 = pw);
                                 }
                             }
                         }
@@ -699,7 +693,7 @@ module skadis_box(l = 60, w = 40, h = 30, t = tolerance, filet = pw, all_pegs = 
                     for (x = [0:1:1]) {
                         mirror([x, 0, 0]) {      
                             translate([l/2-(my_filet()), w/2-(my_filet()), minimum_wall()])
-                            cylinder(h = h, r = my_filet());
+                            cylinder(h = h + extra, r = my_filet());
                         }
                     }
                 }
@@ -730,7 +724,7 @@ module skadis_round_box(d = distance_between_pegs+pt-2*(pw+tolerance+minimum_wal
                 }
             }
             translate([0, 0, minimum_wall()]) {
-                cylinder(d = d, h = h);
+                cylinder(d = d, h = h + extra);
             }
         }
     }
@@ -776,17 +770,17 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_p
                     ((d == undef) ? -((n-1)*(d1+pw)/4) : -((n-1)*(d+pw)/4)) :
                     ((d == undef) ? -((n-1)*(d1+pw)/2) : -((n-1)*(d+pw)/2)),
                 (d == undef) ? -(d1/2+2*pw) : -(d/2+2*pw),
-                0]
+                extra]
             ) {
                 if (compact == false) {
                     for (x = [0:1:n-1]) {
                         if (d == undef) {
-                            translate([x*(d1+pw), 0, 0]) {
+                            translate([x*(d1+pw), 0, extra]) {
                                 skadis_driver_hole(d = d, d1 = d1, d2 = d2);
                             }
                         }
                         else {
-                            translate([x*(d+pw), 0, 0]) {
+                            translate([x*(d+pw), 0, extra]) {
                                 skadis_driver_hole(d);
                             }
                         }
@@ -800,7 +794,7 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_p
                             }
                         }
                         else {
-                            translate([x*(d+pw)/2, -(d+pw)/2*sqrt(3)*(x%2), 0]) {
+                            translate([x*(d+pw)/2, -(d+pw)/2*sqrt(3)*(x%2), extra]) {
                                 skadis_driver_hole(d);
                             }
                         }
@@ -917,7 +911,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
                         (bottom) ? minimum_wall() : 0]
                     ) {
                         rotate([0, 0, angle]) {
-                            cylinder(h = h, d = diameter+tolerance2, center = false, $fn = facets);
+                            cylinder(h = h + extra, d = diameter+tolerance2, center = false, $fn = facets);
                         }
                     }
                 }
@@ -962,6 +956,13 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //translate([120, 0, 0]) skadis_u_holder(d = 30);
 //translate([170, 0, 0]) skadis_u_holder(35);
 
+// Squared holders demo
+//skadis_squared_holder();
+//translate([45, 0, 0]) skadis_squared_holder(l = 20, retainer = true);
+//translate([90, 0, 0]) skadis_squared_holder(l = 25, fullfill = false, retainer = true);
+//translate([150, 0, 0]) skadis_squared_holder(l = 60, w = 60);
+//translate([210, 0, 0]) skadis_squared_holder(35);
+
 // Pliers demo
 //skadis_plier(filet = 0);
 //translate([0, 65, 0]) skadis_plier(60, 35, fullfill = false);
@@ -1003,7 +1004,3 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //translate([0, 130, 0]) skadis_bits_serie(h = 32, d = 1.2, step = 1.2, tolerance2 = 3.2, n = 9, compact = false);
 //translate([0, 190, 0]) skadis_bits_serie(h = 28, d = 2.3, step = 1.5, n = 8, facets = 6, angle = 30, bottom = false, compact = false, tolerance2 = 0.2);
 //translate([0, 260, 0]) skadis_bits_serie(h = 18, d = 14.6, step = 2, n = 6, facets = 4, angle = 45);
-
-
-
-skadis_squared_holder(l = 7, w = 15);
