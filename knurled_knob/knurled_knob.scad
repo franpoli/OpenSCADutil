@@ -8,7 +8,7 @@ the same license. Copyright and license notices must be preserved. Contributors 
 grant of patent rights.
  */
 
-// Preferred knob heigth (will be overridden if too small)
+// Preferred knob height (will be overridden if too small)
 knob_preferred_height = 12;
 // Preferred knob diameter (will be overridden if too small)
 knob_preferred_diameter = 16;
@@ -60,7 +60,7 @@ module knurled_knob(h = knob_preferred_height,
      function grip_length()
           = bolt_grip_length < 10*lh ? 10*lh : bgl;
 
-     function knob_heigth() = ((co != "N") && (co != "None"))
+     function knob_height() = ((co != "N") && (co != "None"))
           ? (h < bhh+pt+grip_length()+minimum_space() ? bhh+pt+grip_length()+minimum_space() : h)
           : (h < bhh+pt+grip_length() ? bhh+pt+grip_length() : h);
 
@@ -81,11 +81,11 @@ module knurled_knob(h = knob_preferred_height,
              : ((knob_diameter()-cd)/2)*sqrt(2));
 
      function bevel()
-          = min(knob_heigth(), (knob_diameter()-head_diameter())/2) * kd/100;
+          = min(knob_height(), (knob_diameter()-head_diameter())/2) * kd/100;
 
      // Nth turn of a cylinder of the same height as its diameter
      function twist(n)
-          = 360/n*knob_heigth()/knob_diameter();
+          = 360/n*knob_height()/knob_diameter();
 
      // Generates a paired list of step values and circle arc lengths
      function pair_steps_and_lengths()
@@ -111,16 +111,16 @@ module knurled_knob(h = knob_preferred_height,
 
      module screw_head() {
           translate([0, 0, grip_length()])
-               cylinder(h=knob_heigth()-grip_length(), d=head_diameter()+pt, $fn=6);
+               cylinder(h=knob_height()-grip_length(), d=head_diameter()+pt, $fn=6);
      }
 
      module screw_thread() {
-          cylinder(h=knob_heigth(), d=btd+pt);
+          cylinder(h=knob_height(), d=btd+pt);
      }
 
      module knurl_pattern() {
-          for (j = [-1 : 2 : 1]) translate([0, 0, knob_heigth()/2]) {
-               linear_extrude(height = knob_heigth(), center = true, convexity = 10, twist = j*twist(4)) {
+          for (j = [-1 : 2 : 1]) translate([0, 0, knob_height()/2]) {
+               linear_extrude(height = knob_height(), center = true, convexity = 10, twist = j*twist(4)) {
                     for (i = [0 : get_ideal_step(pair_steps_and_lengths(), ks) : 360])
                          rotate([0, 0, i]) translate([-knob_diameter()/2, 0, 0]) circle(d=bevel(), $fn=3);
                }
@@ -130,7 +130,7 @@ module knurled_knob(h = knob_preferred_height,
      module cover(substraction=false) {
           if ((co != "N") && (co != "None")) {
                if (substraction == true) {
-                    translate([0, 0, knob_heigth()-minimum_space()])
+                    translate([0, 0, knob_height()-minimum_space()])
                          cylinder(h=minimum_space(), d=cover_diameter()+pt);
                } else {
                     translate([(knob_diameter()+cover_diameter())/2+minimum_space(), 0, 0])
@@ -141,10 +141,10 @@ module knurled_knob(h = knob_preferred_height,
 
      module get_dimensions() {
           echo(
-               "KNOB HEIGTH",
-               knob_heigth(),
+               "KNOB HEIGHT",
+               knob_height(),
                "difference from preference",
-               (knob_heigth()-knob_preferred_height));
+               (knob_height()-knob_preferred_height));
 
           echo("KNOB DIAMETER",
                knob_diameter(),
@@ -171,8 +171,8 @@ module knurled_knob(h = knob_preferred_height,
 
      // Main
      difference() {
-          color("green", 0.5) cylinder(h=knob_heigth(), d=knob_diameter());
-          color("blue", 1.0) chamfer(bevel(), knob_heigth());
+          color("green", 0.5) cylinder(h=knob_height(), d=knob_diameter());
+          color("blue", 1.0) chamfer(bevel(), knob_height());
           color("blue", 1.0) chamfer(bottom_chamfer(), 0);
           color("purple", 1.0) screw_head();
           color("purple", 1.0) screw_thread();
