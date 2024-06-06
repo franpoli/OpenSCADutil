@@ -4,8 +4,11 @@ This is an independent git repository where you'll find [OpenSCAD](http://www.op
 
 If you are looking for the official OpenSCAD git repository, please visit [https://github.com/openscad/openscad/](https://github.com/openscad/openscad/).
 
+
 # Table of Contents
 
+- [Utilities](#utilities)
+    - [SVG to SCAD](#svg-to-scad)
 - [Libraries](#libraries)
 	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories)
 	- [Trolley token generator](#trolley-token-generator)
@@ -16,6 +19,16 @@ If you are looking for the official OpenSCAD git repository, please visit [https
     - [Thumb drive housing generator](#thumb-drive-housing-generator)
     - [Hakko FX-888 soldering sponge template](#hakko-fx-888-soldering-sponge-template)
     - [Milka's Radius Gauge generator](#milkas-radius-gauge-generator)
+
+
+# Utilities
+
+## SVG to SCAD
+
+A Python script to convert an SVG file into coordinates that can be saved in a JSON file or in a SCAD file, wrapped in its own module.
+
+[Project directory](utilities/svg_to_scad) | [documentation](utilities/svg_to_scad/README.md)
+
 
 # Libraries
 
@@ -72,3 +85,4 @@ Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D,
 Generates inward/outward radius gauges.
 
 [Project directory](milka_s_radius_gauge "dir")
+
