@@ -10,9 +10,7 @@ A python script to convert simple SVG files into a list of coordinates.
 
 - Capability to output the results into a JSON file or a SCAD file wrapped into a polygon module.
 
-- Flip capbilities
-
-- Scale capilities
+- Scaling, flipping, rotating capabilities.
 
 - Display graph to visualize the generated result
 
