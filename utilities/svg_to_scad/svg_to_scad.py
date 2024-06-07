@@ -44,6 +44,11 @@ def parse_arguments():
         type=str, 
         help='Scale the coordinates. Format: x:y, x:, or :y'
     )
+    parser.add_argument(
+        '-r', '--rotate', 
+        type=float, 
+        help='Rotate the coordinates by the specified angle (in degrees).'
+    )
     
     return parser.parse_args()
 
@@ -86,7 +91,16 @@ def scale_coordinates(coordinates, x_scale, y_scale):
 
     return coordinates.tolist()
 
-def svg_to_coordinates(svg_file, num_samples, closed, flip, scale):
+def rotate_coordinates(coordinates, angle):
+    angle_rad = np.radians(angle % 360)
+    rotation_matrix = np.array([
+        [np.cos(angle_rad), -np.sin(angle_rad)],
+        [np.sin(angle_rad), np.cos(angle_rad)]
+    ])
+    coordinates = np.dot(coordinates, rotation_matrix)
+    return coordinates.tolist()
+
+def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate):
     paths, attributes, svg_attributes = svgpathtools.svg2paths2(svg_file)
     coordinates = []
     
@@ -103,31 +117,31 @@ def svg_to_coordinates(svg_file, num_samples, closed, flip, scale):
         if coordinates[0] != coordinates[-1]:
             coordinates.append(coordinates[0])
 
+    # By default, flip the coordinates along the y-axis to account for SVG coordinate system
+    coordinates = np.array(coordinates)
+    y_mean = np.mean(coordinates[:, 1])
+    coordinates[:, 1] = 2 * y_mean - coordinates[:, 1]
+
     # Flip the coordinates if requested
     if flip:
-        coordinates = np.array(coordinates)
-        if flip == 'y':
-            y_mean = np.mean(coordinates[:, 0])
-            coordinates[:, 0] = 2 * y_mean - coordinates[:, 0]
-        elif flip == 'x':
-            x_mean = np.mean(coordinates[:, 1])
-            coordinates[:, 1] = 2 * x_mean - coordinates[:, 1]
-        coordinates = coordinates.tolist()
+        if flip == 'x':
+            y_mean = np.mean(coordinates[:, 1])
+            coordinates[:, 1] = 2 * y_mean - coordinates[:, 1]
+        elif flip == 'y':
+            x_mean = np.mean(coordinates[:, 0])
+            coordinates[:, 0] = 2 * x_mean - coordinates[:, 0]
+    coordinates = coordinates.tolist()
 
     # Scale the coordinates if requested
     if scale:
         x_scale, y_scale = parse_scale(scale)
         coordinates = scale_coordinates(coordinates, x_scale, y_scale)
+    
+    # Rotate the coordinates if requested
+    if rotate is not None:
+        coordinates = rotate_coordinates(np.array(coordinates), rotate)
 
     return coordinates
-
-def calculate_width_height(coordinates):
-    coordinates = np.array(coordinates)
-    x_min, y_min = np.min(coordinates, axis=0)
-    x_max, y_max = np.max(coordinates, axis=0)
-    width = x_max - x_min
-    height = y_max - y_min
-    return width, height
 
 def plot_coordinates(coordinates):
     coordinates = np.array(coordinates)
@@ -139,20 +153,22 @@ def plot_coordinates(coordinates):
     plt.axis('equal')  # Equal scaling for X and Y axes
     plt.show()
 
-def save_as_scad(coordinates, output_file, width, height):
+def save_as_scad(coordinates, output_file):
     base_name = os.path.splitext(os.path.basename(output_file))[0]
+    width = np.max(np.array(coordinates)[:, 0]) - np.min(np.array(coordinates)[:, 0])
+    height = np.max(np.array(coordinates)[:, 1]) - np.min(np.array(coordinates)[:, 1])
     with open(output_file, 'w') as f:
-        f.write(f"// Width: {width}, Height: {height}\n")
+        f.write(f"// Width: {width}\n")
+        f.write(f"// Height: {height}\n")
         f.write(f"module {base_name}() {{\n")
         f.write(f"    polygon(points=[\n")
         for point in coordinates:
             f.write(f"        [{point[0]}, {point[1]}],\n")
-        f.write("    ]);\n")
-        f.write("}\n")
+        f.write(f"    ]);\n")
+        f.write(f"}}\n")
 
 def save_coordinates(coordinates, output_file):
     ext = os.path.splitext(output_file)[1]
-    width, height = calculate_width_height(coordinates)
     if ext == '.json':
         with open(output_file, 'w') as f:
             json.dump(coordinates, f)
@@ -160,7 +176,7 @@ def save_coordinates(coordinates, output_file):
     elif ext == '.scad' or ext == '':
         if ext == '':
             output_file += '.scad'
-        save_as_scad(coordinates, output_file, width, height)
+        save_as_scad(coordinates, output_file)
         print(f"Coordinates saved to {output_file}")
     else:
         raise ValueError("Invalid file extension. Use '.json' or '.scad'.")
@@ -169,11 +185,14 @@ def main():
     args = parse_arguments()
     
     # Convert the SVG to coordinates
-    coordinates = svg_to_coordinates(args.input, args.number_samples, args.closed, args.flip, args.scale)
+    coordinates = svg_to_coordinates(args.input, args.number_samples, args.closed, args.flip, args.scale, args.rotate)
 
-    # Calculate width and height
-    width, height = calculate_width_height(coordinates)
-    print(f"Width: {width}, Height: {height}")
+    # Print the width and height
+    coordinates_array = np.array(coordinates)
+    width = np.max(coordinates_array[:, 0]) - np.min(coordinates_array[:, 0])
+    height = np.max(coordinates_array[:, 1]) - np.min(coordinates_array[:, 1])
+    print(f"Width: {width}")
+    print(f"Height: {height}")
 
     # Save the coordinates to the appropriate format
     save_coordinates(coordinates, args.output)

@@ -27,13 +27,18 @@ python svg_to_scad.py --input demo/straight_lines.svg --output demo/straight_lin
 ```
 
 ``` results
-Width: 60.292721, Height: 83.38827
+Width: 60.292721
+Height: 83.38827
 Coordinates saved to demo/straight_lines.json
 ```
 
-input/output:
+straight_lines.svg default rendering:
 
-![demo/fig_svg_to_scad_1.png](demo/fig_svg_to_scad_1.png)
+![demo/straight_lines_svg_rendering.png](demo/straight_lines_svg_rendering.png)
+
+Graph:
+
+![demo/fig_svg_to_scad_straight_lines_graph.png](demo/fig_svg_to_scad_straight_lines_graph.png)
 
 ### Close option
 
@@ -42,63 +47,38 @@ python svg_to_scad.py -i demo/straight_lines.svg -o demo/straight_lines.json --c
 ```
 
 ``` results
-Width: 60.292721, Height: 83.38827
+Width: 60.292721
+Height: 83.38827
 Coordinates saved to demo/straight_lines.json
 ```
 
-input/output:
+Graph:
 
-![demo/fig_svg_to_scad_2.png](demo/fig_svg_to_scad_2.png)
-
-### Flip option
-
-``` bash
-python svg_to_scad.py -i demo/straight_lines.svg -o demo/straight_lines.scad -c --flip x
-```
-
-```
-Width: 60.292721, Height: 83.38827
-Coordinates saved to demo/straight_lines.scad
-```
-
-input/output:
-
-![demo/fig_svg_to_scad_3.png](demo/fig_svg_to_scad_3.png)
+![demo/fig_svg_to_scad_straight_lines_graph_close.png](demo/fig_svg_to_scad_straight_lines_graph_close.png)
 
 ### Sampling option
 
 ``` bash
-python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad -c -f x --number-samples 10
+python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad --number-samples 10
 ```
 
 ``` results
-Width: 141.81590968696838, Height: 99.41870528120708
+Width: 141.81590968696838
+Height: 99.41870528120708
 Coordinates saved to demo/bezier_curves.scad
 ```
 
-input/output:
+bezier_curves.svg default redering:
 
-![demo/fig_svg_to_scad_4.png](demo/fig_svg_to_scad_4.png)
+![demo/bezier_curves_svg_rendering.png](demo/bezier_curves_svg_rendering.png)
 
-### Scale option
+Graph:
 
-``` bash
-python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad -c -f x -n 15 --scale 300:
-```
-
-``` results
-Width: 300.0, Height: 210.84904916813773
-Coordinates saved to demo/bezier_curves.scad
-```
-
-input/output:
-
-![demo/fig_svg_to_scad_5.png](demo/fig_svg_to_scad_5.png)
-
+![dmeo/fig_svg_to_scad_bezier_curves_number_samples.png](demo/fig_svg_to_scad_bezier_curves_number_samples.png)
 
 ### help menu
 
-For further details on options, use the help menu:
+For a complete list of options, consult the help menu:
 
 ``` bash
 python svg_to_scad.py --help
