@@ -1,0 +1,157 @@
+#+STARTUP: indent content
+#+TITLE: svg_to_scad.py
+#+DESCRIPTION: A python script to convert simple SVG files into a list of coordinates
+#+LANGUAGE: us-en
+
+* Features
+:PROPERTIES:
+:CUSTOM_ID: fetures
+:END:
+
+- Allows fine-grained control over the number of samples for Bezier curves and arcs
+- Capability to output the results into a JSON file or a SCAD file wrapped into a polygon module.
+- Scaling, flipping, rotating capabilities.
+- Display graph to visualize the generated result
+- Output final result dimensions
+
+* Usage
+:PROPERTIES:
+:CUSTOM_ID: usage
+:END:
+** Input and output options
+:PROPERTIES:
+:CUSTOM_ID: input-and-output-options
+:END:
+
+#+begin_src bash :results output
+  python svg_to_scad.py --input demo/straight_lines.svg --output demo/straight_lines.json
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  Width: 60.292721
+  Height: 83.38827
+  Coordinates saved to demo/straight_lines.json
+#+end_example
+
+straight_lines.svg default rendering:
+
+#+caption: straight_lines_svg_rendering.png
+[[file:demo/straight_lines_svg_rendering.png]]
+
+Graph:
+
+#+caption: fig_svg_to_scad_straight_lines_graph.png
+[[file:demo/fig_svg_to_scad_straight_lines_graph.png]]
+
+** Close option
+:PROPERTIES:
+:CUSTOM_ID: close-option
+:END:
+
+#+begin_src bash :results output
+  python svg_to_scad.py -i demo/straight_lines.svg -o demo/straight_lines.json --close
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  Width: 60.292721
+  Height: 83.38827
+  Coordinates saved to demo/straight_lines.json
+#+end_example
+
+Graph:
+
+#+caption: fig_svg_to_scad_straight_lines_graph_close.png
+[[file:demo/fig_svg_to_scad_straight_lines_graph_close.png]]
+
+** Sampling option
+:PROPERTIES:
+:CUSTOM_ID: sampling-option
+:END:
+
+#+begin_src bash :results output
+  python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad --number-samples 10
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  Width: 141.81590968696838
+  Height: 99.41870528120708
+  Coordinates saved to demo/bezier_curves.scad
+#+end_example
+
+bezier_curves.svg default redering:
+
+#+caption: bezier_curves_svg_rendering.png
+[[file:demo/bezier_curves_svg_rendering.png]]
+
+Graph:
+
+#+caption: fig_svg_to_scad_bezier_curves_number_samples.png
+[[file:demo/fig_svg_to_scad_bezier_curves_number_samples.png]]
+
+** help menu
+:PROPERTIES:
+:CUSTOM_ID: help-menu
+:END:
+
+For a complete list of options, consult the help menu:
+
+#+begin_src bash :results output
+  python svg_to_scad.py --help
+#+end_src
+
+#+RESULTS:
+#+begin_example
+usage: svg_to_scad.py [-h] -i INPUT [-n NUMBER_SAMPLES] [-o OUTPUT] [-c]
+                      [-f {x,y}] [-s SCALE] [-r ROTATE]
+
+Convert SVG paths to a list of coordinates for use in OpenSCAD.
+
+options:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Path to the SVG file.
+  -n NUMBER_SAMPLES, --number-samples NUMBER_SAMPLES
+                        Number of samples for Bezier curves and arcs (default:
+                        100).
+  -o OUTPUT, --output OUTPUT
+                        Output file name (default: coordinates.scad).
+  -c, --closed          Close the path by adding the first point to the end if
+                        not already closed.
+  -f {x,y}, --flip {x,y}
+                        Flip the coordinates either horizontally or
+                        vertically.
+  -s SCALE, --scale SCALE
+                        Scale the coordinates. Format: x:y, x:, or :y
+  -r ROTATE, --rotate ROTATE
+                        Rotate the coordinates by the specified angle (in
+                        degrees).
+#+end_example
+
+** Usage example in OpenSCAD
+:PROPERTIES:
+:CUSTOM_ID: usage-example-in-openscad
+:END:
+
+  #+begin_example scad
+  // Load the generated SCAD files
+  use <straight_lines.scad>
+  use <bezier_curves.scad>
+  
+  // Use the polygon modules defined in the included files
+  translate([-200, -40, 0]) {
+      linear_extrude(10)
+      straight_lines();
+  }
+  
+  translate([-100, -100, 0]) {
+      linear_extrude(15)
+      bezier_curves();
+  }
+#+end_example
+
+#+RESULTS:
+#+caption: import_coordonate_files_demo.png
+[[file:demo/import_coordonate_files_demo.png]]

@@ -1,0 +1,42 @@
+#+STARTUP: indent content
+#+TITLE: thumbdrive_housing.scad
+#+DESCRIPTION: Generates customizable USB drive cases
+#+LANGUAGE: us-en
+
+* Overview
+
+This is a USB drive case generator.
+
+* Demo
+
+#+begin_example scad
+use <thumbdrive_housing.scad>
+
+thumbdrive_housing(l="TEXT", kb="Tiny", il=true);
+
+translate([0, 50, 0])
+thumbdrive_housing("Demo", "S", false);
+
+translate([0, -50, 0])
+thumbdrive_housing("OpenSCAD", "M", true);
+
+translate([0, -110, 0])
+thumbdrive_housing("3D print", "L", true);
+#+end_example
+
+* Customizer
+
+#+caption: customizable_usb_drive_housing_anim1.gif
+[[file:images/customizable_usb_drive_housing_anim1.gif]]
+
+* 3D prints picture
+
+#+caption: customizable_usb_drive_housing_img1.jpg
+[[file:images/customizable_usb_drive_housing_img1.jpg]]
+
+* Assembly
+
+The PCB should be secured in the housing with hot glue, and the cap bonded with super glue.
+
+#+caption: customizable_usb_drive_housing_img2.jpg
+[[file:images/customizable_usb_drive_housing_img2.jpg]]

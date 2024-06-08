@@ -1,0 +1,41 @@
+#+STARTUP: indent content
+#+TITLE: escutcheon.scad
+#+DESCRIPTION: Parametric escutcheon generator
+#+LANGUAGE: us-en
+
+* Overview
+
+The file [[file:escutcheon.scad][escutcheon.scad]] can be used as an [[http://www.openscad.org/][OpenSCAD]] library to generate single pipe or double pipes escutcheon. This model has been designed to be printed with ease in FDM printers.
+
+* Usage
+
+1. escutcheon_height (h), [numerical]
+2. escutcheon_width (w), [numerical]
+3. escutcheon_hole_diameter (d), [numerical]
+4. separation_between_pipes (s), [numerical]
+5. edge (e), [string with one of the following values: "chamfer", "filet" or "none"]
+6. nozzle_width (nw), [numerical]
+7. printer_tolerance (pt), [numerical]
+8. parts (p), [string with one of the following values: "both", "male" or "female"]
+
+#+caption: escutcheon_usage.png
+[[file:images/escutcheon_usage.png]]
+
+* Demo
+
+#+begin_example scad
+  translate([0, -60, 0]) escutcheon(p="female");
+  translate([0, -50, 0]) escutcheon(p="male");
+  escutcheon();
+  translate([0, 48, 0]) escutcheon(s=36, e="chamfer");
+  translate([0, 90, 0]) escutcheon(h=4, w=6, d=16, s=24, e="none", nw=0.2, pt=0.2);
+  translate([0, 125, 0]) escutcheon(h=3, w=8, d=10, s=0, e="chamfer", nw=0.6, pt=0.3);
+#+end_example
+
+#+caption: escutcheon_demo.png
+[[file:images/escutcheon_demo.png]]
+
+* 3D print
+
+#+caption: escutcheon_photo_double_pipes_escutcheon.png
+[[file:images/escutcheon_photo_double_pipes_escutcheon.png]]

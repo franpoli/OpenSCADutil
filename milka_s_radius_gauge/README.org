@@ -1,0 +1,29 @@
+#+STARTUP: indent content
+#+TITLE: milka_s_radius_gauge.scad
+#+DESCRIPTION: This is an OpenSCAD script to generate Milka's radius gauge with slight variations
+#+LANGUAGE: us-en
+
+* Overview
+
+This radius gauge generator offers the following features:
+
+- Adjustable step
+- Adjustable range from 1 to 25 mm
+- Constant square angle for each radius gauge
+- Adjustable layer height
+- Adjustable printer tolerance
+- Supports different types of screws
+- Cover label customization
+- Option to generate 3D printing support
+- Preview mode and rendering mode for 3d printing
+- Outputs needed hardware
+- Respects users' freedom
+
+* Demo
+
+#+caption: milka_s_radius_gauge_demo.gif
+[[file:images/milka_s_radius_gauge_demo.gif]]
+
+* Note
+
+The Milka's gauge is inspired by the Radius Template from [[https://www.thingiverse.com/_sibmaker_/designs][_sibmaker_]] which might be worth checking out.

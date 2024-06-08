@@ -1,0 +1,69 @@
+#+STARTUP: indent content
+#+TITLE: cabletie.scad
+#+DESCRIPTION: Generates simple, quick and easy to print TPU cable ties
+#+LANGUAGE: us-en
+
+* Overview
+
+The file cabletie.scad can be used as an OpenSCAD library to generate labelled cable ties of different sizes.
+
+Once tight, the cable tie get locked. It can be released by a slight hand pressure.
+
+* Usage
+
+The module ~cabletie()~ takes up to 6 parameters:
+
+#+begin_src text
+  1. cabletie_width (w), [numerical]
+  2. cabletie_wrapping_diameter (d), [numerical]
+  3. cabletie_minimum_thickness (t), [numerical] // would be override if too large
+  4. label (l), [string]
+  5. nozzle_width (nw), [numerical]
+  6. printer_tolerance (pt), [numerical]
+#+end_src
+
+* Demonstration
+
+Here is a demo of different cable tie sizes with or without lables:
+
+#+begin_example scad :file demo/cabletie_demo.png :colorscheme Cornfield :size 600,600 :eval no :results output
+  // cabletie.scad demo
+  use <cabletie.scad>
+
+  cabletie(6, 15, 1.0);
+  translate([0, -12, 0]) cabletie(6, 20, 1.0);
+  translate([0, -24, 0]) cabletie(6, 25, 1.0);
+
+  translate([0, -40, 0]) cabletie(8, 20, 1.2);
+  translate([0, -55, 0]) cabletie(8, 25, 1.2);
+  translate([0, -70, 0]) cabletie(8, 30, 1.2);
+
+  translate([0, -90, 0]) cabletie(10, 35, 1.4);
+  translate([0, -108, 0]) cabletie(10, 45, 1.4);
+  translate([0, -126, 0]) cabletie(10, 55, 1.4);
+
+  translate([0, -150, 0]) cabletie(w=10, d=60, t=1.6, l="Label");
+  translate([0, -170, 0]) cabletie(w=10, d=65, t=1.6, l="Cabletie");
+  translate([0, -190, 0]) cabletie(w=10, d=70, t=1.6, l="OpenSCAD");
+#+end_example
+
+#+caption: cabletie_demo.png
+[[file:demo/cabletie_demo.png]]
+
+* Customizer
+
+You may also use the OpenSCAD customizer utility to conveniently change the parameters.
+
+#+caption: cabletie_customizer_demo.png
+[[file:demo/cabletie_customizer_demo.png]]
+
+* 3D printed examples
+** Cable ties without labels
+
+#+caption: cable_ties_photo_without_labels.jpg
+[[file:demo/cable_ties_photo_without_labels.jpg]]
+
+** Cable ties with labels
+
+#+caption: cable_ties_photo_with_labels.jpg
+[[file:demo/cable_ties_photo_with_labels.jpg]]

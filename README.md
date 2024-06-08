@@ -27,7 +27,7 @@ If you are looking for the official OpenSCAD git repository, please visit [https
 
 A Python script to convert an SVG file into coordinates that can be saved in a JSON file or in a SCAD file, wrapped in its own module.
 
-[Project directory](utilities/svg_to_scad) | [documentation](utilities/svg_to_scad/README.md)
+[Project directory](utilities/svg_to_scad) | [documentation](utilities/svg_to_scad/README.org)
 
 
 # Libraries
@@ -36,53 +36,53 @@ A Python script to convert an SVG file into coordinates that can be saved in a J
 
 Customizable pegboard accessories designed for convenient 3D printing.
 
-[Project directory](ikea_skadis_pegboard_accessories "dir") | [documentation](ikea_skadis_pegboard_accessories/ikea_skadis_demo.md "doc")
+[Project directory](ikea_skadis_pegboard_accessories "dir") | [documentation](ikea_skadis_pegboard_accessories/README.org "doc")
 
 ## Trolley token generator
 
 Parametric dual tokens generator intended to be 3D printed and used in place of coins.
 
-[Project directory](trolley_token "dir") | [documentation](trolley_token/parametric_trolley_token_demo.md "doc")
+[Project directory](trolley_token "dir") | [documentation](trolley_token/README.org "doc")
 
 ## Radiator escutcheon generator
 
 Parametric single pipe or double pipes escutcheon generator convenient to cover gaps around radiator pipes.
 
-[Project directory](escutcheon "dir") | [documentation](escutcheon/escutcheon_demo.md "doc")
+[Project directory](escutcheon "dir") | [documentation](escutcheon/README.org "doc")
 
 ## Identification cable ties generator
 
 Generate simple, quick and easy to print TPU cable ties.
 
-[Project directory](cabletie "dir") | [documentation](cabletie/cabletie_demo.md "doc")
+[Project directory](cabletie "dir") | [documentation](cabletie/README.org "doc")
 
 ## Knurled knobs generator for bolts and nuts
 
 Generates knurled knobs
 
-[Project directory](knurled_knob "dir") | [documentation](knurled_knob/knurled_knob_demo.md "doc")
+[Project directory](knurled_knob "dir") | [documentation](knurled_knob/README.org "doc")
 
 ## Kita-Boshi mechanical pencil barrel generator
 
 Generates a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
 
-[Project directory](kitaboshi "dir")
+[Project directory](kitaboshi "dir") | [documentation](kitaboshi/README.org "doc")
 
 ## Thumb drive housing generator
 
 Generates thumd/USB drive cases 
 
-[Project directory](thumb_drive_housing "dir")
+[Project directory](thumb_drive_housing "dir") | [documentation](thumb_drive_housing/README.org "doc")
 
 ## Hakko FX-888 soldering sponge template
 
 Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D,
 
-[Project directory](hakko_fx_888_soldering_sponge_template "dir")
+[Project directory](hakko_fx_888_soldering_sponge_template "dir") | [documentation](hakko_fx_888_soldering_sponge_template/README.org "doc")
 
 ## Milka's Radius Gauge generator
 
 Generates inward/outward radius gauges.
 
-[Project directory](milka_s_radius_gauge "dir")
+[Project directory](milka_s_radius_gauge "dir") | [documentation](milka_s_radius_gauge/README.org "doc")
 

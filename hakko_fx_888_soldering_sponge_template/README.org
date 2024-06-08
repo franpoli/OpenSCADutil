@@ -1,0 +1,24 @@
+#+STARTUP: indent content
+#+TITLE: hakko_fx_888_sponge_template.scad
+#+DESCRIPTION: Hakko soldering sponge template
+#+LANGUAGE: us-en
+
+* Overview
+
+OpenSCAD script to generate a cutting soldering sponge template for the Hakko FX-888/FX-888D.
+
+* Demo
+
+#+caption: hakko_fx_888_soldering_sponge_template.gif
+[[file:images/hakko_fx_888_soldering_sponge_template.gif]]
+
+* 3D prints
+
+#+caption: hakko_fx_888_soldering_sponge_template_1.jpg
+[[file:images/hakko_fx_888_soldering_sponge_template_1.jpg]]
+
+#+caption: hakko_fx_888_soldering_sponge_template_2.jpg
+[[file:images/hakko_fx_888_soldering_sponge_template_2.jpg]]
+
+#+caption: hakko_fx_888_soldering_sponge_template_3.jpg
+[[file:images/hakko_fx_888_soldering_sponge_template_3.jpg]]
