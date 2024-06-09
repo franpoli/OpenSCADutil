@@ -1,88 +1,114 @@
-# Libraries, modules, or scripts related to OpenSCAD 
+# Repository Overview
 
-This is an independent git repository where you'll find [OpenSCAD](http://www.openscad.org/) utilities. Each directory contains a small project with examples or instructions if necessary.
+This is an independent git repository where you'll find [OpenSCAD](http://www.openscad.org/) utilities.
+Each directory contains a small project with examples or instructions if necessary.
 
-If you are looking for the official OpenSCAD git repository, please visit [https://github.com/openscad/openscad/](https://github.com/openscad/openscad/).
+If you are looking for the official OpenSCAD git repository, please visit
+[https://github.com/openscad/openscad/](https://github.com/openscad/openscad/).
 
+---
 
-# Table of Contents
+# utilities
+## svg_to_scad.py
 
-- [Utilities](#utilities)
-    - [SVG to SCAD](#svg-to-scad)
-- [Libraries](#libraries)
-	- [IKEA Skådis pegboard accessories](#ikea-skådis-pegboard-accessories)
-	- [Trolley token generator](#trolley-token-generator)
-	- [Radiator escutcheon generator](#radiator-escutcheon-generator)
-    - [Identification cable ties generator](#identification-cable-ties-generator)
-    - [Knurled knobs generator for bolts and nuts](#knurled-knobs-generator-for-bolts-and-nuts)
-    - [Kita-Boshi mechanical pencil barrel generator](#kita-boshi-mechanical-pencil-barrel-generator)
-    - [Thumb drive housing generator](#thumb-drive-housing-generator)
-    - [Hakko FX-888 soldering sponge template](#hakko-fx-888-soldering-sponge-template)
-    - [Milka's Radius Gauge generator](#milkas-radius-gauge-generator)
+Description: A python script to convert simple SVG files into a list of coordinates
 
+Updated: 2024-06-08T16:16:51+02:00
 
-# Utilities
+[Project Directory](./utilities/svg_to_scad)
+# libraries
+## cabletie.scad
 
-## SVG to SCAD
+Description: Generates simple, quick and easy to print TPU cable ties
 
-A Python script to convert an SVG file into coordinates that can be saved in a JSON file or in a SCAD file, wrapped in its own module.
+Updated: 2024-06-08T16:05:52+02:00
 
-[Project directory](utilities/svg_to_scad) | [documentation](utilities/svg_to_scad/README.org)
+[Project Directory](./libraries/cabletie)
 
+## escutcheon.scad
 
-# Libraries
+Description: Parametric escutcheon generator
 
-## IKEA Skådis pegboard accessories
+Updated: 2024-06-08T16:05:52+02:00
 
-Customizable pegboard accessories designed for convenient 3D printing.
+[Project Directory](./libraries/escutcheon)
 
-[Project directory](ikea_skadis_pegboard_accessories "dir") | [documentation](ikea_skadis_pegboard_accessories/README.org "doc")
+## hakko_fx_888_sponge_template.scad
 
-## Trolley token generator
+Description: Hakko soldering sponge template
 
-Parametric dual tokens generator intended to be 3D printed and used in place of coins.
+Updated: 2024-06-08T16:05:52+02:00
 
-[Project directory](trolley_token "dir") | [documentation](trolley_token/README.org "doc")
+[Project Directory](./libraries/hakko_fx_888_soldering_sponge_template)
 
-## Radiator escutcheon generator
+## ikea_skadis.scad
 
-Parametric single pipe or double pipes escutcheon generator convenient to cover gaps around radiator pipes.
+Description: Generates Ikea Skådis pegboard accessories
 
-[Project directory](escutcheon "dir") | [documentation](escutcheon/README.org "doc")
+Updated: 2024-06-08T14:57:47+02:00
 
-## Identification cable ties generator
+[Project Directory](./libraries/ikea_skadis_pegboard_accessories)
 
-Generate simple, quick and easy to print TPU cable ties.
+## kitaboshi_demo.scad
 
-[Project directory](cabletie "dir") | [documentation](cabletie/README.org "doc")
+Description: Barrel generator for the Kita-Boshi 2mm mechanical pencil
 
-## Knurled knobs generator for bolts and nuts
+Updated: 2024-06-08T16:10:29+02:00
 
-Generates knurled knobs
+[Project Directory](./libraries/kitaboshi)
 
-[Project directory](knurled_knob "dir") | [documentation](knurled_knob/README.org "doc")
+## knurled_knob.scad
 
-## Kita-Boshi mechanical pencil barrel generator
+Description: Knurled knobs generator for bolts and nuts
 
-Generates a barrel replacement part for the Kita-Boshi 2mm mechanical pencil.
+Updated: 2024-06-08T16:05:52+02:00
 
-[Project directory](kitaboshi "dir") | [documentation](kitaboshi/README.org "doc")
+[Project Directory](./libraries/knurled_knob)
 
-## Thumb drive housing generator
+## milka_s_radius_gauge.scad
 
-Generates thumd/USB drive cases 
+Description: This is an OpenSCAD script to generate Milka's radius gauge with slight variations
 
-[Project directory](thumb_drive_housing "dir") | [documentation](thumb_drive_housing/README.org "doc")
+Updated: 2024-06-08T16:05:52+02:00
 
-## Hakko FX-888 soldering sponge template
+[Project Directory](./libraries/milka_s_radius_gauge)
 
-Generates a cutting soldering sponge template for the Hakko FX-888/FX-888D,
+## thumbdrive_housing.scad
 
-[Project directory](hakko_fx_888_soldering_sponge_template "dir") | [documentation](hakko_fx_888_soldering_sponge_template/README.org "doc")
+Description: Generates customizable USB drive cases
 
-## Milka's Radius Gauge generator
+Updated: 2024-06-08T16:05:52+02:00
 
-Generates inward/outward radius gauges.
+[Project Directory](./libraries/thumb_drive_housing)
 
-[Project directory](milka_s_radius_gauge "dir") | [documentation](milka_s_radius_gauge/README.org "doc")
+## parametric_trolley_token.scad
+
+Description: Parametric trolley token generator
+
+Updated: 2024-06-08T16:05:52+02:00
+
+[Project Directory](./libraries/trolley_token)
+
+---
+
+## Updating README.md
+
+To update the README.md file with the latest information from the README.org files in the
+repository, run the following command in the root directory of the repository:
+
+```bash
+bash update_readme.sh
+```
+
+This will generate a new README.md file with the updated information.
+
+Alternatively, you can copy the `update_readme.sh` script to your git hooks directory to
+automatically update the README.md file every time you commit changes. To do this, run the
+following commands:
+
+```bash
+cp update_readme.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
 
