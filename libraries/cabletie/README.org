@@ -26,7 +26,7 @@ The module ~cabletie()~ takes up to 6 parameters:
 
 Here is a demo of different cable tie sizes with or without lables:
 
-#+begin_example scad :file demo/cabletie_demo.png :colorscheme Cornfield :size 600,600 :eval no :results output
+#+begin_example scad :file demo/cabletie_demo.png :colorscheme Cornfield :size 600,600 :results output :eval no
   // cabletie.scad demo
   use <cabletie.scad>
 

@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 Description: A python script to convert simple SVG files into a list of coordinates
 
-Updated: 2024-06-08T16:16:51+02:00
+Updated: 2024-06-28T01:50:19+02:00
 
 [Project Directory](./utilities/svg_to_scad)
 # libraries
@@ -21,7 +21,7 @@ Updated: 2024-06-08T16:16:51+02:00
 
 Description: Generates simple, quick and easy to print TPU cable ties
 
-Updated: 2024-06-08T16:05:52+02:00
+Updated: 2024-06-09T23:37:30+02:00
 
 [Project Directory](./libraries/cabletie)
 
@@ -45,15 +45,15 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: Generates Ikea Skådis pegboard accessories
 
-Updated: 2024-06-08T14:57:47+02:00
+Updated: 2024-06-28T01:44:34+02:00
 
 [Project Directory](./libraries/ikea_skadis_pegboard_accessories)
 
-## kitaboshi_demo.scad
+## kitaboshi.scad
 
 Description: Barrel generator for the Kita-Boshi 2mm mechanical pencil
 
-Updated: 2024-06-08T16:10:29+02:00
+Updated: 2024-06-09T17:16:51+02:00
 
 [Project Directory](./libraries/kitaboshi)
 
@@ -69,7 +69,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: This is an OpenSCAD script to generate Milka's radius gauge with slight variations
 
-Updated: 2024-06-08T16:05:52+02:00
+Updated: 2024-06-28T01:44:34+02:00
 
 [Project Directory](./libraries/milka_s_radius_gauge)
 
@@ -108,7 +108,7 @@ following commands:
 
 ```bash
 cp update_readme.sh .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
+chmod u+x .git/hooks/pre-commit
 ```
 
 

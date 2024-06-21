@@ -91,7 +91,7 @@ following commands:
 
 \`\`\`bash
 cp update_readme.sh .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
+chmod u+x .git/hooks/pre-commit
 \`\`\`
 
 

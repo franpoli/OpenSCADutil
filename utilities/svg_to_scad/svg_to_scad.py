@@ -49,6 +49,11 @@ def parse_arguments():
         type=float, 
         help='Rotate the coordinates by the specified angle (in degrees).'
     )
+    parser.add_argument(
+        '-g', '--center-of-gravity', 
+        action='store_true', 
+        help='Center the coordinates at the center of gravity of the shape.'
+    )
     
     return parser.parse_args()
 
@@ -100,7 +105,18 @@ def rotate_coordinates(coordinates, angle):
     coordinates = np.dot(coordinates, rotation_matrix)
     return coordinates.tolist()
 
-def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate):
+def calculate_center_of_gravity(coordinates):
+    coordinates = np.array(coordinates)
+    centroid = np.mean(coordinates, axis=0)
+    return centroid
+
+def center_coordinates_at_gravity(coordinates):
+    centroid = calculate_center_of_gravity(coordinates)
+    coordinates = np.array(coordinates)
+    coordinates -= centroid
+    return coordinates.tolist()
+
+def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate, center_of_gravity):
     paths, attributes, svg_attributes = svgpathtools.svg2paths2(svg_file)
     coordinates = []
     
@@ -140,6 +156,10 @@ def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate):
     # Rotate the coordinates if requested
     if rotate is not None:
         coordinates = rotate_coordinates(np.array(coordinates), rotate)
+
+        # Center the coordinates at the center of gravity if requested
+    if center_of_gravity:
+        coordinates = center_coordinates_at_gravity(coordinates)
 
     return coordinates
 
@@ -185,7 +205,7 @@ def main():
     args = parse_arguments()
     
     # Convert the SVG to coordinates
-    coordinates = svg_to_coordinates(args.input, args.number_samples, args.closed, args.flip, args.scale, args.rotate)
+    coordinates = svg_to_coordinates(args.input, args.number_samples, args.closed, args.flip, args.scale, args.rotate, args.center_of_gravity)
 
     # Print the width and height
     coordinates_array = np.array(coordinates)
