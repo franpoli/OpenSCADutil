@@ -1,5 +1,5 @@
 #+STARTUP: indent content
-#+TITLE: kitaboshi_demo.scad
+#+TITLE: kitaboshi.scad
 #+DESCRIPTION: Barrel generator for the Kita-Boshi 2mm mechanical pencil
 #+LANGUAGE: us-en
 

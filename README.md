@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 Description: A python script to convert simple SVG files into a list of coordinates
 
-Updated: 2024-06-08T16:16:51+02:00
+Updated: 2024-06-09T23:34:09+02:00
 
 [Project Directory](./utilities/svg_to_scad)
 # libraries
@@ -21,7 +21,7 @@ Updated: 2024-06-08T16:16:51+02:00
 
 Description: Generates simple, quick and easy to print TPU cable ties
 
-Updated: 2024-06-08T16:05:52+02:00
+Updated: 2024-06-09T23:37:30+02:00
 
 [Project Directory](./libraries/cabletie)
 
@@ -49,11 +49,11 @@ Updated: 2024-06-08T14:57:47+02:00
 
 [Project Directory](./libraries/ikea_skadis_pegboard_accessories)
 
-## kitaboshi_demo.scad
+## kitaboshi.scad
 
 Description: Barrel generator for the Kita-Boshi 2mm mechanical pencil
 
-Updated: 2024-06-08T16:10:29+02:00
+Updated: 2024-06-09T17:16:51+02:00
 
 [Project Directory](./libraries/kitaboshi)
 
