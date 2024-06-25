@@ -19,8 +19,8 @@ distance_between_pegs = 40;
 
 // pegs options
 all_pegs = false; // [false,true] defines whether or not all pegs should be generated
-fullfill = true; // [false,true] defines wether ot not a peg should be full filled
-retainer = false; // [false,true] defines wether ot not if a retainer should be added to avoid pegs falling out easily
+fullfill = true; // [false,true] defines whether ot not a peg should be full filled
+retainer = false; // [false,true] defines whether ot not if a retainer should be added to avoid pegs falling out easily
 
 // Resolution parameters
 $fa = $preview ? $fa : 1;
@@ -731,7 +731,7 @@ module skadis_round_box(d = distance_between_pegs+pt-2*(pw+tolerance+minimum_wal
     skadis_o_holder(d = d+2*(minimum_wall()+t), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer);
 }
 
-/* A skadis rack takes up to heigth parameters
+/* A skadis rack takes up to height parameters
  * 1. d (numerical) - the unique diameter to be used
  * 2. d1 (numerical) - 1st diameter
  * 3. d2 (numerical) - 2nd diameter
@@ -807,7 +807,7 @@ module skadis_rack(d, d1 = 20, d2 = 10, n = 6, compact = false, all_pegs = all_p
 }
 
 /* A skadis bits serie takes up to 13 parameters
- * 1. h (numerical) - the heigth of the bits holder
+ * 1. h (numerical) - the height of the bits holder
  * 2. d (numerical) - the diameter of the first bit
  * 3. step (numerical) - the incrementation step for each successive bit
  * 4. n (numerical) - the number of bits the holder shall contain
@@ -828,51 +828,51 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
         ((1/2)*n*(2*d+(n-1)*step)+(n-1)*pw-((d+last_diameter)/2))/(n-1)*((n-1)*sqrt(1/3))+pw+d/2+last_diameter/2+pw :
         (1/2)*n*(2*d+(n-1)*step)+(n+1)*pw;
     skadis_bits_width = (compact) ? 2*last_diameter+3*pw : last_diameter+2*pw;
-    holder_heigth = (bottom) ? h+minimum_wall() : h;
+    holder_height = (bottom) ? h+minimum_wall() : h;
     translate([-skadis_bits_length/2, -((last_diameter+2*pw)/2+2*pw+tolerance1), 0]) {
         difference() {
             union () {
                 hull() {
                     hull() {
-                        translate([(last_diameter+2*pw)/2, 0, holder_heigth-2*chamfer()]) {
+                        translate([(last_diameter+2*pw)/2, 0, holder_height-2*chamfer()]) {
                             cylinder(h = 2*chamfer(), d = last_diameter+2*(pw+2*chamfer()));
                         }
-                        translate([(last_diameter+2*pw)/2, 0, holder_heigth-4*chamfer()]) {
+                        translate([(last_diameter+2*pw)/2, 0, holder_height-4*chamfer()]) {
                             cylinder(h = 2*chamfer(), d = last_diameter+2*pw);
                         }
                     }
                     if (compact == false) {
                         hull() { //last_diameter/2+pw
-                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_heigth-2*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_height-2*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*(pw+2*chamfer()));
                             }
-                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_heigth-4*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_height-4*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*pw);
                             }
                         }
                     }
                     else {
                         hull() {
-                            translate([(last_diameter+2*pw)/2, -(last_diameter+pw), holder_heigth-2*chamfer()]) {
+                            translate([(last_diameter+2*pw)/2, -(last_diameter+pw), holder_height-2*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*(pw+2*chamfer()));
                             }
-                            translate([(last_diameter+2*pw)/2, -(last_diameter+pw), holder_heigth-4*chamfer()]) {
+                            translate([(last_diameter+2*pw)/2, -(last_diameter+pw), holder_height-4*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*pw);
                             }
                         }
                         hull() {
-                            translate([skadis_bits_length-(last_diameter/2+pw), -(last_diameter+pw), holder_heigth-2*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), -(last_diameter+pw), holder_height-2*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*(pw+2*chamfer()));
                             }
-                            translate([skadis_bits_length-(last_diameter/2+pw), -(last_diameter+pw), holder_heigth-4*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), -(last_diameter+pw), holder_height-4*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*pw);
                             }
                         }
                         hull() {
-                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_heigth-2*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_height-2*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*(pw+2*chamfer()));
                             }
-                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_heigth-4*chamfer()]) {
+                            translate([skadis_bits_length-(last_diameter/2+pw), 0, holder_height-4*chamfer()]) {
                                 cylinder(h = 2*chamfer(), d = last_diameter+2*pw);
                             }
                         }
@@ -880,22 +880,22 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
                 }
                 hull() {
                     translate([(last_diameter+2*pw)/2, 0, 0]) {
-                        cylinder(h = holder_heigth, d = last_diameter+2*pw);
+                        cylinder(h = holder_height, d = last_diameter+2*pw);
                     }
                     if (compact == false) {
                         translate([skadis_bits_length-(last_diameter+2*pw)/2, 0, 0]) {
-                            cylinder(h = holder_heigth, d = last_diameter+2*pw);
+                            cylinder(h = holder_height, d = last_diameter+2*pw);
                         }
                     }
                     else {
                         translate([(last_diameter+2*pw)/2, -(last_diameter+pw), 0]) {
-                            cylinder(h = holder_heigth, d = last_diameter+2*pw);
+                            cylinder(h = holder_height, d = last_diameter+2*pw);
                         }
                         translate([skadis_bits_length-(last_diameter/2+pw), -(last_diameter+pw), 0]) {
-                            cylinder(h = holder_heigth, d = last_diameter+2*pw);
+                            cylinder(h = holder_height, d = last_diameter+2*pw);
                         }
                         translate([skadis_bits_length-(last_diameter/2+pw), 0, 0]) {
-                            cylinder(h = holder_heigth, d = last_diameter+2*pw);
+                            cylinder(h = holder_height, d = last_diameter+2*pw);
                         }
                     }
                 }
