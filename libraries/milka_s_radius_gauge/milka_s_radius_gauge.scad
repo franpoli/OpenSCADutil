@@ -55,8 +55,8 @@ dimensions = [ [  6.72,  5.68,  3.00, 2.40, 5.50, 3.0 ],   // M3=0
                [ 11.20,  8.72,  5.00, 4.00, 8.00, 5.0 ] ]; // M5=2
 
 // Default redering resolution
-$fa=1; // default minimum facet angle
-$fs=0.5; // default minimum facet size
+$fa = $preview ? 5 : 1; // default minimum facet angle
+$fs = $preview ? 2.5 : 0.5; // default minimum facet size
 
 // Main module
 module milka_radius_gauge( rstep = radius_step,
