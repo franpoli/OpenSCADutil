@@ -10,7 +10,7 @@
 
 - Allows fine-grained control over the number of samples for Bezier curves and arcs
 - Capability to output the results into a JSON file or a SCAD file wrapped into a polygon module.
-- Scaling, flipping, rotating capabilities.
+- Scaling, flipping, rotating, moving capabilities.
 - Display graph to visualize the generated result
 - Output final result dimensions
 

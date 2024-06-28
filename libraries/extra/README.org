@@ -1,0 +1,116 @@
+#+STARTUP: indent content
+#+TITLE: extra.scad
+#+DESCRIPTION: OpenSCAD Reusable Modules and Function Library
+#+LANGUAGE: us-en
+
+* About
+
+This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as
+creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts.
+
+* 2D
+** Circle Sector
+
+Create a circle sector given an angle from 0° ecluded to 360° included ~angle ∈ ] 0; 360 ]~:
+
+#+NAME: Create a Circle Sector Example
+#+begin_example scad :eval no
+  circle_sector(radius, start_angle, end_angle);
+#+end_example
+
+Parameters:
+
+- ~radius~: sector circle radius expressed in mm
+- ~start_angle~: sector start angle expressed in degrees
+- ~end_angle~: sector end angle expressed in degrees
+
+Note that the ~end_angle~ has to be greater than the ~start_angle~.  
+
+#+NAME: Create a Circle Sector Demo
+#+begin_src scad :file ./images/fig_circle_sector_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  minor_angle = 60;
+  straight_angle = 180;
+  major_angle = 240;
+  radius = 160;
+  start_angle = 45;
+
+  // Create a minor sector
+  translate([-400, -150, 0]) {
+    circle_sector(2*radius, start_angle, start_angle + minor_angle);
+  }
+
+  // Create a semicircula sector
+  translate([0, 0, 0])
+  circle_sector(radius, start_angle, start_angle + straight_angle);
+
+  // Create a major sector
+  translate([300, 0, 0]) {
+    circle_sector(radius, start_angle, start_angle + major_angle);
+  }
+#+end_src
+
+#+RESULTS: Create a Circle Sector Demo
+[[file:./images/fig_circle_sector_demo.png]]
+
+* 3D
+** Cylinder Sector
+
+Create a cylinder sector given an angle from 0° ecluded to 360° included ~angle ∈ ] 0; 360 ]~:
+
+#+NAME: Create a Circle Sector Example
+#+begin_example scad
+  cylinder_sector(radius, height, start_angle, end_angle);
+#+end_example
+
+Parameters:
+
+- ~radius~: cylinder radius expressed in mm
+- ~height~: Cylinder height expressed in mm
+- ~start_angle~: sector start angle expressed in degrees
+- ~end_angle~: sector end angle expressed in degrees
+
+#+NAME: Create a Cylinder Sector Demo
+#+begin_src scad :file ./images/fig_cylinder_sector_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  cylinder_sector(100, 60, 0, 290);
+#+end_src
+
+#+RESULTS: Create a Cylinder Sector Demo
+[[file:./images/fig_cylinder_sector_demo.png]]
+
+* Transformations
+** Symmetry Plane
+
+Mirrors the child object along a plane defined by the Cartesian axis (XY, XZ, or YZ) while retaining the original object.
+
+#+NAME: Symetry Plane Example
+#+begin_example scad :eval no
+  symmetry_plane(plane) children_object();
+#+end_example
+
+Parameters:
+
+- ~XY~, ~xy~, ~YX~ or ~yx~: the plane XY
+- ~XZ~, ~xz~, ~ZX~ or ~zx~: the plane XZ
+- ~YZ~, ~yz~, ~ZY~ or ~zy~: the plane YZ
+
+#+NAME: Symetry Plane Demo
+#+begin_src scad :file ./images/fig_symmetry_plane_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  module xy_object() {
+    r = 10;
+    translate([0, 40, r]) {
+      sphere(r = 10);
+    }
+  }
+
+  symmetry_plane("XZ") xy_object();
+  symmetry_plane("YZ") translate([15, 0, 0]) cube(size = [10, 20, 10]);
+#+end_src
+
+#+RESULTS: Symetry Plane Demo
+[[file:./images/fig_symmetry_plane_demo.png]]

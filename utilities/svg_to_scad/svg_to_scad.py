@@ -29,7 +29,7 @@ def parse_arguments():
         help='Output file name (default: coordinates.scad).'
     )
     parser.add_argument(
-        '-c', '--closed', 
+        '-c', '--close', 
         action='store_true', 
         help='Close the path by adding the first point to the end if not already closed.'
     )
@@ -116,7 +116,7 @@ def center_coordinates_at_gravity(coordinates):
     coordinates -= centroid
     return coordinates.tolist()
 
-def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate, center_of_gravity):
+def svg_to_coordinates(svg_file, num_samples, close, flip, scale, rotate, center_of_gravity):
     paths, attributes, svg_attributes = svgpathtools.svg2paths2(svg_file)
     coordinates = []
     
@@ -129,7 +129,7 @@ def svg_to_coordinates(svg_file, num_samples, closed, flip, scale, rotate, cente
                 coordinates.extend(sample_segment(segment, num_samples))
             # Add other segment types if needed
     
-    if closed and coordinates:
+    if close and coordinates:
         if coordinates[0] != coordinates[-1]:
             coordinates.append(coordinates[0])
 
@@ -205,7 +205,7 @@ def main():
     args = parse_arguments()
     
     # Convert the SVG to coordinates
-    coordinates = svg_to_coordinates(args.input, args.number_samples, args.closed, args.flip, args.scale, args.rotate, args.center_of_gravity)
+    coordinates = svg_to_coordinates(args.input, args.number_samples, args.close, args.flip, args.scale, args.rotate, args.center_of_gravity)
 
     # Print the width and height
     coordinates_array = np.array(coordinates)
