@@ -93,9 +93,17 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2024-06-28T20:31:51+02:00
+Updated: 2024-07-01T18:51:47+02:00
 
 [Project Directory](./libraries/extra)
+
+## hakko_fx_888d_magnetic_tips_holder.scad
+
+Description: Hakko FX-888D Magnetic Tips Holder
+
+Updated: 2024-07-01T18:51:47+02:00
+
+[Project Directory](./libraries/hakko_fx_888d_magnetic_tips_holder)
 
 ---
 

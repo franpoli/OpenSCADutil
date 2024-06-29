@@ -3,7 +3,7 @@
 #+DESCRIPTION: OpenSCAD Reusable Modules and Function Library
 #+LANGUAGE: us-en
 
-* About
+* Overview
 
 This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as
 creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts.
@@ -114,3 +114,29 @@ Parameters:
 
 #+RESULTS: Symetry Plane Demo
 [[file:./images/fig_symmetry_plane_demo.png]]
+
+* Functions
+** Degrees to radian
+
+#+NAME: Converting Degrees to Radians
+#+begin_example scad
+  use <extra.scad>
+
+  angle_deg = 45;
+  angle_rad = deg_to_rad(angle_deg);
+  echo("Angle in degrees:", angle_deg);
+  echo("Angle in radians:", angle_rad);
+#+end_example
+
+** Radians to degrees
+
+#+NAME: Converting Degrees to Radians
+#+begin_example scad
+  use <extra.scad>
+
+  angle_rad = 120;
+  angle_deg = rad_to_deg(angle_rad);
+  echo("Angle in radians:", angle_rad);
+  echo("Angle in degrees:", angle_deg);
+#+end_example
+

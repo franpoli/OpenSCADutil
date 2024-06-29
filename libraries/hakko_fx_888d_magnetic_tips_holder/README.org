@@ -1,0 +1,54 @@
+#+STARTUP: indent content
+#+TITLE: hakko_fx_888d_magnetic_tips_holder.scad
+#+DESCRIPTION: Hakko FX-888D Magnetic Tips Holder
+#+LANGUAGE: us-en
+
+* Description
+
+This magnetic tips holder for soldering stations is inspired by [[https://www.thingiverse.com/thing:2702809][amcanhazdeath's Hakko Tip Holder]] and designed to be compatible with various [[https://www.hakko.com/english/products/hakko_fx888d.html][Hakko models]] (supposedly the supported models are ~FH800-01BY~ and ~FH800-03BY~) please check dimensions for compatibility.
+
+The design aims to enhance practicality while maintaining the "spirit" of the original Hakko design.
+
+* Print Instructions
+
+To complete this build, you will need:
+
+5 disc magnets of diameter 8 mm and height 4 mm ([[https://www.supermagnete.de/eng/disc-magnets-neodymium/disc-magnet-8mm-4mm_S-08-04-N][Neodymium N35]] or similar strength recommended)
+Glue suitable for adhering magnets to plastic
+
+* Assembly
+
+Glue the magnets onto the designated locations on the back of the holder.
+
+The clip can be used to secure the tip holder in place on your soldering station (refer to attached photographs for illustration).
+
+#+NAME: Image showing the assembled magnetic tips holder
+[[file:images/final_results_hakko_fx-888d_magnetic_tips_holder_000.webp]]
+
+#+NAME: Assembly step 1
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_001.webp]]
+
+#+NAME: Assembly step 2
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_002.webp]]
+
+#+NAME: Assembly step 3
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_003.webp]]
+
+#+NAME: Assembly step 4
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_004.webp]]
+
+#+NAME: Assembly step 5
+file:images/assembly_hakko_fx-888d_magnetic_tips_holder_005.webp
+
+#+NAME: Assembly step 6
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_006.webp]]
+
+#+NAME: Assembly step 7
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_007.webp]]
+
+* OpenSCAD Cutomizer
+
+Some adjustements can be made from the customizer in OpenSCAD.
+
+#+NAME: Customizing the Hakko Magnetic Tips Holder in OpenSCAD
+[[file:images/hakko_magnetic_tips_holder_openscad_customizer.gif]]
