@@ -23,28 +23,28 @@ Glue the magnets onto the designated locations on the back of the holder.
 The clip can be used to secure the tip holder in place on your soldering station (refer to attached photographs for illustration).
 
 #+NAME: Image showing the assembled magnetic tips holder
-[[file:images/final_results_hakko_fx-888d_magnetic_tips_holder_000.webp]]
+[[file:images/final_results_hakko_fx-888d_magnetic_tips_holder_000.jpg]]
 
 #+NAME: Assembly step 1
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_001.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_001.jpg]]
 
 #+NAME: Assembly step 2
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_002.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_002.jpg]]
 
 #+NAME: Assembly step 3
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_003.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_003.jpg]]
 
 #+NAME: Assembly step 4
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_004.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_004.jpg]]
 
 #+NAME: Assembly step 5
-file:images/assembly_hakko_fx-888d_magnetic_tips_holder_005.webp
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_005.jpg]]
 
 #+NAME: Assembly step 6
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_006.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_006.jpg]]
 
 #+NAME: Assembly step 7
-[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_007.webp]]
+[[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_007.jpg]]
 
 * OpenSCAD Cutomizer
 
