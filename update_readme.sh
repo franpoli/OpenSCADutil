@@ -22,12 +22,15 @@ extract_info() {
     echo "$title|$description|$updated|$dir"
 }
 
-# Function to generate the table of contents
-generate_toc() {
+# Function to generate the table of contents for a category with project sorting
+generate_toc_sorted() {
     local project_dir="$1"
     local toc=""
 
-    for readme_file in $(find "$project_dir" -name "README.org"); do
+    # Find all README.org files within the category
+    local readme_files=($(find "$project_dir" -name "README.org" | sort -nr)) 
+
+    for readme_file in "${readme_files[@]}"; do
         local info=$(extract_info "$readme_file")
         IFS='|' read -r title description updated dir <<< "$info"
         
@@ -56,7 +59,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 EOL
 
-# Generate the table of contents for each category
+# Generate the table of contents with sorted projects for each category
 for category in $(find "$PROJECTS_DIR" -mindepth 1 -maxdepth 1 -type d); do
     category_name=$(basename "$category")
     # Skip unwanted directories
@@ -65,7 +68,7 @@ for category in $(find "$PROJECTS_DIR" -mindepth 1 -maxdepth 1 -type d); do
     fi
 
     echo "# $category_name" >> "$OUTPUT_FILE"
-    toc=$(generate_toc "$category")
+    toc=$(generate_toc_sorted "$category")
     echo -e "$toc" >> "$OUTPUT_FILE"
 done
 
