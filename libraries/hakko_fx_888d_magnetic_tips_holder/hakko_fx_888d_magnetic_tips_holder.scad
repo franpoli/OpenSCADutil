@@ -95,8 +95,10 @@ module 01by_shape(shape_offset = 0) {
 }
 
 module 03by_shape(shape_offset = 0) {
-  offset(r = shape_offset) {
-    translate([0, 1.8, 0]) 03by();
+  scale([1, 1.015, 1]) offset(r = 0.5) { // Suggested adjustment by 03by user
+    offset(r = shape_offset) {
+      translate([0, 1.8, 0]) 03by();
+    }
   }
 }
 
@@ -302,4 +304,3 @@ module hakko_fx_888d_magnetic_tips_holder(z_position) {
 }
 
 hakko_fx_888d_magnetic_tips_holder(clips_height_position);
-
