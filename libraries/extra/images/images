@@ -1,0 +1,6 @@
+  /home/fpo/Development/maintainer/OpenSCADutil/libraries/extra/images:
+  drwxr-xr-x. 1 fpo fpo   226 Aug  4 17:00 .
+  drwxr-xr-x. 1 fpo fpo   120 Aug  4 17:02 ..
+  -rw-r--r--. 1 fpo fpo  7037 Jun 28 23:34 fig_circle_sector_demo.png
+  -rw-r--r--. 1 fpo fpo  7640 Jun 28 23:34 fig_cylinder_sector_demo.png
+  -rw-r--r--. 1 fpo fpo 13311 Jun 28 23:34 fig_symmetry_plane_demo.png

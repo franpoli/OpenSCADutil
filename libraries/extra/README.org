@@ -35,24 +35,80 @@ Note that the ~end_angle~ has to be greater than the ~start_angle~.
   major_angle = 240;
   radius = 160;
   start_angle = 45;
+  thickness = 3;
 
   // Create a minor sector
-  translate([-400, -150, 0]) {
+  linear_extrude(thickness) translate([-400, -150, 0]) {
     circle_sector(2*radius, start_angle, start_angle + minor_angle);
   }
 
   // Create a semicircula sector
-  translate([0, 0, 0])
-  circle_sector(radius, start_angle, start_angle + straight_angle);
+  linear_extrude(thickness) translate([0, 0, 0]) {
+    circle_sector(radius, start_angle, start_angle + straight_angle);
+  }
 
   // Create a major sector
-  translate([300, 0, 0]) {
+  linear_extrude(thickness) translate([300, 0, 0]) {
     circle_sector(radius, start_angle, start_angle + major_angle);
   }
 #+end_src
 
 #+RESULTS: Create a Circle Sector Demo
 [[file:./images/fig_circle_sector_demo.png]]
+
+** Isosceles Trapezium
+
+Create an isosceles trapezium with optional centering:
+
+#+NAME: Create an isosceles trapezium with optional centering
+#+begin_example scad :eval no
+  isosceles_trapezium(base, top, height, center);
+#+end_example
+
+Parameters:
+
+- ~base~ or ~b~: Length of the bottom of the base (default 0).
+- ~top~ or ~b2~: Length of the top of the trapezium (default 0).
+- ~height~ or ~h~: Height of the trapezium (default 0).
+- ~center~: Boolean to center the trapezium on the axes (default false).
+
+#+begin_src scad :file ./images/fig_isosceles_trapezium_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  linear_extrude(0.5) {
+    isosceles_trapezium(base=36, top=26, height=24, center=true);
+  }
+  #+end_src
+
+#+RESULTS:
+[[file:./images/fig_isosceles_trapezium_demo.png]]
+
+** Isoscele Trapezium
+
+Create a rectangle trapezium with optional centering
+
+#+NAME: Create an rectangle trapezium with optional centering
+#+begin_example scad :eval no
+  rectangle_trapezium(base, top, height, center);
+#+end_example
+
+Parameters:
+
+- ~base~ or ~b~: Length of the bottom of the base (default 0).
+- ~top~ or ~b2~: Length of the top of the trapezium (default 0).
+- ~height~ or ~h~: Height of the trapezium (default 0).
+- ~center~: Boolean to center the trapezium on the axes (default false).
+
+#+begin_src scad :file ./images/fig_rectangle_trapezium_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  linear_extrude(0.5) {
+    rectangle_trapezium(base=26, top=36, height=24, center=true);
+  }
+  #+end_src
+
+  #+RESULTS:
+  [[file:./images/fig_rectangle_trapezium_demo.png]]
 
 * 3D
 ** Cylinder Sector
@@ -75,7 +131,7 @@ Parameters:
 #+begin_src scad :file ./images/fig_cylinder_sector_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
-  cylinder_sector(100, 60, 0, 290);
+  cylinder_sector(100, 10, 0, 290);
 #+end_src
 
 #+RESULTS: Create a Cylinder Sector Demo

@@ -47,45 +47,51 @@ module circle_sector(radius, start_angle, end_angle) {
   }
 }
 
-/// isosceles_trapezium(base1, base2, height)
-/// Module to create an isosceles trapezium with optional centering.
-/// Parameters:
-/// - base1 or b1: Length of the bottom base (default 0).
-/// - base2 or b2: Length of the top base (default 0).
-/// - height or h: Height of the trapezium (default 0).
-/// - center: Boolean to center the trapezium on the axes (default false).
-///
-/// Usage examples:
-/// - Positional arguments:
-///   isosceles_trapezium(10, 5, 6, center=true);
-///
-/// - Named parameters (short names):
-///   isosceles_trapezium(b1=10, b2=5, h=6, center=true);
-///
-/// - Named parameters (full names):
-///   isosceles_trapezium(base1=10, base2=5, height=6, center=false);
-module isosceles_trapezium(base1=0, base2=0, height=0, b1=0, b2=0, h=0, center=false) {
-  b1 = base1 != 0 ? base1 : b1;
-  b2 = base2 != 0 ? base2 : b2;
+// Create an isosceles trapezium with optional centering
+module isosceles_trapezium(base=0, top=0, height=0, b=0, t=0, h=0, center=false) {
+  b = base != 0 ? base : b;
+  t = top != 0 ? top : t;
   h = height != 0 ? height : h;
 
   // Assertions to ensure valid input
-  assert(b1 > 0, "base1 (or b1) must be greater than 0");
-  assert(b2 > 0, "base2 (or b2) must be greater than 0");
-  assert(h > 0, "height (or h) must be greater than 0");
-  
+  if (b <= 0 || t <= 0 || h <= 0) {
+    assert(false, "base, top or height must be greater than 0");
+  }
+
   // Calculate offset for centering
-  x_offset = center ? -b1 / 2 : 0;
+  x_offset = center ? -b / 2 : 0;
   y_offset = center ? -h / 2 : 0;
   
   polygon(points = [
                     [x_offset, y_offset],
-                    [x_offset + b1, y_offset],
-                    [x_offset + (b1 + b2) / 2, y_offset + h],
-                    [x_offset + (b1 - b2) / 2, y_offset + h]
+                    [x_offset + b, y_offset],
+                    [x_offset + (b + t) / 2, y_offset + h],
+                    [x_offset + (b - t) / 2, y_offset + h]
                     ]);
 }
 
+// Create a rectangle trapezium with optional centering
+module rectangle_trapezium(base=0, top=0, height=0, center=false) {
+  b = base != 0 ? base : b;
+  t = top != 0 ? top : t;
+  h = height != 0 ? height : h;
+
+  // Assertions to ensure valid input
+  if (b <= 0 || t <= 0 || h <= 0) {
+    assert(false, "base, top or height must be greater than 0");
+  }
+
+  // Calculate offset for centering
+  x_offset = center ? -b / 2 : 0;
+  y_offset = center ? -h / 2 : 0;
+
+  polygon(points=[
+                  [x_offset, y_offset],
+                  [x_offset + b, y_offset],
+                  [x_offset + t, y_offset + h],
+                  [x_offset, y_offset + h]
+                  ]);
+}
 
 /* 3D */
 
