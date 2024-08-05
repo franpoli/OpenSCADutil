@@ -5,11 +5,10 @@
 
 * Overview
 
-This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as
-creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts.
+This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts.
 
 * 2D
-** Circle Sector
+** Circle sector
 
 Create a circle sector given an angle from 0° ecluded to 360° included ~angle ∈ ] 0; 360 ]~:
 
@@ -26,7 +25,7 @@ Parameters:
 
 Note that the ~end_angle~ has to be greater than the ~start_angle~.  
 
-#+NAME: Create a Circle Sector Demo
+#+NAME: Circle sector demo
 #+begin_src scad :file ./images/fig_circle_sector_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
@@ -53,10 +52,10 @@ Note that the ~end_angle~ has to be greater than the ~start_angle~.
   }
 #+end_src
 
-#+RESULTS: Create a Circle Sector Demo
+#+RESULTS: Circle sector demo
 [[file:./images/fig_circle_sector_demo.png]]
 
-** Isosceles Trapezium
+** Isosceles trapezium
 
 Create an isosceles trapezium with optional centering:
 
@@ -72,6 +71,7 @@ Parameters:
 - ~height~ or ~h~: Height of the trapezium (default 0).
 - ~center~: Boolean to center the trapezium on the axes (default false).
 
+#+NAME: Isosceles trapezium demo
 #+begin_src scad :file ./images/fig_isosceles_trapezium_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
@@ -80,10 +80,10 @@ Parameters:
   }
   #+end_src
 
-#+RESULTS:
-[[file:./images/fig_isosceles_trapezium_demo.png]]
+  #+RESULTS: Isosceles trapezium demo
+  [[file:./images/fig_isosceles_trapezium_demo.png]]
 
-** Isoscele Trapezium
+** Isoscele trapezium
 
 Create a rectangle trapezium with optional centering
 
@@ -99,6 +99,7 @@ Parameters:
 - ~height~ or ~h~: Height of the trapezium (default 0).
 - ~center~: Boolean to center the trapezium on the axes (default false).
 
+#+NAME: Rectangle trapezium demo
 #+begin_src scad :file ./images/fig_rectangle_trapezium_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
@@ -107,16 +108,16 @@ Parameters:
   }
   #+end_src
 
-  #+RESULTS:
+  #+RESULTS: Rectangle trapezium demo
   [[file:./images/fig_rectangle_trapezium_demo.png]]
-
+  
 * 3D
 ** Cylinder Sector
 
 Create a cylinder sector given an angle from 0° ecluded to 360° included ~angle ∈ ] 0; 360 ]~:
 
-#+NAME: Create a Circle Sector Example
-#+begin_example scad
+#+NAME: Create a circle sector
+#+begin_example scad :eval no
   cylinder_sector(radius, height, start_angle, end_angle);
 #+end_example
 
@@ -127,18 +128,18 @@ Parameters:
 - ~start_angle~: sector start angle expressed in degrees
 - ~end_angle~: sector end angle expressed in degrees
 
-#+NAME: Create a Cylinder Sector Demo
+#+NAME: Cylinder sector demo
 #+begin_src scad :file ./images/fig_cylinder_sector_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
   cylinder_sector(100, 10, 0, 290);
 #+end_src
 
-#+RESULTS: Create a Cylinder Sector Demo
+#+RESULTS: Cylinder sector demo
 [[file:./images/fig_cylinder_sector_demo.png]]
 
 * Transformations
-** Symmetry Plane
+** Symmetry plane
 
 Mirrors the child object along a plane defined by the Cartesian axis (XY, XZ, or YZ) while retaining the original object.
 
@@ -153,7 +154,7 @@ Parameters:
 - ~XZ~, ~xz~, ~ZX~ or ~zx~: the plane XZ
 - ~YZ~, ~yz~, ~ZY~ or ~zy~: the plane YZ
 
-#+NAME: Symetry Plane Demo
+#+NAME: Symetry plane demo
 #+begin_src scad :file ./images/fig_symmetry_plane_demo.png :colorscheme Cornfield :size 400,400 :exports both
   use <extra.scad>
 
@@ -168,31 +169,311 @@ Parameters:
   symmetry_plane("YZ") translate([15, 0, 0]) cube(size = [10, 20, 10]);
 #+end_src
 
-#+RESULTS: Symetry Plane Demo
+#+RESULTS: Symetry plane demo
 [[file:./images/fig_symmetry_plane_demo.png]]
 
+* Cartesian coordinate system
+
+Some visualization modules are available to illustrate vector operations.   
+
+** Line illustration
+
+Draw a line segment given two points, with an optional parameter to extend the line beyond these points.
+
+#+NAME: Draw a line given two points
+#+begin_src scad :eval no
+  line_illustration(point1, point2, thickness, extend = false, ext_factor = 1);
+#+end_src
+
+Parameters:
+
+- ~point1~: the first point of the line [x0, y0, z0]
+- ~point2~: the second point of the line [x1, y1, z1]
+- ~thickness~: the thickness of the line
+- ~extend~: optional parameter to extend the line beyond the given points
+- ~ext_factor~: optional parameter that is the multiplication factor for the line extention
+
+#+NAME: Line demo
+#+begin_src scad :file ./images/fig_line_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  th = 1;
+  p1 = [1, 2, 3];
+  p2 = [10, 20, 30];
+
+  line_illustration(p1, p2, th);
+  translate([10, 0, 0]) line_illustration(p1, p2, th, extend = true);
+#+end_src
+
+#+RESULTS: Line demo
+[[file:./images/fig_line_demo.png]]
+
+** Vector illustration
+
+Draw a vector with its direction arrow.
+
+#+NAME: Draw a vector with its direction arrow
+#+begin_src scad :eval no
+  vector_illustration(point1, point2, thickness);
+#+end_src
+
+Parameters:
+
+- ~point1~: the first point of the line [x0, y0, z0]
+- ~point2~: the second point of the line [x1, y1, z1]
+- ~thickness~: the thickness of the line
+
+#+NAME: Vector demo
+#+begin_src scad :file ./images/fig_vector_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  th = 0.3;
+  p1 = [1, 2, 3];
+  p2 = [10, 20, 30];
+
+  vector_illustration(p1, p2, th);
+#+end_src
+
+#+RESULTS: Vector demo
+[[file:./images/fig_vector_demo.png]]
+
+** Vector components
+
+Draw a vector with its direction arrow and vector components.
+
+#+NAME: Draw a vector with its direction arrow and vector components
+#+begin_src scad :eval no
+  vector_components_illustartion(point1, point2, thickness, bounding_box = false);
+#+end_src
+
+Parameters:
+
+- ~point1~: the first point of the line [x0, y0, z0]
+- ~point2~: the second point of the line [x1, y1, z1]
+- ~thickness~: the thickness of the line
+- ~bounding_box~: optional parameter to draw the vectors boundary box 
+
+#+NAME: Vector components demo
+#+begin_src scad :file ./images/fig_vector_components_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  th = 0.3;
+  p1 = [1, 2, 3];
+  p2 = [10, 20, 30];
+
+  vector_illustration(p1, p2, th);
+  vector_components_illustartion(p1, p2, th, boundary_box = true);
+#+end_src
+
+#+RESULTS: Vector components demo
+[[file:./images/fig_vector_components_demo.png]]
+
 * Functions
-** Degrees to radian
+** Degrees to radians
 
 #+NAME: Converting Degrees to Radians
-#+begin_example scad
+#+begin_src scad :file ./demo/converting_degrees_to_radians.echo :tangle ./demo/converting_degrees_to_radians.scad :results file :exports both
   use <extra.scad>
 
   angle_deg = 45;
   angle_rad = deg_to_rad(angle_deg);
   echo("Angle in degrees:", angle_deg);
   echo("Angle in radians:", angle_rad);
-#+end_example
+#+end_src
+
+#+RESULTS: Converting Degrees to Radians
+[[file:./demo/converting_degrees_to_radians.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/converting_degrees_to_radians.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Angle in degrees:", 45
+: ECHO: "Angle in radians:", 0.785398
 
 ** Radians to degrees
 
-#+NAME: Converting Degrees to Radians
-#+begin_example scad
+#+NAME: Converting Radians to Degrees
+#+begin_src scad :file ./demo/converting_radians_to_degrees.echo :tangle ./demo/converting_radians_to_degrees.scad :results file :exports both
   use <extra.scad>
 
-  angle_rad = 120;
+  angle_rad = 0.785398;
   angle_deg = rad_to_deg(angle_rad);
   echo("Angle in radians:", angle_rad);
   echo("Angle in degrees:", angle_deg);
-#+end_example
+#+end_src
 
+#+RESULTS: Converting Radians to Degrees
+[[file:./demo/converting_radians_to_degrees.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/converting_radians_to_degrees.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Angle in radians:", 0.785398
+: ECHO: "Angle in degrees:", 45
+
+** Cross product (or vector product)
+
+#+NAME: Calculate the cross product of two vectors
+#+begin_src scad :file ./demo/calculate_the_cross_product.echo :tangle ./demo/calculate_the_cross_product.scad :results file :exports both
+  use <extra.scad>
+
+  v1 = [20, 0, 0];
+  v2 = [-10, 1.2, 0];
+
+  v1_x_v2 = cross(v1, v2);
+
+  echo("v1 x v2", v1_x_v2);
+#+end_src
+
+#+RESULTS: Calculate the cross product of two vectors
+[[file:./demo/calculate_the_cross_product.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/calculate_the_cross_product.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "v1 x v2", [0, 0, 24]
+
+#+NAME: Calculate the cross product of two vectors illustration
+#+begin_src scad :file ./images/fig_calculate_the_cross_product.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  v1 = [20, 0, 0];
+  v2 = [-10, 1.2, 0];
+
+  v1_x_v2 = cross(v1, v2);
+
+  origin = [0, 0, 0];
+  thickness = 0.5;
+
+  color("Blue", 1.0) vector_illustration(origin, v1, thickness);
+  color("Green", 1.0) vector_illustration(origin, v2, thickness);
+  color("Purple", 1.0) vector_illustration(origin, v1_x_v2, thickness);
+#+end_src
+
+#+RESULTS: Calculate the cross product of two vectors illustration
+[[file:./images/fig_calculate_the_cross_product.png]]
+
+** Vector addition
+
+#+NAME: Calculate the vector addition
+#+begin_src scad :file ./demo/calculate_the_vector_addition.echo :tangle ./demo/calculate_the_vector_addition.scad :results file :exports both
+  use <extra.scad>
+
+  p1 = [3, 16, 15];
+  p2 = [23, 26, 10];
+
+  v = vector_addition(p1, p2);
+
+  echo("Displacement vector", v);
+#+end_src
+
+#+RESULTS: Calculate the vector addition
+[[file:./demo/calculate_the_vector_addition.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/calculate_the_vector_addition.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Displacement vector", [26, 42, 25]
+
+#+NAME: Calculate the vector addition illustration
+#+begin_src scad :file ./images/fig_calculate_the_vector_addition.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  p1 = [3, 16, 15];
+  p2 = [23, 26, 10];
+
+  v = vector_addition(p1, p2);
+
+  origin = [0, 0, 0];
+  thickness = 0.5;
+
+  color("Red", 1.0) vector_illustration(origin, p1, thickness);
+  translate(p1) color("Green", 1.0) vector_illustration(origin, p2, thickness);
+  color("Yellow", 1.0) vector_illustration(origin, v, thickness);
+#+end_src
+
+#+RESULTS: Calculate the vector addition illustration
+[[file:./images/fig_calculate_the_vector_addition.png]]
+
+#+NAME: Vector substraction example by adding negative p2 to p1
+#+begin_src scad :file ./images/fig_vector_substraction_example.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  origin = [0, 0, 0];
+
+  p1 = [3, 16, 15];
+  p2 = [23, 26, 10];
+  np2 = (-1)*p2;
+  v = vector_addition(p1, np2);
+
+  thickness = 0.5;
+
+  color("Red", 1.0) vector_illustration(origin, p1, thickness);
+  translate(p1) {
+    color("Cyan", 1.0) vector_illustration(origin, np2, thickness);
+  }
+  color("Yellow", 1.0) vector_illustration(origin, v, thickness);
+#+end_src
+
+#+RESULTS: Vector substraction example by adding negative p2 to p1
+[[file:./images/fig_vector_substraction_example.png]]
+
+** Euclidean norm
+
+#+NAME: Calculate the Euclidean norm
+#+begin_src scad :file ./demo/calculate_the_euclidean_norm.echo :tangle ./demo/calculate_the_euclidean_norm.scad :results file :exports both
+  use <extra.scad>
+
+  point1 = [3, 6, 9];
+  point2 = [33, 66, 99];
+
+  v = vector(point1, point2);
+  n = norm(v);
+
+  echo("Vector v", v);
+  echo("norm(v)", n);
+#+end_src
+
+#+RESULTS: Calculate the Euclidean norm
+[[file:./demo/calculate_the_euclidean_norm.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/calculate_the_euclidean_norm.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Vector v", [30, 60, 90]
+: ECHO: "norm(v)", 112.25
+
+** Unit vector
+
+#+NAME: Calculate the unit vector
+#+begin_src scad :file ./demo/calculate_the_unit_vector.echo :tangle ./demo/calculate_the_unit_vector.scad :results file :exports both
+  use <extra.scad>
+
+  v = [30, 60, 90];
+  n = norm(v);
+  u = unit_vector(v);
+
+  echo("vector", v);
+  echo("unit vector", u);
+#+end_src
+
+#+RESULTS: Calculate the unit vector
+[[file:./demo/calculate_the_unit_vector.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/calculate_the_unit_vector.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "vector", [30, 60, 90]
+: ECHO: "unit vector", [0.267261, 0.534522, 0.801784]

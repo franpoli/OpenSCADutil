@@ -127,3 +127,140 @@ function deg_to_rad(deg) = deg * PI / 180;
 
 // Function to convert radians to degrees
 function rad_to_deg(rad) = rad * 180 / PI;
+
+// Function to calculate dot (saclar) product
+function dot(v1, v2) = v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+
+// Function to calculate cross product
+function cross(v1, v2) = [v1[1] * v2[2] - v1[2] * v2[1],
+                          v1[2] * v2[0] - v1[0] * v2[2],
+                          v1[0] * v2[1] - v1[1] * v2[0]];
+
+// Function to add vectors
+function vector_addition(point1, point2) =
+  [point2[0] + point1[0], point2[1] + point1[1], point2[2] + point1[2]];
+
+// Function to displace vectors
+function vector_displacement(point1, point2) =
+  [point2[0] - point1[0], point2[1] - point1[1], point2[2] - point1[2]];
+
+// Function to calculate Euclidean norm
+function norm(v) = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+
+// Function to calculate the unit vector
+function unit_vector(v) =
+  let (n = norm(v))
+  n == 0 ? [0, 0, 0] : [v[0] / n, v[1] / n, v[2] / n];
+
+/* Cartesian Coordinate System */
+
+// Draw a line segment given two points, with an optional parameter to extend the line beyond these points.
+module line_illustration(point1, point2, thickness, extend = false, ext_factor = 1) {
+  // Calculate vector from two points
+  v = vector_displacement(point1, point2);
+
+  // Calculate unit vector and magnitude of the line segment
+  u = unit_vector(v);
+  len_v = norm(v);
+
+  // If extend is true, calculate extension points
+  if (extend) {
+    ext_point1 = [point1[0] - ext_factor * v[0], point1[1] - ext_factor * v[1], point1[2] - ext_factor * v[2]];
+    ext_point2 = [point2[0] + ext_factor * v[0], point2[1] + ext_factor * v[1], point2[2] + ext_factor * v[2]];
+
+    hull() {
+      translate([ext_point1[0], ext_point1[1], ext_point1[2]]) sphere(d = thickness);
+      translate([point1[0], point1[1], point1[2]]) sphere(d = thickness);
+      translate([point2[0], point2[1], point2[2]]) sphere(d = thickness);
+      translate([ext_point2[0], ext_point2[1], ext_point2[2]]) sphere(d = thickness);
+    }
+  } else { // If extend is false, draw the line segment
+    hull() {
+      translate([point1[0], point1[1], point1[2]]) sphere(d = thickness);
+      translate([point2[0], point2[1], point2[2]]) sphere(d = thickness);
+    }
+  }
+}
+
+// Draw a vector with arrow
+module vector_illustration(point1, point2, thickness) {  
+  // Calculate vector direction
+  v = vector_displacement(point1, point2);
+
+  // Normalized direction vector
+  direction = unit_vector(v);
+  
+  // Reference direction (z-axis)
+  ref_dir = [0, 0, 1];
+  
+  // Calculate the axis of rotation using cross product
+  rotation_axis = cross(ref_dir, direction);
+  
+  // Calculate the angle of rotation using dot product
+  angle = acos(dot(ref_dir, direction));
+
+  color("Purple", 1.0) {
+    line_illustration(point1, point2, thickness);
+    translate([point2[0], point2[1], point2[2]]) {
+      // Rotate around the calculated axis and angle
+      if (norm(v) > 0) {
+        rotate(a = angle, v = rotation_axis) {
+          arrow_illustration(thickness);
+        }
+      }
+    }
+  }
+
+  // Arrow vector representation
+  module arrow_illustration(thickness) {
+    hull() {
+      sphere(d = thickness);
+      translate([0, 0, -4*thickness]) {
+        cylinder(h = 1*thickness, d1 = thickness, d2 = 3*thickness);
+      }
+    }
+  }
+}
+
+// Cross illustration that can be used to highlight points 
+module point_illustration(point, thickness) {
+  translate([point[0], point[1], point[2]]) {
+    for (i = [0:2]) {
+      rotate([i*90, (i==2?1:0)*90, 0]) {
+        translate([0, 0, -2*thickness]) {
+          cylinder(h = 4*thickness, d = thickness);
+        }
+      }
+    }
+  }
+}
+
+module vector_components_illustartion(point1, point2, thickness, bounding_box = false) {
+  color("Red", 1.0) vector_illustration([point1[0], point1[1], point1[2]],
+                                        [point2[0], point1[1], point1[2]],
+                                        thickness);
+  color("Green", 1.0) vector_illustration([point1[0], point1[1], point1[2]],
+                                          [point1[0], point2[1], point1[2]],
+                                          thickness);
+  color("Blue", 1.0) vector_illustration([point1[0], point1[1], point1[2]],
+                                         [point1[0], point1[1], point2[2]],
+                                         thickness);
+
+  if ($preview || bounding_box) {
+    color("Grey", 0.5) polyhedron (points = [[point1[0], point1[1], point1[2]],
+                                             [point2[0], point1[1], point1[2]],
+                                             [point2[0], point2[1], point1[2]],
+                                             [point1[0], point2[1], point1[2]],
+                                             [point1[0], point1[1], point2[2]],
+                                             [point2[0], point1[1], point2[2]],
+                                             [point2[0], point2[1], point2[2]],
+                                             [point1[0], point2[1], point2[2]]],
+
+                                   faces = [[0,1,2,3],
+                                            [4,5,1,0],
+                                            [7,6,5,4],
+                                            [5,6,2,1],
+                                            [6,7,3,2],
+                                            [7,4,0,3]]);
+  }
+}

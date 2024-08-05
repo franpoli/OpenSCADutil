@@ -1,0 +1,2 @@
+ECHO: "Vector v", [30, 60, 90]
+ECHO: "norm(v)", 112.25
