@@ -174,76 +174,154 @@ Parameters:
 
 * Cartesian coordinate system
 
-Some visualization modules are available to illustrate vector operations.   
+These are some modules modules to illustrate vector operations.
 
-** Line illustration
+** Draw line
 
 Draw a line segment given two points, with an optional parameter to extend the line beyond these points.
 
 #+NAME: Draw a line given two points
 #+begin_src scad :eval no
-  line_illustration(point1, point2, thickness, extend = false, ext_factor = 1);
+  draw_line(point1, point2, line_thickness, extend = false, multiplication_factor = 1);
 #+end_src
 
 Parameters:
 
 - ~point1~: the first point of the line [x0, y0, z0]
 - ~point2~: the second point of the line [x1, y1, z1]
-- ~thickness~: the thickness of the line
+- ~line_thickness~: the thickness of the line
 - ~extend~: optional parameter to extend the line beyond the given points
 - ~ext_factor~: optional parameter that is the multiplication factor for the line extention
 
 #+NAME: Line demo
-#+begin_src scad :file ./images/fig_line_demo.png :colorscheme Cornfield :size 400,400 :exports both
+#+begin_src scad :file ./images/fig_line_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
-  th = 1;
+  // Instantiating two points defining a line 
   p1 = [1, 2, 3];
   p2 = [10, 20, 30];
 
-  line_illustration(p1, p2, th);
-  translate([10, 0, 0]) line_illustration(p1, p2, th, extend = true);
+  // Draw the line
+  color("Red") draw_line(p1, p2);
+  // Draw an extented line parallel to the initial line 
+  color("Green") translate([10, 0, 0]) {
+    draw_line(p1, p2, extend = true, multiplication_factor = 0.5);
+  }
 #+end_src
 
 #+RESULTS: Line demo
 [[file:./images/fig_line_demo.png]]
 
-** Vector illustration
+** Draw vector
 
 Draw a vector with its direction arrow.
 
 #+NAME: Draw a vector with its direction arrow
 #+begin_src scad :eval no
-  vector_illustration(point1, point2, thickness);
+  draw_vector(point1, point2, line_thickness);
 #+end_src
 
 Parameters:
 
 - ~point1~: the first point of the line [x0, y0, z0]
 - ~point2~: the second point of the line [x1, y1, z1]
-- ~thickness~: the thickness of the line
+- ~line_thickness~: the thickness of the line
 
 #+NAME: Vector demo
-#+begin_src scad :file ./images/fig_vector_demo.png :colorscheme Cornfield :size 400,400 :exports both
+#+begin_src scad :file ./images/fig_vector_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
-  th = 0.3;
-  p1 = [1, 2, 3];
-  p2 = [10, 20, 30];
+  // Lines thickness
+  lt1 = 0.8;
+  lt2 = 0.4;
 
-  vector_illustration(p1, p2, th);
+  // Instantiating two points defining the vector tail and vector tip fir the vector u
+  u1 = [1, 2, 3];
+  u2 = [10, 20, 30];
+
+  // Instantiating two points defining the vector tail and vector tip fir the vector v
+  v1 = [-2, 7, 8];
+  v2 = [-12, 10, 31];
+
+  // Draw the vectors
+  color("Magenta", 1.0) draw_vector(u1, u2, lt1);
+  color("Tomato", 1.0) draw_vector(v1, v2, lt2);
 #+end_src
 
 #+RESULTS: Vector demo
 [[file:./images/fig_vector_demo.png]]
 
-** Vector components
+** Draw parallelepiped
+
+Draw parallelepiped built by two vectors.
+
+#+NAME: Draw parallelepiped built by two vectors
+#+begin_src scad :eval no
+  draw_parallelepiped(point1, point2, line_thickness);
+#+end_src
+
+Parameters:
+
+- ~point1, point2~: two vectors represented by the three dimensional points.
+
+#+NAME: Draw parallelepiped demo
+#+begin_src scad :file ./images/fig_draw_parallelepiped_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>
+
+  // Instantiating two points defining the vector tail and vector tip
+  u = [19, 3, 2];
+  v = [-4, 20, 4];
+
+  // Draw the parallelepiped
+  draw_parallelepiped(u, v, thickness = 0.1);
+
+  // Draw the vectors
+  color("Red") draw_vector([0, 0, 0], u, 0.4);
+  color("Blue") draw_vector([0, 0, 0], v, 0.4);
+#+end_src
+
+#+RESULTS: Draw parallelepiped demo
+[[file:./images/fig_draw_parallelepiped_demo.png]]
+
+#+NAME: Parallelepiped cross animation
+#+begin_src scad :exports code
+  use <extra.scad>
+
+  // Origin
+  o = [0, 0, 0];
+
+  // Define the two vectors
+  v1 = [15, 0, 0];
+  v2 = [-10, 1.2, 0];
+
+  // Angle of rotation around the z-axis
+  angle = $t * 360;
+
+  // Calculate the rotated v1 manually
+  v1_rotated = [v1[0] * cos(angle) - v1[1] * sin(angle),
+                v1[0] * sin(angle) + v1[1] * cos(angle),
+                v1[2]];
+
+  // Compute the cross product
+  v1_x_v2 = cross(v1_rotated, v2);
+
+  // Visualization of the vectors
+  color("Green") draw_vector(o, v1_rotated);
+  color("Red") draw_vector(o, v2);
+  color("Blue") draw_vector(o, v1_x_v2);
+  draw_parallelepiped(v1_rotated, v2);
+#+end_src
+
+#+NAME: Parallelepiped cross animation results
+[[./images/fig_parallelepiped_cross_animation.gif]]
+
+** Draw vector components
 
 Draw a vector with its direction arrow and vector components.
 
 #+NAME: Draw a vector with its direction arrow and vector components
 #+begin_src scad :eval no
-  vector_components_illustartion(point1, point2, thickness, bounding_box = false);
+  draw_vector_components(point1, point2, thickness, bounding_box = false);
 #+end_src
 
 Parameters:
@@ -254,15 +332,20 @@ Parameters:
 - ~bounding_box~: optional parameter to draw the vectors boundary box 
 
 #+NAME: Vector components demo
-#+begin_src scad :file ./images/fig_vector_components_demo.png :colorscheme Cornfield :size 400,400 :exports both
+#+begin_src scad :file ./images/fig_vector_components_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
-  th = 0.3;
+  // Line thickness
+  lt = 0.4;
+
+  // Instantiating two points defining a vector in the cartesian system
   p1 = [1, 2, 3];
   p2 = [10, 20, 30];
 
-  vector_illustration(p1, p2, th);
-  vector_components_illustartion(p1, p2, th, boundary_box = true);
+  // Draw the vector
+  draw_vector(p1, p2, lt);
+  // Draw the vector components
+  draw_vector_components(p1, p2, lt, boundary_box = true);
 #+end_src
 
 #+RESULTS: Vector components demo
@@ -271,12 +354,24 @@ Parameters:
 * Functions
 ** Degrees to radians
 
+Function to convert degrees to radians.
+
+#+NAME: Convert degres to radians
+#+begin_src scad :eval no
+  deg_to_rad(deg);
+#+end_src
+
+Parameters:
+
+- ~deg~: the angle in degrees
+
 #+NAME: Converting Degrees to Radians
 #+begin_src scad :file ./demo/converting_degrees_to_radians.echo :tangle ./demo/converting_degrees_to_radians.scad :results file :exports both
   use <extra.scad>
 
   angle_deg = 45;
   angle_rad = deg_to_rad(angle_deg);
+
   echo("Angle in degrees:", angle_deg);
   echo("Angle in radians:", angle_rad);
 #+end_src
@@ -294,12 +389,24 @@ Parameters:
 
 ** Radians to degrees
 
+Function to convert radians to degrees.
+
+#+NAME: Convert radians to degrees
+#+begin_src scad :eval no
+  rad_to_deg(rad);
+#+end_src
+
+Parameters:
+
+- ~rad~: the angle in radians
+
 #+NAME: Converting Radians to Degrees
 #+begin_src scad :file ./demo/converting_radians_to_degrees.echo :tangle ./demo/converting_radians_to_degrees.scad :results file :exports both
   use <extra.scad>
 
   angle_rad = 0.785398;
   angle_deg = rad_to_deg(angle_rad);
+
   echo("Angle in radians:", angle_rad);
   echo("Angle in degrees:", angle_deg);
 #+end_src
@@ -315,51 +422,98 @@ Parameters:
 : ECHO: "Angle in radians:", 0.785398
 : ECHO: "Angle in degrees:", 45
 
-** Cross product (or vector product)
+** Pad to three
 
-#+NAME: Calculate the cross product of two vectors
-#+begin_src scad :file ./demo/calculate_the_cross_product.echo :tangle ./demo/calculate_the_cross_product.scad :results file :exports both
-  use <extra.scad>
+Function that transforms a one- or two-dimensional vector into a three-dimensional vector.
 
-  v1 = [20, 0, 0];
-  v2 = [-10, 1.2, 0];
-
-  v1_x_v2 = cross(v1, v2);
-
-  echo("v1 x v2", v1_x_v2);
+#+NAME: Pad to three
+#+begin_src scad :eval no
+  pad_to_three(point);
 #+end_src
 
-#+RESULTS: Calculate the cross product of two vectors
-[[file:./demo/calculate_the_cross_product.echo]]
+Parameters:
+
+- ~point~: Either a one-, two- or three-dimensional vector.
+
+#+NAME: One- or two-dimensional vectors into a three-dimensional vectors demo
+#+begin_src scad :file ./demo/one_or_two_dimensional_vectors_into_a_three_dimensional_vectors.echo :tangle ./demo/one_or_two_dimensional_vectors_into_a_three_dimensional_vectors.scad :results file :exports both
+  use <extra.scad>
+
+  // One-dimensional vector
+  vec_1_dim = [11];
+  // Two-dimensional vector
+  vec_2_dim = [15, 10];
+  // Three-dimensional vector
+  vec_3_dim = [20, -15, -10];
+  // Four-dimensional vector
+  vec_4_dim = [-5, 9, 10, 12];
+
+  vectors = [vec_1_dim, vec_2_dim, vec_3_dim, vec_4_dim]; 
+
+  for (vector = vectors) {
+    echo(vector, pad_to_three(vector));
+  }
+#+end_src
+
+#+RESULTS: One- or two-dimensional vectors into a three-dimensional vectors demo
+[[file:./demo/one_or_two_dimensional_vectors_into_a_three_dimensional_vectors.echo]]
 
 #+begin_src bash :results output :exports both
-  cat ./demo/calculate_the_cross_product.echo
+  cat ./demo/one_or_two_dimensional_vectors_into_a_three_dimensional_vectors.echo
 #+end_src
 
 #+RESULTS:
-: ECHO: "v1 x v2", [0, 0, 24]
+: ECHO: [11], [11, 0, 0]
+: ECHO: [15, 10], [15, 10, 0]
+: ECHO: [20, -15, -10], [20, -15, -10]
+: ECHO: [-5, 9, 10, 12], undef
 
-#+NAME: Calculate the cross product of two vectors illustration
-#+begin_src scad :file ./images/fig_calculate_the_cross_product.png :colorscheme Cornfield :size 400,400 :exports both
-  use <extra.scad>
+** Unit vector
 
-  v1 = [20, 0, 0];
-  v2 = [-10, 1.2, 0];
+The unit vector (also called normalized vector) is the vector of size one that goes in the same direction as the original vector.  
 
-  v1_x_v2 = cross(v1, v2);
-
-  origin = [0, 0, 0];
-  thickness = 0.5;
-
-  color("Blue", 1.0) vector_illustration(origin, v1, thickness);
-  color("Green", 1.0) vector_illustration(origin, v2, thickness);
-  color("Purple", 1.0) vector_illustration(origin, v1_x_v2, thickness);
+#+NAME: Norm function
+#+begin_src scad :eval no
+  norm(point);
 #+end_src
 
-#+RESULTS: Calculate the cross product of two vectors illustration
-[[file:./images/fig_calculate_the_cross_product.png]]
+Parameters:
+
+- ~point~: Either a one-, two- or three-dimensional vector.
+
+#+NAME: Calculate the unit vector
+#+begin_src scad :file ./demo/calculate_the_unit_vector.echo :tangle ./demo/calculate_the_unit_vector.scad :results file :exports both
+  use <extra.scad>
+
+  v = [30, 60, 90];
+  n = norm(v);
+  u = unit_vector(v);
+
+  echo("vector", v);
+  echo("unit vector", u);
+#+end_src
+
+#+RESULTS: Calculate the unit vector
+[[file:./demo/calculate_the_unit_vector.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/calculate_the_unit_vector.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "vector", [30, 60, 90]
+: ECHO: "unit vector", [0.267261, 0.534522, 0.801784]
 
 ** Vector addition
+
+#+NAME: Vector addition
+#+begin_src scad :eval no
+  vector_addition(point1, point2);
+#+end_src
+
+Parameters:
+
+- ~point1, point2~: Are either one-, two- or three-dimensional vectors.
 
 #+NAME: Calculate the vector addition
 #+begin_src scad :file ./demo/calculate_the_vector_addition.echo :tangle ./demo/calculate_the_vector_addition.scad :results file :exports both
@@ -384,96 +538,161 @@ Parameters:
 : ECHO: "Displacement vector", [26, 42, 25]
 
 #+NAME: Calculate the vector addition illustration
-#+begin_src scad :file ./images/fig_calculate_the_vector_addition.png :colorscheme Cornfield :size 400,400 :exports both
+#+begin_src scad :file ./images/fig_calculate_the_vector_addition.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
+  // Defining the tip of two vectors
   p1 = [3, 16, 15];
   p2 = [23, 26, 10];
 
+  // Compute the vector addition to the two vectors and and store its value in variable v
   v = vector_addition(p1, p2);
 
+  // Setting the reference for the two vectors
   origin = [0, 0, 0];
-  thickness = 0.5;
 
-  color("Red", 1.0) vector_illustration(origin, p1, thickness);
-  translate(p1) color("Green", 1.0) vector_illustration(origin, p2, thickness);
-  color("Yellow", 1.0) vector_illustration(origin, v, thickness);
+  // Drawing vector p1 from the origin
+  color("Red", 1.0) draw_vector(origin, p1);
+  // Drawing vector p2 from the tip of vector p1
+  translate(p1) color("Green", 1.0) draw_vector(origin, p2);
+  // Drawing the computed vector v from the origin. The tip of v lands on the tip of p2  
+  color("Yellow", 1.0) draw_vector(origin, v);
 #+end_src
 
 #+RESULTS: Calculate the vector addition illustration
 [[file:./images/fig_calculate_the_vector_addition.png]]
 
 #+NAME: Vector substraction example by adding negative p2 to p1
-#+begin_src scad :file ./images/fig_vector_substraction_example.png :colorscheme Cornfield :size 400,400 :exports both
+#+begin_src scad :file ./images/fig_vector_substraction_example.png :colorscheme Cornfield :size 400,400 :projection ortho :exports :exports both
   use <extra.scad>
 
-  origin = [0, 0, 0];
-
+  // Defining the tip of two vectors
   p1 = [3, 16, 15];
   p2 = [23, 26, 10];
+
+  // Compute the negative of p2
   np2 = (-1)*p2;
+
+  // Compute p1+(-p2) -> p1-p2 and store the value in variable v
   v = vector_addition(p1, np2);
 
-  thickness = 0.5;
+  // Setting the reference for the two vectors
+  origin = [0, 0, 0];
 
-  color("Red", 1.0) vector_illustration(origin, p1, thickness);
+  // Draw vector p1 fom the origin
+  color("Red", 1.0) draw_vector(origin, p1);
+  // Draw vector p2 from the tip of p1
   translate(p1) {
-    color("Cyan", 1.0) vector_illustration(origin, np2, thickness);
+    color("Green", 1.0) draw_vector(origin, np2);
   }
-  color("Yellow", 1.0) vector_illustration(origin, v, thickness);
+  // Dra the computed vector v from the origin. The tip of v lands on the tip of p2  
+  color("Yellow", 1.0) draw_vector(origin, v);
 #+end_src
 
 #+RESULTS: Vector substraction example by adding negative p2 to p1
 [[file:./images/fig_vector_substraction_example.png]]
 
-** Euclidean norm
+** Dot product
 
-#+NAME: Calculate the Euclidean norm
-#+begin_src scad :file ./demo/calculate_the_euclidean_norm.echo :tangle ./demo/calculate_the_euclidean_norm.scad :results file :exports both
+The dot product (or scalar product)....
+
+** The slope function
+
+#+Name: Slope demo
+#+begin_src scad :file ./images/fig_slope_demo.png :colorscheme Cornfield :size 400,400 :camera 10,10,0,0,0,0,300 :projection ortho :exports both
   use <extra.scad>
 
-  point1 = [3, 6, 9];
-  point2 = [33, 66, 99];
+  // Define points
+  point1 = [2, 3];
+  point2 = [15, 21];
 
-  v = vector(point1, point2);
-  n = norm(v);
+  // Calculate rise and run
+  rise = point2[1] - point1[1];
+  run = point2[0] - point1[0];
 
-  echo("Vector v", v);
-  echo("norm(v)", n);
+  // Draw points
+  draw_point(point1);
+  draw_point(point2);
+
+  // Draw line between points
+  color("red") draw_line(point1, point2);
+
+  // Draw rise and run
+  color("green")
+  draw_line(point1, [point2[0], point1[1]]); // Run
+  draw_line([point2[0], point1[1]], point2); // Rise
+
+  // Annotate points
+  translate([point1[0] - 2.5, point1[1], 0.3])
+  text(str("(", point1[0], ", ", point1[1], ")"), size = 1, valign = "center", halign = "center");
+
+  translate([point2[0] - 3.5, point2[1], 0.3])
+  text(str("(", point2[0], ", ", point2[1], ")"), size = 1, valign = "center", halign = "center");
+
+  // Annotate rise and run
+  translate([(point1[0] + point2[0]) / 2, point1[1] - 2.0, 0.3])
+  text("Run", size = 1, valign = "center", halign = "center");
+
+  translate([point2[0] + 2.5, (point1[1] + point2[1]) / 2, 0.3])
+  text("Rise", size = 1, valign = "center", halign = "center");
+
+  // Annotate slope
+  translate([(point1[0] + point2[0]) / 2 - 6, (point1[1] + point2[1]) / 2, 0.3])
+  text(str("Slope = ", slope(point1, point2)), size = 1, valign = "center", halign = "center");
 #+end_src
 
-#+RESULTS: Calculate the Euclidean norm
-[[file:./demo/calculate_the_euclidean_norm.echo]]
+#+RESULTS: Slope demo
+[[file:./images/fig_slope_demo.png]]
+
+#+Name: Slope and perpendicular slope demo
+#+begin_src scad :file ./demo/slope_and_perpendicular_slope.echo :tangle ./demo/slope_and_perpendicular_slope.scad :results file :exports both
+  use <extra.scad>
+
+  point1 = [2, 3];
+  point2 = [15, 21];
+
+  slope = slope(point1, point2);
+  perpendicular_slope = perpendicular_slope(slope);
+
+  echo("slope", slope);
+  echo("perpendicular slope", perpendicular_slope);
+#+end_src
+
+#+RESULTS: Slope and perpendicular slope demo
+[[file:./demo/slope_and_perpendicular_slope.echo]]
 
 #+begin_src bash :results output :exports both
-  cat ./demo/calculate_the_euclidean_norm.echo
+  cat ./demo/slope_and_perpendicular_slope.echo
 #+end_src
 
 #+RESULTS:
-: ECHO: "Vector v", [30, 60, 90]
-: ECHO: "norm(v)", 112.25
+: ECHO: "slope", 1.38462
+: ECHO: "perpendicular slope", -0.722222
 
-** Unit vector
+** Lines intersection
 
-#+NAME: Calculate the unit vector
-#+begin_src scad :file ./demo/calculate_the_unit_vector.echo :tangle ./demo/calculate_the_unit_vector.scad :results file :exports both
+#+NAME: Lines intersecton demo
+#+begin_src scad :file ./images/fig_lines_intersection_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
-  v = [30, 60, 90];
-  n = norm(v);
-  u = unit_vector(v);
+  // Instanstiating four points defining two lines 
+  u0 = [8, 12];
+  u1 = [-4, 2];
+  v0 = [19, 0];
+  v1 = [-7, 4];
 
-  echo("vector", v);
-  echo("unit vector", u);
+  // Drawing the lines
+  color("Red")draw_line(u0, u1, extend = true);
+  color("Green")draw_line(v0, v1, extend = true);
+
+  // Compute the intersection point of the two lines and stor the value
+  i = lines_intersection([u0, u1], [v0, v1]);
+
+  // Draw the intersection point
+  color("Yellow") draw_point(i);
 #+end_src
 
-#+RESULTS: Calculate the unit vector
-[[file:./demo/calculate_the_unit_vector.echo]]
+#+RESULTS: Lines intersecton demo
+[[file:./images/fig_lines_intersection_demo.png]]
 
-#+begin_src bash :results output :exports both
-  cat ./demo/calculate_the_unit_vector.echo
-#+end_src
 
-#+RESULTS:
-: ECHO: "vector", [30, 60, 90]
-: ECHO: "unit vector", [0.267261, 0.534522, 0.801784]
