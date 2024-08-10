@@ -10,8 +10,9 @@ self-contained and can be easily integrated into other OpenSCAD scripts.
 /* Default values */
 
 // Line thickness is the default thickness for a line in cartesian system representation
-line_thickness = !is_undef(line_thickness) ? line_thickness : 1;
-multiplication_factor = !is_undef(multiplication_factor) ? multiplication_factor : 1;
+origin = !is_undef(origin) ? origin : [0, 0, 0];
+line_thickness = !is_undef(line_thickness) ? line_thickness : 0.5;
+multiplication_factor = !is_undef(multiplication_factor) ? multiplication_factor : 1.67;
 
 /* 2D */
 
@@ -134,124 +135,111 @@ function deg_to_rad(deg) = deg * PI / 180;
 // Function to convert radians to degrees
 function rad_to_deg(rad) = rad * 180 / PI;
 
-// Funcion that make sure that a list has at list three elements, in order
-// to make sure we work with three coordinates vector
+// Function that ensures a list has exactly three elements, padding with zeros if necessary
 function pad_to_three(point) = 
   len(point) > 3 ? undef :
   len(point) < 3 ? concat(point, [for (i = [0:2-len(point)]) 0]) :
   point;
 
-// Function to calculate dot (saclar) product
-function dot(point1, point2) =
-  let(
-      u = pad_to_three(point1),
-      v = pad_to_three(point2)
+// Function to calculate dot (scalar) product
+function dot(v1, v2) =
+  let (
+       u = pad_to_three(v1),
+       v = pad_to_three(v2)
   )
   u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
 
 // Function to add vectors
-function vector_addition(point1, point2) =
-  let(
-      p1 = pad_to_three(point1),
-      p2 = pad_to_three(point2)
+function vector_addition(v1, v2) =
+  let (
+    u = pad_to_three(v1),
+    v = pad_to_three(v2)
   )
-  [p2[0] + p1[0], p2[1] + p1[1], p2[2] + p1[2]];
+  [for (i = [0:2]) u[i] + v[i]];
 
-// Function to displace vectors, ensuring both points have 3 coordinates
-function vector_displacement(point1, point2) = 
-  let(
-      p1 = pad_to_three(point1),
-      p2 = pad_to_three(point2)
+// Function to displace vectors
+function vector_displacement(v1, v2) =
+  let (
+    u = pad_to_three(v1),
+    v = pad_to_three(v2)
   )
-  [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]];
-  
+  [for (i = [0:2]) v[i] - u[i]];
+
 // Function to calculate the unit vector
 function unit_vector(v) =
   let (n = norm(v))
-  n == 0 ? [0, 0, 0] : [v[0] / n, v[1] / n, v[2] / n];
+  n == 0 ? [0, 0, 0] : [for (i = v) i / n];
 
 // Calculate the slope between two points
-function slope(point1, point2) =
-  (point2[1] - point1[1]) / (point2[0] - point1[0]);
-
-// Calculate the slope of the perpendicular line
-function perpendicular_slope(slope) = -1 / slope;
-
-// Function to compute the perpendicular vector from point1 (tail) to point2 (tip)
-function perpendicular_vector(point1, point2) =
-  let(
-      p1 = pad_to_three(point1),
-      p2 = pad_to_three(point2),
-      // change the reference to the origin
-      o_factor = [p1[0], -p1[1], p1[2]],
-      v_tail = [-o_factor[0]*p1[0] + o_factor[1]*p1[1] + o_factor[2]*p1[2],
-                o_factor[0]*p1[0] - o_factor[1]*p1[1] + o_factor[2]*p1[2],
-                -o_factor[0]*p1[0] - o_factor[1]*p1[1] - o_factor[2]*p1[2]],
-      v_tip = [-o_factor[0]*p2[0] + o_factor[1]*p2[1] + o_factor[2]*p2[2],
-               o_factor[0]*p2[0] - o_factor[1]*p2[1] + o_factor[2]*p2[2],
-               -o_factor[0]*p2[0] - o_factor[1]*p2[1] - o_factor[2]*p2[2]],
-      v_perp_at_origin = [v_tip[2] - v_tail[2], v_tail[0] - v_tip[0], v_tip[1] - v_tail[1]]
-  )
-  [p1[0]*v_perp_at_origin[0],
-   p1[1]*v_perp_at_origin[1],
-   p1[2]*v_perp_at_origin[2]];
-
-// Function to find the intersection point of two lines
-function lines_intersection(line1, line2) =
-  let(
-      line1_point1 = line1[0],
-      line1_point2 = line1[1],
-      line2_point1 = line2[0],
-      line2_point2 = line2[1],
-      m1 = slope(line1_point1, line1_point2),
-      b1 = line1_point1[1] - m1 * line1_point1[0],
-      m2 = slope(line2_point1, line2_point2),
-      b2 = line2_point1[1] - m2 * line2_point1[0],
-      x = (b2 - b1) / (m1 - m2),
-      y = m1 * x + b1
-  )
-  [x, y];
-
-// Find the intersection point of a line through point1 with slope m1 and a perpendicular line through point2
-function perpendicular_intersection(point_line1, slope_line1, point_line2) = 
-    let(
-        m2 = perpendicular_slope(slope_line1),
-        b1 = point_line1[1] - slope_line1 * point_line1[0],
-        b2 = point_line2[1] - m2 * point_line2[0],
-        x = (b2 - b1) / (slope_line1 - m2),
-        y = slope_line1 * x + b1
-    )
-    [x, y];
-
-// Create a new point by adding a distance vector to an existing point
-function vector_point(point1, distance_vector) = 
-  [point1[0] + distance_vector[0], point1[1] + distance_vector[1]];
+function slope(p1, p2) = (p2[1] - p1[1]) / (p2[0] - p1[0]);
 
 // Calculate the slope of a perpendicular line
 function perpendicular_slope(slope) = -1 / slope;
 
-// Normalize a vector
-function normalize(vector) = vector / sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
+// Function to compute the perpendicular vector in 2D (Z component is 0)
+function perpendicular_vector(v) =
+  [-v[1], v[0], 0];
+
+// Function to find the intersection point of two lines
+function lines_intersection(line1, line2) =
+  let (
+    m1 = slope(line1[0], line1[1]),
+    b1 = line1[0][1] - m1 * line1[0][0],
+    m2 = slope(line2[0], line2[1]),
+    b2 = line2[0][1] - m2 * line2[0][0],
+    x = (b2 - b1) / (m1 - m2),
+    y = m1 * x + b1
+  )
+  [x, y];
+
+// Function to find the intersection of a line through a point with a perpendicular line through another point
+function perpendicular_intersection(point_line1, slope_line1, point_line2) = 
+  let (
+    m2 = perpendicular_slope(slope_line1),
+    b1 = point_line1[1] - slope_line1 * point_line1[0],
+    b2 = point_line2[1] - m2 * point_line2[0],
+    x = (b2 - b1) / (slope_line1 - m2),
+    y = slope_line1 * x + b1
+  )
+  [x, y];
+
+// Function to create a new point by adding a distance vector to an existing point
+function vector_point(point1, distance_vector) = 
+  [point1[0] + distance_vector[0], point1[1] + distance_vector[1]];
+
+function directional_vector(v) =
+  let (length = norm(v))
+  [for (i = v) i / length];
 
 // Generate points for a parallel line at a specified distance
 function parallel_vector(point1, point2, distance) =
-  let(
-      dir = [point2[0] - point1[0], point2[1] - point1[1]],
-      dir_normalized = normalize(dir),
-      perp = perpendicular_vector(dir_normalized),
-      perp_scaled = [perp[0] * distance, perp[1] * distance],
-      p1 = vector_point(point1, perp_scaled),
-      p2 = vector_point(point2, perp_scaled)
+  let (
+    dir = vector_displacement(point1, point2),
+    dir_normalized = unit_vector(dir),
+    perp = perpendicular_vector(dir_normalized),
+    perp_scaled = [perp[0] * distance, perp[1] * distance],
+    p1 = vector_point(point1, perp_scaled),
+    p2 = vector_point(point2, perp_scaled)
   )
   [p1, p2];
 
+// Function to calculate the projection of point onto a line defined by a vector
+function projection_point_on_vector(reference, line, point) =
+  let (
+       adjusted_point = vector_displacement(reference, point),
+       unit_line = unit_vector(line),
+       dot_product = dot(adjusted_point, unit_line)
+  )
+  [for (i = [0:2]) reference[i] + unit_line[i] * dot_product];
 
 /* Cartesian Coordinate System */
 
 // Draw a line segment given two points, with an optional parameter to extend the line beyond these points.
-module draw_line(point1, point2,
-                 line_thickness = line_thickness,
-                 extend = false, multiplication_factor = multiplication_factor) {
+module draw_line(point1,
+                 point2,
+                 thickness = line_thickness,
+                 extend = false,
+                 factor = multiplication_factor) {
   // Ensure points have 3 coordinates for consistent handling
   point1 = pad_to_three(point1);
   point2 = pad_to_three(point2);
@@ -261,23 +249,23 @@ module draw_line(point1, point2,
 
   // Calculate extension points if needed
   if (extend) {
-    ext_point1 = [point1[0] - multiplication_factor * v[0],
-                  point1[1] - multiplication_factor * v[1],
-                  point1[2] - multiplication_factor * v[2]];
-    ext_point2 = [point2[0] + multiplication_factor * v[0],
-                  point2[1] + multiplication_factor * v[1],
-                  point2[2] + multiplication_factor * v[2]];
+    ext_point1 = [point1[0] - factor * v[0],
+                  point1[1] - factor * v[1],
+                  point1[2] - factor * v[2]];
+    ext_point2 = [point2[0] + factor * v[0],
+                  point2[1] + factor * v[1],
+                  point2[2] + factor * v[2]];
 
     hull() {
-      draw_sphere_at(ext_point1, line_thickness); 
-      draw_sphere_at(point1, line_thickness);
-      draw_sphere_at(point2, line_thickness);
-      draw_sphere_at(ext_point2, line_thickness);
+      draw_sphere_at(ext_point1, thickness); 
+      draw_sphere_at(point1, thickness);
+      draw_sphere_at(point2, thickness);
+      draw_sphere_at(ext_point2, thickness);
     }
   } else { // If extend is false, draw the line segment
     hull() {
-      draw_sphere_at(point1, line_thickness);
-      draw_sphere_at(point2, line_thickness);
+      draw_sphere_at(point1, thickness);
+      draw_sphere_at(point2, thickness);
     }
   }
   // Function to draw a sphere at a given point with specified diameter
@@ -289,8 +277,34 @@ module draw_line(point1, point2,
   }
 }
 
+// Draw a point with optional line_thickness and cross highlight option.
+module draw_point(point, cross = false, factor = multiplication_factor) {
+  echo("Point", point);
+  point_thickness = factor * line_thickness;
+  // Ensure point has 3 coordinates for consistent handling
+  point = pad_to_three(point);
+  // Function to draw a cross at the origin
+  module draw_cross(line_thickness) {
+    for (i = [0:2]) {
+      rotate([i*90, (i==2?1:0)*90, 0]) {
+        translate([0, 0, -point_thickness / 2]) {
+          cylinder(h = point_thickness, d = line_thickness / 2);
+        }
+      }
+    }
+  }
+
+  translate(point) {
+    if (cross) {
+      draw_cross(line_thickness);
+    } else {
+      sphere(d = point_thickness);
+    }
+  }
+}
+
 // Draw a vector with arrow
-module draw_vector(point1, point2, line_thickness = line_thickness) {
+module draw_vector(point1, point2, thickness = line_thickness) {
   // Use three dimensional vectors
   points = [pad_to_three(point1), pad_to_three(point2)];
   
@@ -314,48 +328,23 @@ module draw_vector(point1, point2, line_thickness = line_thickness) {
 
   if (v_length != 0) {
     color("Purple", 1.0) {
-      draw_line(points[0], points[1], line_thickness);
+      draw_line(points[0], points[1], thickness);
       translate([points[1][0], points[1][1], points[1][2]]) {
         // Rotate around the calculated axis and angle
         rotate(a = angle, v = rotation_axis) {
-          draw_arrow(line_thickness);
+          draw_arrow(thickness);
         }
       }
     }
   }
 
   // Arrow vector representation
-  module draw_arrow(line_thickness = line_thickness) {
+  module draw_arrow(thickness) {
     hull() {
-      sphere(d = line_thickness);
-      translate([0, 0, -4*line_thickness]) {
-        cylinder(h = 1*line_thickness, d1 = line_thickness, d2 = 3*line_thickness);
+      sphere(d = thickness);
+      translate([0, 0, -4*thickness]) {
+        cylinder(h = 1*thickness, d1 = thickness, d2 = 3*thickness);
       }
-    }
-  }
-}
-
-// Draw a point with optional line_thickness and cross highlight option.
-module draw_point(point, cross = false) {
-  point_thickness = 3*line_thickness;
-  // Ensure point has 3 coordinates for consistent handling
-  point = pad_to_three(point);
-  // Function to draw a cross at the origin
-  module draw_cross(line_thickness) {
-    for (i = [0:2]) {
-      rotate([i*90, (i==2?1:0)*90, 0]) {
-        translate([0, 0, -point_thickness/2]) {
-          cylinder(h = point_thickness, d = line_thickness);
-        }
-      }
-    }
-  }
-
-  translate(point) {
-    if (cross) {
-      draw_cross(line_thickness);
-    } else {
-      sphere(d = point_thickness);
     }
   }
 }
@@ -390,17 +379,17 @@ module draw_parallelepiped(point1, point2, thickness = line_thickness/4) {
 }
 
 module draw_vector_components(point1, point2,
-                              line_thickness = line_thickness,
+                              thickness = line_thickness,
                               bounding_box = false) {
   color("Red", 1.0) draw_vector([point1[0], point1[1], point1[2]],
                                         [point2[0], point1[1], point1[2]],
-                                        line_thickness);
+                                        thickness);
   color("Green", 1.0) draw_vector([point1[0], point1[1], point1[2]],
                                           [point1[0], point2[1], point1[2]],
-                                          line_thickness);
+                                          thickness);
   color("Blue", 1.0) draw_vector([point1[0], point1[1], point1[2]],
                                          [point1[0], point1[1], point2[2]],
-                                         line_thickness);
+                                         thickness);
 
   if ($preview || bounding_box) {
     color("LightGrey", 0.5) {

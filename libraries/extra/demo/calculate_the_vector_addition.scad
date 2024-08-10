@@ -1,8 +1,8 @@
 use <extra.scad>
 
-p1 = [3, 16, 15];
-p2 = [23, 26, 10];
+v1 = [3, 16, 15];
+v2 = [23, 26, 10];
 
-v = vector_addition(p1, p2);
+v = vector_addition(v1, v2);
 
 echo("Displacement vector", v);

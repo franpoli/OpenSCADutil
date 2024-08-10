@@ -172,40 +172,41 @@ Parameters:
 #+RESULTS: Symetry plane demo
 [[file:./images/fig_symmetry_plane_demo.png]]
 
-* Cartesian coordinate system
-
-These are some modules modules to illustrate vector operations.
-
+* Cartesian coordinate system representation
 ** Draw line
 
 Draw a line segment given two points, with an optional parameter to extend the line beyond these points.
 
 #+NAME: Draw a line given two points
 #+begin_src scad :eval no
-  draw_line(point1, point2, line_thickness, extend = false, multiplication_factor = 1);
+  draw_line(point1,
+            point2,
+            thickness = line_thickness,
+            extend = false,
+            factor = multiplication_factor);
 #+end_src
 
 Parameters:
 
 - ~point1~: the first point of the line [x0, y0, z0]
 - ~point2~: the second point of the line [x1, y1, z1]
-- ~line_thickness~: the thickness of the line
+- ~thickness~: the thickness of the line
 - ~extend~: optional parameter to extend the line beyond the given points
-- ~ext_factor~: optional parameter that is the multiplication factor for the line extention
+- ~factor~: optional parameter that is the multiplication factor for the line extention
 
 #+NAME: Line demo
 #+begin_src scad :file ./images/fig_line_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
 
   // Instantiating two points defining a line 
-  p1 = [1, 2, 3];
-  p2 = [10, 20, 30];
+  p1 = [-4, 2, 3];
+  p2 = [-8, 20, 30];
 
   // Draw the line
   color("Red") draw_line(p1, p2);
   // Draw an extented line parallel to the initial line 
   color("Green") translate([10, 0, 0]) {
-    draw_line(p1, p2, extend = true, multiplication_factor = 0.5);
+    draw_line(p1, p2, extend = true, factor = 0.2);
   }
 #+end_src
 
@@ -218,14 +219,14 @@ Draw a vector with its direction arrow.
 
 #+NAME: Draw a vector with its direction arrow
 #+begin_src scad :eval no
-  draw_vector(point1, point2, line_thickness);
+  draw_vector(point1, point2, thickness);
 #+end_src
 
 Parameters:
 
 - ~point1~: the first point of the line [x0, y0, z0]
 - ~point2~: the second point of the line [x1, y1, z1]
-- ~line_thickness~: the thickness of the line
+- ~thickness~: the thickness of the line
 
 #+NAME: Vector demo
 #+begin_src scad :file ./images/fig_vector_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
@@ -257,12 +258,13 @@ Draw parallelepiped built by two vectors.
 
 #+NAME: Draw parallelepiped built by two vectors
 #+begin_src scad :eval no
-  draw_parallelepiped(point1, point2, line_thickness);
+  draw_parallelepiped(point1, point2, thickness)
 #+end_src
 
 Parameters:
 
-- ~point1, point2~: two vectors represented by the three dimensional points.
+- ~point1, point2~: two vectors represented by the three dimensional points
+- ~thickness~: the thickness of the parallelepiped
 
 #+NAME: Draw parallelepiped demo
 #+begin_src scad :file ./images/fig_draw_parallelepiped_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
@@ -321,7 +323,7 @@ Draw a vector with its direction arrow and vector components.
 
 #+NAME: Draw a vector with its direction arrow and vector components
 #+begin_src scad :eval no
-  draw_vector_components(point1, point2, thickness, bounding_box = false);
+  draw_vector_components(point1, point2, line_thickness, bounding_box)
 #+end_src
 
 Parameters:
@@ -474,7 +476,7 @@ The unit vector (also called normalized vector) is the vector of size one that g
 
 #+NAME: Norm function
 #+begin_src scad :eval no
-  norm(point);
+  unit_vector(v);
 #+end_src
 
 Parameters:
@@ -486,11 +488,10 @@ Parameters:
   use <extra.scad>
 
   v = [30, 60, 90];
-  n = norm(v);
-  u = unit_vector(v);
+  unit_v = unit_vector(v);
 
   echo("vector", v);
-  echo("unit vector", u);
+  echo("unit vector", unit_v);
 #+end_src
 
 #+RESULTS: Calculate the unit vector
@@ -506,23 +507,25 @@ Parameters:
 
 ** Vector addition
 
+Function to add vectors
+
 #+NAME: Vector addition
 #+begin_src scad :eval no
-  vector_addition(point1, point2);
+  vector_addition(v1, v22);
 #+end_src
 
 Parameters:
 
-- ~point1, point2~: Are either one-, two- or three-dimensional vectors.
+- ~v1, v2~: are either one-, two- or three-dimensional vectors
 
 #+NAME: Calculate the vector addition
 #+begin_src scad :file ./demo/calculate_the_vector_addition.echo :tangle ./demo/calculate_the_vector_addition.scad :results file :exports both
   use <extra.scad>
 
-  p1 = [3, 16, 15];
-  p2 = [23, 26, 10];
+  v1 = [3, 16, 15];
+  v2 = [23, 26, 10];
 
-  v = vector_addition(p1, p2);
+  v = vector_addition(v1, v2);
 
   echo("Displacement vector", v);
 #+end_src
@@ -542,61 +545,192 @@ Parameters:
   use <extra.scad>
 
   // Defining the tip of two vectors
-  p1 = [3, 16, 15];
-  p2 = [23, 26, 10];
+  v1 = [3, 16, 15];
+  v2 = [23, 26, 10];
 
   // Compute the vector addition to the two vectors and and store its value in variable v
-  v = vector_addition(p1, p2);
+  v = vector_addition(v1, v2);
 
   // Setting the reference for the two vectors
   origin = [0, 0, 0];
 
-  // Drawing vector p1 from the origin
-  color("Red", 1.0) draw_vector(origin, p1);
-  // Drawing vector p2 from the tip of vector p1
-  translate(p1) color("Green", 1.0) draw_vector(origin, p2);
-  // Drawing the computed vector v from the origin. The tip of v lands on the tip of p2  
+  // Drawing vector v1 from the origin
+  color("Red", 1.0) draw_vector(origin, v1);
+  // Drawing vector v2 from the tip of vector v1
+  translate(v1) color("Green", 1.0) draw_vector(origin, v2);
+  // Drawing the computed vector v from the origin. The tip of v lands on the tip of v2  
   color("Yellow", 1.0) draw_vector(origin, v);
 #+end_src
 
 #+RESULTS: Calculate the vector addition illustration
 [[file:./images/fig_calculate_the_vector_addition.png]]
 
-#+NAME: Vector substraction example by adding negative p2 to p1
+#+NAME: Vector substraction example by adding negative v2 to v1
 #+begin_src scad :file ./images/fig_vector_substraction_example.png :colorscheme Cornfield :size 400,400 :projection ortho :exports :exports both
   use <extra.scad>
 
   // Defining the tip of two vectors
-  p1 = [3, 16, 15];
-  p2 = [23, 26, 10];
+  v1 = [3, 16, 15];
+  v2 = [23, 26, 10];
 
-  // Compute the negative of p2
-  np2 = (-1)*p2;
+  // Compute the negative of v2
+  nv2 = (-1)*v2;
 
-  // Compute p1+(-p2) -> p1-p2 and store the value in variable v
-  v = vector_addition(p1, np2);
+  // Compute v1+(-v2) -> v1-v2 and store the value in variable v
+  v = vector_addition(v1, nv2);
 
   // Setting the reference for the two vectors
   origin = [0, 0, 0];
 
-  // Draw vector p1 fom the origin
-  color("Red", 1.0) draw_vector(origin, p1);
-  // Draw vector p2 from the tip of p1
-  translate(p1) {
-    color("Green", 1.0) draw_vector(origin, np2);
+  // Draw vector v1 fom the origin
+  color("Red", 1.0) draw_vector(origin, v1);
+  // Draw vector v2 from the tip of v1
+  translate(v1) {
+    color("Green", 1.0) draw_vector(origin, nv2);
   }
-  // Dra the computed vector v from the origin. The tip of v lands on the tip of p2  
+  // Dra the computed vector v from the origin. The tip of v lands on the tip of v2  
   color("Yellow", 1.0) draw_vector(origin, v);
 #+end_src
 
-#+RESULTS: Vector substraction example by adding negative p2 to p1
+#+RESULTS: Vector substraction example by adding negative v2 to v1
 [[file:./images/fig_vector_substraction_example.png]]
 
 ** Dot product
 
-The dot product (or scalar product)....
+The dot product (or scalar product)
+
+#+NAME: Dot product
+#+begin_src scad :eval no
+  dot(v1, v2)
+#+end_src
+
+Parameters:
+
+- ~v1, v2~: are either one-, two- or three-dimensional vectors
+
+#+NAME: Calculate the dot product
+#+begin_src scad :file ./images/fig_calculate_the_dot_product.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>
+
+  // Test dot product (vector tip points)
+  u = [-4, 20, 4];
+  v = [9, 3, 2];
+  
+  // Drawing parameters
+  thickness = 0.3;
+  origo = [0, 0, 0]; // ISSUE: other origo values than the origin at [0, 0, 0] don't work
+  
+  // Draw two vectors, u and v with the same origo 
+  color("Red") draw_vector(origo, u, thickness);
+  color("Blue") draw_vector(origo, v, thickness);
+  
+  // Compute the projection of u onto v
+  //projection_u_on_v = projection_point_on_vector(v, u);
+  projection_u_on_v =
+    projection_point_on_vector(origo, v, [origo[0] + u[0],
+                                              origo[1] + u[1],
+                                              origo[2] + u[2]]);
+  
+  // Draw the projection of u onto v
+  color("Gray") draw_line(u, projection_u_on_v, thickness/3);
+  
+  // Draw the projection vector of u onto v
+  color("Green") draw_vector(origo, projection_u_on_v, thickness);
+  
+  // Compute the dot product of u, v
+  dot_product = dot(u, v);
+  
+  // Normalize vector v to get the unit vector
+  unit_v = unit_vector(v);
+  
+  // Place the point along vector v at the dot product value
+  dot_product_point_on_v = [for (i = [0:2]) unit_v[i] * dot_product];
+  
+  // Draw the point using draw_point module
+  color("SkyBlue") draw_point(dot_product_point_on_v, cross = false);
+  
+  // Draw the line from the tip of vector v to the the dot product value
+  color("SkyBlue", 0.67) draw_line(v, dot_product_point_on_v, thickness);
+#+end_src
+
+#+RESULTS: Calculate the dot product
+[[file:./images/fig_calculate_the_dot_product.png]]
+
+#+NAME: Dot product with reference other than origo
+#+begin_src scad :file ./images/fig_calculate_the_dot_product_with_reference_other_than_origo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>
+  
+  // Test dot product (vector tip points) at custom reference point
+  u = [-17, 15, -1];
+  v = [5, 3, 2];
+  
+  // Drawing parameters
+  thickness = 0.3;
+  reference = [-5, -10, 8]; // ISSUE: other reference values than the origin at [0, 0, 0] don't work
+  
+  // Draw two vectors, u and v with the same reference 
+  color("Red") draw_vector(reference,
+                           [reference[0] + u[0],
+                            reference[1] + u[1],
+                            reference[2] + u[2]],
+                           thickness);
+  color("Blue") draw_vector(reference,
+                            [reference[0] + v[0],
+                             reference[1] + v[1],
+                             reference[2] + v[2]],
+                            thickness);
+  
+  // Compute the projection of u onto v
+  projection_u_on_v =
+    projection_point_on_vector(reference, v, [reference[0] + u[0],
+                                              reference[1] + u[1],
+                                              reference[2] + u[2]]);
+  
+  // Draw the projection of u onto v
+  color("Gray") draw_line([reference[0] + u[0],
+                           reference[1] + u[1],
+                           reference[2] + u[2]],
+                          projection_u_on_v,
+                          thickness / 3);
+  
+  // Draw the projection vector of u onto v
+  color("Green") draw_vector(reference, projection_u_on_v, thickness);
+  
+  // Compute the dot product of u, v
+  dot_product = dot(u, v);
+  
+  // Normalize vector v to get the unit vector
+  unit_v = unit_vector(v);
+  
+  // Place the point along vector v at the dot product value
+  dot_product_point_on_v = [for (i = [0:2]) reference[i] + unit_v[i] * dot_product];
+  
+  // Draw the point using draw_point module
+  color("SkyBlue") draw_point(dot_product_point_on_v, cross = false);
+  
+  // Draw the line from the tip of vector v to the dot product value
+  color("SkyBlue", 0.67) draw_line([reference[0] + v[0],
+                                   reference[1] + v[1],
+                                   reference[2] + v[2]],
+                                  dot_product_point_on_v,
+                                  thickness);
+#+end_src
+
+#+RESULTS: Dot product with reference other than origo
+[[file:./images/fig_calculate_the_dot_product_with_reference_other_than_origo.png]]
 
 ** The slope function
+
+Calculate the slope between two points
+
+#+NAME: Slope function
+#+begin_src scad :eval no
+  slope(p1, p2);
+#+end_src
+
+Parameters:
+
+- ~p1, p2~: are two vector points up to three dimensions
 
 #+Name: Slope demo
 #+begin_src scad :file ./images/fig_slope_demo.png :colorscheme Cornfield :size 400,400 :camera 10,10,0,0,0,0,300 :projection ortho :exports both
@@ -671,6 +805,17 @@ The dot product (or scalar product)....
 
 ** Lines intersection
 
+Function to find the intersection point of two lines
+
+#+NAME: Lines intersection
+#+begin_src scad :eval no
+  lines_intersection(line1, line2)
+#+end_src
+
+Parameters:
+
+- ~line1, line2~: a line is determined by two points of two dimensions encapsulated in a list
+
 #+NAME: Lines intersecton demo
 #+begin_src scad :file ./images/fig_lines_intersection_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
   use <extra.scad>
@@ -689,10 +834,9 @@ The dot product (or scalar product)....
   i = lines_intersection([u0, u1], [v0, v1]);
 
   // Draw the intersection point
-  color("Yellow") draw_point(i);
+  color("Magenta") draw_point(i, cross = false, factor = 8);
 #+end_src
 
 #+RESULTS: Lines intersecton demo
 [[file:./images/fig_lines_intersection_demo.png]]
-
 
