@@ -18,18 +18,15 @@ multiplication_factor = !is_undef(multiplication_factor) ? multiplication_factor
 
 // Circle sector (2D) given an angle from 0 ecluded to 360 included: angle ∈ ] 0; 360 ]
 module circle_sector(radius, start_angle, end_angle) {
-  
   module sector_less_or_equal_to_90_degrees(radius, start_angle, end_angle) {
-    // Calculate the arc height based on central angle and radius (Sagitta formula)
-    segment_height = radius * (2 * sin(abs(end_angle - start_angle) / 2));
-
+    triangle_sides_length = sqrt(2*pow(radius,2));
     intersection() {
       circle(radius);
       rotate(start_angle) {
         polygon(points = [[0, 0],
-                          [radius + segment_height, 0],
-                          [(radius + segment_height) * cos(end_angle - start_angle),
-                           (radius + segment_height) * sin(end_angle - start_angle)]]);
+                          [triangle_sides_length, 0],
+                          [triangle_sides_length * cos(end_angle - start_angle),
+                           triangle_sides_length * sin(end_angle - start_angle)]]);
       }
     }
   }
@@ -41,7 +38,6 @@ module circle_sector(radius, start_angle, end_angle) {
       for (i = [0:number_of_quadrants-1]) {
         segment_start_angle = start_angle + i * 90;
         segment_end_angle = min(start_angle + (i + 1) * 90, end_angle);
-        
         rotate([0, 0, segment_start_angle]) {
           sector_less_or_equal_to_90_degrees(radius,
                                              0,
