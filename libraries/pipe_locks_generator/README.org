@@ -1,0 +1,28 @@
+#+STARTUP: indent content
+#+TITLE: pipe_locks_generator.scad
+#+DESCRIPTION: generates customizable locking mechanisms for pipes and tubes
+#+LANGUAGE: us-en
+
+* Description
+
+This OpenSCAD script generates customizable locking mechanisms for pipes and tubes of various sizes. It includes three main components:
+
+- Fixed base lock
+- Threaded collar
+- Threaded lid
+
+These parts are designed to seal tubular structures, making them ideal for creating recipients or containers.
+
+* OpenSCAD Cutomizer
+
+- The *Part selector* menu let you render either the /fixed base lock/, the /threaded collar/ or the /locking lid/.
+
+- The *main dimensions* menu permits to edit the /outer diameter/, the /thickness/, the wished /clereance/ and /thread heigth/.
+
+- The /curled pattern options/ let you modify the depth of the engraved curled pattern. You can also choose to not have any pattern at all.
+
+- The printer settings option lets you select the width of your printer nozzle (default: 0.4). Most importantly, you can define your printer tolerance (default: 0.2).
+
+#+NAME: pipe_locks_generator_customizer.gif
+[[./images/pipe_locks_generator_customizer.gif]]
+

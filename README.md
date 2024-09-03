@@ -33,6 +33,14 @@ Updated: 2024-06-08T16:05:52+02:00
 
 [Project Directory](./libraries/thumb_drive_housing)
 
+## pipe_locks_generator.scad
+
+Description: generates customizable locking mechanisms for pipes and tubes
+
+Updated: 2024-09-04T01:00:52+02:00
+
+[Project Directory](./libraries/pipe_locks_generator)
+
 ## milka_s_radius_gauge.scad
 
 Description: This is an OpenSCAD script to generate Milka's radius gauge with slight variations
@@ -85,7 +93,7 @@ Updated: 2024-07-07T10:13:45+02:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2024-08-19T19:52:05+02:00
+Updated: 2024-08-19T19:53:27+02:00
 
 [Project Directory](./libraries/extra)
 
