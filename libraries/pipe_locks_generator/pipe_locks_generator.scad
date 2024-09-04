@@ -23,10 +23,9 @@ clearance = 0.2;
 thread_heigth = 10;
 
 /* [Curled pattern options] */
-curled_pattern = "String"; // [Strong, Medium, Light, None]
+curled_pattern = "Medium"; // [Strong, Medium, Light, None]
 
 /* [Printer settings] */
-//layer_height = 0.20; // [0.05, 0.010, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40]
 nozzle_width = 0.40; // [0.20, 0.40, 0.50, 0.60, 0.80]
 printer_tolerance = 0.2; // [0.05,0.010,0.15,0.20,0.25,0.30,0.35,0.40]
 

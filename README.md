@@ -37,7 +37,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: generates customizable locking mechanisms for pipes and tubes
 
-Updated: 2024-09-04T01:00:52+02:00
+Updated: 2024-09-05T07:58:40+02:00
 
 [Project Directory](./libraries/pipe_locks_generator)
 
@@ -85,7 +85,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: Hakko FX-888D Magnetic Tips Holder
 
-Updated: 2024-07-07T10:13:45+02:00
+Updated: 2024-09-04T09:08:20+02:00
 
 [Project Directory](./libraries/hakko_fx_888d_magnetic_tips_holder)
 

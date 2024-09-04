@@ -13,7 +13,8 @@ This OpenSCAD script generates customizable locking mechanisms for pipes and tub
 
 These parts are designed to seal tubular structures, making them ideal for creating recipients or containers.
 
-* OpenSCAD Cutomizer
+* OpenSCAD Cus
+tomizer
 
 - The *Part selector* menu let you render either the /fixed base lock/, the /threaded collar/ or the /locking lid/.
 
@@ -23,6 +24,17 @@ These parts are designed to seal tubular structures, making them ideal for creat
 
 - The printer settings option lets you select the width of your printer nozzle (default: 0.4). Most importantly, you can define your printer tolerance (default: 0.2).
 
-#+NAME: pipe_locks_generator_customizer.gif
+#+NAME: Pipe locks generator customizer demo
 [[./images/pipe_locks_generator_customizer.gif]]
 
+* Examples
+
+Candidates for the pipe locks generators:
+
+#+NAME: Candidates for the pipe locks generators
+[[./images/pipe_locks_generator_condidates.jpg]]
+
+Containers created with the pipe locks generators:
+
+#+NAME: Containers created with the pipe locks generators
+[[./images/pipe_locks_generator.jpg]]

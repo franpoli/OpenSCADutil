@@ -46,7 +46,7 @@ The clip can be used to secure the tip holder in place on your soldering station
 #+NAME: Assembly step 7
 [[file:images/assembly_hakko_fx-888d_magnetic_tips_holder_007.jpg]]
 
-* OpenSCAD Cutomizer
+* OpenSCAD Customizer
 
 Some adjustements can be made from the customizer in OpenSCAD.
 
