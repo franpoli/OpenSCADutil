@@ -13,8 +13,7 @@ This OpenSCAD script generates customizable locking mechanisms for pipes and tub
 
 These parts are designed to seal tubular structures, making them ideal for creating recipients or containers.
 
-* OpenSCAD Cus
-tomizer
+* OpenSCAD Customizer
 
 - The *Part selector* menu let you render either the /fixed base lock/, the /threaded collar/ or the /locking lid/.
 
