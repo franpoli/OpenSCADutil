@@ -38,17 +38,17 @@ Note that the ~end_angle~ has to be greater than the ~start_angle~.
 
   // Create a minor sector
   linear_extrude(thickness) translate([-400, -150, 0]) {
-    circle_sector(2*radius, start_angle, start_angle + minor_angle);
+      circle_sector(2*radius, start_angle, start_angle + minor_angle);
   }
 
   // Create a semicircula sector
   linear_extrude(thickness) translate([0, 0, 0]) {
-    circle_sector(radius, start_angle, start_angle + straight_angle);
+      circle_sector(radius, start_angle, start_angle + straight_angle);
   }
 
   // Create a major sector
   linear_extrude(thickness) translate([300, 0, 0]) {
-    circle_sector(radius, start_angle, start_angle + major_angle);
+      circle_sector(radius, start_angle, start_angle + major_angle);
   }
 #+end_src
 
@@ -76,7 +76,7 @@ Parameters:
   use <extra.scad>
 
   linear_extrude(0.5) {
-    isosceles_trapezium(base=36, top=26, height=24, center=true);
+      isosceles_trapezium(base=36, top=26, height=24, center=true);
   }
   #+end_src
 
@@ -104,13 +104,43 @@ Parameters:
   use <extra.scad>
 
   linear_extrude(0.5) {
-    rectangle_trapezium(base=26, top=36, height=24, center=true);
+      rectangle_trapezium(base=26, top=36, height=24, center=true);
   }
   #+end_src
 
   #+RESULTS: Rectangle trapezium demo
   [[file:./images/fig_rectangle_trapezium_demo.png]]
-  
+
+** Fillet
+
+Applies fillets on reflex corners to a 2D shape without altering its overall size.
+
+#+NAME: Create an rectangle trapezium with optional centering
+#+begin_example scad :eval no
+  fillet_reflex_corners_2d(radius) children_2d_object();;
+#+end_example
+
+Parameters:
+
+- ~radius~: The fillet radius, must be greater than 0.
+
+#+NAME: Fillet on 2D shapes demo
+#+begin_src scad :file ./images/fig_fillet_on_2d_shape_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  module 2d_object() {
+      union() {
+          circle(50);
+          square([50, 100]);
+      }
+  }
+
+  fillet_reflex_corners_2d(10) 2d_object();
+#+end_src
+
+#+RESULTS: Fillet on 2D shapes demo
+[[file:./images/fig_fillet_on_2d_shape_demo.png]]
+
 * 3D
 ** Cylinder Sector
 

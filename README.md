@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 Description: A python script to convert simple SVG files into a list of coordinates
 
-Updated: 2024-06-28T10:34:20+02:00
+Updated: 2024-12-01T16:38:41+01:00
 
 [Project Directory](./utilities/svg_to_scad)
 # libraries
@@ -37,7 +37,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: generates customizable locking mechanisms for pipes and tubes
 
-Updated: 2024-09-05T16:32:01+02:00
+Updated: 2024-12-01T16:38:41+01:00
 
 [Project Directory](./libraries/pipe_locks_generator)
 
@@ -85,7 +85,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: Hakko FX-888D Magnetic Tips Holder
 
-Updated: 2024-09-04T09:08:20+02:00
+Updated: 2024-12-01T16:38:41+01:00
 
 [Project Directory](./libraries/hakko_fx_888d_magnetic_tips_holder)
 
@@ -93,7 +93,7 @@ Updated: 2024-09-04T09:08:20+02:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2024-08-19T19:53:27+02:00
+Updated: 2024-12-01T23:01:21+01:00
 
 [Project Directory](./libraries/extra)
 
