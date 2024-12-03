@@ -97,7 +97,7 @@ module rectangle_trapezium(base=0, top=0, height=0, center=false) {
 }
 
 // Applies fillets on reflex corners to a 2D shape without altering its overall size.
-module fillet_reflex_corners_2d(radius) {
+module fillet_reflex_angles(radius) {
     assert(radius > 0, "Radius must be greater than zero.");
     
     // Expand back 2d object
@@ -107,14 +107,27 @@ module fillet_reflex_corners_2d(radius) {
         children();        
 }
 
-module 2d_object() {
-    union() {
-        circle(50);
-        square([50, 100]);
+// Transforms a 2D shape into a hollow object by adding a wall of the specified width.
+module thickness(width = -1) {
+    // Inward
+    if (sign(width) == -1) {
+        difference() {
+            children();
+            offset(delta = width) children();
+        }
+    }
+    // Outward
+    else if (sign(width) == 1) {
+        difference() {
+            offset(delta = width) children();
+            children();
+        }
+    } else {
+        // Unchanged
+        children();
+        echo("Warning! Using thickness module with zero value.");
     }
 }
-
-fillet_reflex_corners_2d(10) 2d_object();
 
 /* 3D */
 

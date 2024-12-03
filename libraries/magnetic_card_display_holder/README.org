@@ -1,0 +1,41 @@
+#+STARTUP: indent content
+#+TITLE: magnetic_card_display_holder.scad
+#+DESCRIPTION: Generates a customizable stand designed to hold cards securely using magnets.
+#+LANGUAGE: us-en
+
+* Description
+
+This OpenSCAD script generates a customizable stand for displaying various types of cards. The stand uses magnets to securely hold the cards and adjusts automatically based on card thickness, ensuring a perfect fit every time.
+
+* Features
+
+- Magnet Integration
+
+  The stand incorporates magnets to keep the cards securely in place. You can customize the size, number, and placement of the magnets to suit your needs.
+  
+- Card Thickness Adjustment
+
+  The holder adjusts its dimensions based on card thickness, ensuring a stable and snug fit for cards of different types, such as handball green time and expulsion cards.
+
+- Customizable Dimensions
+
+  Modify parameters like the number of magnets, card dimensions (width, length, and thickness), and the overall size of the holder for an optimal fit.
+
+- Tolerance Compensation
+
+  The script compensates for printer tolerances, ensuring the cards fit perfectly, even with slight variations in 3D printing results.
+
+- Optimized Printing Orientation
+
+  The model can be printed either standing up or laying down. When printing flat, the design automatically trims the base slightly to avoid the need for supports on FDM printers, ensuring an efficient and clean print.
+
+- Easy Card Insertion
+
+  Cards are inserted into the holder by pressing them into a slot. This design ensures a secure hold while making it easy to add or remove cards.
+
+* Usage example
+
+Originally designed for handball [[https://shop.neh.com/handboll_domare/prylar/88346-time-out-kort-6-pack][time-out]] and [[https://shop.neh.com/handboll_domare/prylar/90280-whiteboardkort-2-pack][whiteboard/expulsion]] cards, this script is perfect for creating a functional, adjustable 3D-printed card holder that helps keep the cards secure and visible during a game.
+
+#+NAME: 3D Printed Magnetic Card Display Holder
+[[./images/magnetic_card_display_holder.jpg]]

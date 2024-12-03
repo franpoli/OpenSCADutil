@@ -117,7 +117,7 @@ Applies fillets on reflex corners to a 2D shape without altering its overall siz
 
 #+NAME: Create an rectangle trapezium with optional centering
 #+begin_example scad :eval no
-  fillet_reflex_corners_2d(radius) children_2d_object();;
+  fillet_reflex_angles(radius) children_2d_object();
 #+end_example
 
 Parameters:
@@ -135,11 +135,45 @@ Parameters:
       }
   }
 
-  fillet_reflex_corners_2d(10) 2d_object();
+  fillet_reflex_angles(10) 2d_object();
 #+end_src
 
 #+RESULTS: Fillet on 2D shapes demo
 [[file:./images/fig_fillet_on_2d_shape_demo.png]]
+
+** Thickness
+
+Transforms a 2D shape into a hollow object by adding a wall of the specified width. A positive width creates an outward contour, while a negative width generates an inward contour.
+
+#+NAME: Thickness example
+#+begin_example scad :eval no
+  thickness(width) children_2d_object();
+#+end_example
+
+Parameters:
+
+- ~width~: The width or thickness of the wall to be generated around the 2d shape.
+
+#+NAME: Thickness demo
+#+begin_src scad :file ./images/fig_thickness_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  module 2d_object() {
+      union() {
+          circle(50);
+          square([50, 100]);
+      }
+  }
+
+  // Inward thickness
+  translate([-60, 0, 0]) thickness(-10) 2d_object();
+
+  // Outward thickness
+  translate([60, 0, 0]) thickness(10) 2d_object();
+#+end_src  
+
+#+RESULTS: Thickness demo
+[[file:./images/fig_thickness_demo.png]]
 
 * 3D
 ** Cylinder Sector

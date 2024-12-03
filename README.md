@@ -49,6 +49,14 @@ Updated: 2024-06-28T01:44:34+02:00
 
 [Project Directory](./libraries/milka_s_radius_gauge)
 
+## magnetic_card_display_holder.scad
+
+Description: Generates a customizable stand designed to hold cards securely using magnets.
+
+Updated: 2024-12-04T02:07:29+01:00
+
+[Project Directory](./libraries/magnetic_card_display_holder)
+
 ## knurled_knob.scad
 
 Description: Knurled knobs generator for bolts and nuts
@@ -93,7 +101,7 @@ Updated: 2024-12-01T16:38:41+01:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2024-12-01T23:01:21+01:00
+Updated: 2024-12-04T01:43:20+01:00
 
 [Project Directory](./libraries/extra)
 
