@@ -25,6 +25,14 @@ Updated: 2024-06-08T16:05:52+02:00
 
 [Project Directory](./libraries/trolley_token)
 
+## time_out_card.scad
+
+Description: #+DESCRIPTION: 
+
+Updated: 2024-12-09T04:03:17+01:00
+
+[Project Directory](./libraries/time_out_cards)
+
 ## thumbdrive_housing.scad
 
 Description: Generates customizable USB drive cases
@@ -53,7 +61,7 @@ Updated: 2024-06-28T01:44:34+02:00
 
 Description: Generates a customizable stand designed to hold cards securely using magnets.
 
-Updated: 2024-12-04T02:07:29+01:00
+Updated: 2024-12-04T02:08:46+01:00
 
 [Project Directory](./libraries/magnetic_card_display_holder)
 

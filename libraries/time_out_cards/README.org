@@ -1,0 +1,44 @@
+#+STARTUP: indent content
+#+TITLE: time_out_card.scad
+#+DESCRIPTION: 
+#+LANGUAGE: us-en
+
+* Description
+
+This OpenSCAD script generates customizable time-out cards for handball matches, compliant with official handball rules. Each team (Home and Away) is allowed one time-out per period, including extra time.
+
+The script supports two output formats:
+
+- SVG: For use with vinyl cutters or laser engravers.
+- STL: For 3D printing, including multi-color designs and stencils.
+
+* Features
+
+- Fully adjustable card dimensions and layer heights.
+  
+- Customizable text for:
+
+  1. Period: "1", "2", "3", or "E" (Extra time).
+  2. Team: "H" (Home) or "A" (Away)
+
+- Four distinct modules for various use cases:
+
+  - svg: Outline for cutting or engraving.
+  - stencil: 3D-printable stencil.
+  - card: Complete card with raised text for 3D printing.
+  - card_text: Standalone text module for multi-material printing.
+   
+* Usaage
+
+Cards can be generated interactively using the OpenSCAD customizer or automated through a script to produce an entire set (see the file [[./generate_time_out_cards.sh][generate_time_out_cards.sh]] for an example).
+
+For direct customization via the command line, OpenSCAD parameters can be overridden using the ~-D~ flag:
+
+- selector: Output type (svg, stencil, card, or card_text).
+- char_period: Period (1, 2, 3, or E).
+- char_team: Team (H or A).
+
+#+NAME: OpenSCAD Customizer Demo
+[[./images/handball_time-out_cards_customizer.gif]]
+  
+
