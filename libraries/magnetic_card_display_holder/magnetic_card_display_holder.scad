@@ -16,6 +16,8 @@ $fs = $preview ? 1 : 0.5; // default minimum facet size
 printer_tolerance = 0.1;
 nozzel_width = 0.4;
 number_of_perimeters = 3;
+// Print orientation
+lying_down = true;
 
 /* [Hardware] */
 magnet_diameter = 8;
@@ -23,10 +25,7 @@ magnet_height = 4;
 number_of_magnets = 3;
 card_width = 150;
 card_thickness = 1;
-
-/* [Fine adjustments] */
-overlapp = 8;
-lying_down = false; // [false, true]
+claim_depth = 8; // Depth the holder grips the card's bottom
     
 /* [Parts] */
 selector = "stand"; // ["stand", "holder", "all"]
@@ -53,11 +52,11 @@ function base(bezel = fillet,
 
 base = base(); // Compute bezel
 
-function minimum_overlapp(desired_value = overlapp,
+function minimum_claim_depth(desired_value = claim_depth,
                           heigth = magnet_height + wall_width + printer_tolerance) =
     desired_value < heigth ? heigth : desired_value;
 
-minimum_overlapp = minimum_overlapp(); // Compute minimum overlapping
+minimum_claim_depth = minimum_claim_depth(); // Compute minimum claim_depthing
 
 function conditional_position(boolean) =
     boolean ? 1/3 : 0;
@@ -83,7 +82,7 @@ module main_2d_shape(boolean = lying_down) {
     module shape() { 
         fillet_reflex_angles(fillet) difference() {
             circle(r=radius, $fn=3);
-            translate([minimum_overlapp, -base/2, 0]) square(base);
+            translate([minimum_claim_depth, -base/2, 0]) square(base);
             translate([0, 0, 0]) square([radius, printer_tolerance]);
         }
     }
@@ -134,12 +133,12 @@ module parts(part = selector) {
     }
 
     // Conditional rendering and positioning
-    if (part == "holder") {
-        rotate([0, -270*conditional_position, 0]) color("RosyBrown", 1.0) holder();
-    } else if (part == "stand") {
-        rotate([0, -270*conditional_position, 0]) color("Tan", 1.0) stand();
-    } else {
-        rotate([0, -270*conditional_position, 0]) {
+    rotate([0, -270 * conditional_position, 0]) translate([0, 0, -card_width / 2]) {
+        if (part == "holder") {
+            color("RosyBrown", 1.0) holder();
+        } else if (part == "stand") {
+            color("Tan", 1.0) stand();
+        } else {
             color("RosyBrown", 1.0) holder();
             color("Tan", 1.0) stand();
         }
@@ -152,5 +151,5 @@ parts(part = selector);
 echo("wall_width", wall_width);
 echo("fillet", fillet);
 echo("base)", base);
-echo("minimum_overlapp", minimum_overlapp);
+echo("minimum_claim_depth", minimum_claim_depth);
 echo("conditional_position", conditional_position);
