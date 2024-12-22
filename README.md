@@ -29,7 +29,7 @@ Updated: 2024-06-08T16:05:52+02:00
 
 Description: #+DESCRIPTION: 
 
-Updated: 2024-12-11T20:32:31+01:00
+Updated: 2024-12-21T16:41:28+01:00
 
 [Project Directory](./libraries/time_out_cards)
 
@@ -61,7 +61,7 @@ Updated: 2024-06-28T01:44:34+02:00
 
 Description: Generates a customizable stand designed to hold cards securely using magnets.
 
-Updated: 2024-12-15T07:48:57+01:00
+Updated: 2024-12-15T09:00:21+01:00
 
 [Project Directory](./libraries/magnetic_card_display_holder)
 
@@ -109,7 +109,7 @@ Updated: 2024-12-15T07:11:38+01:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2024-12-04T01:43:20+01:00
+Updated: 2024-12-23T00:48:21+01:00
 
 [Project Directory](./libraries/extra)
 

@@ -87,7 +87,7 @@ Parameters:
 
 Create a rectangle trapezium with optional centering
 
-#+NAME: Create an rectangle trapezium with optional centering
+#+NAME: Create a rectangle trapezium with optional centering
 #+begin_example scad :eval no
   rectangle_trapezium(base, top, height, center);
 #+end_example
@@ -110,6 +110,34 @@ Parameters:
 
   #+RESULTS: Rectangle trapezium demo
   [[file:./images/fig_rectangle_trapezium_demo.png]]
+
+** Ellipse
+
+Create an ellipse
+
+#+NAME: Create an ellipse
+#+begin_example scad :eval no
+  ellipse(length, width)
+#+end_example
+
+Parameters:
+
+- ~length~ or ~l~: The major axis diameter of the ellipse.
+- ~width~ or ~w~: The minor axis diameter of the ellipse.
+
+The module accepts either short (~l~, ~w~) or long (~length~, ~width~) parameter names. If both are provided, the long names take precedence.
+
+Examples:
+
+#+begin_src scad scad :file ./images/fig_eclipse_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  ellipse(length = 10, width = 5);
+  translate([-6, -6, 0]) ellipse(l = 8, w = 4);
+#+end_src
+
+#+RESULTS:
+[[file:./images/fig_eclipse_demo.png]]
 
 ** Fillet
 

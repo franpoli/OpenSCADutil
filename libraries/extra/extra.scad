@@ -51,49 +51,68 @@ module circle_sector(radius, start_angle, end_angle) {
 }
 
 // Create an isosceles trapezium with optional centering
-module isosceles_trapezium(base=0, top=0, height=0, b=0, t=0, h=0, center=false) {
-    b = base != 0 ? base : b;
-    t = top != 0 ? top : t;
-    h = height != 0 ? height : h;
+module isosceles_trapezium(b = 2, t = 1, h = 1, base = 0, top = 0, height = 0, center = false) {
+    // Determine the effective dimensions with consistent defaults
+    effective_b = base > 0 ? base : b;  // Default to 2
+    effective_t = top > 0 ? top : t;    // Default to 1
+    effective_h = height > 0 ? height : h; // Default to 1
 
     // Assertions to ensure valid input
-    if (b <= 0 || t <= 0 || h <= 0) {
-        assert(false, "base, top or height must be greater than 0");
+    if (effective_b <= 0 || effective_t <= 0 || effective_h <= 0) {
+        assert(false, "base, top, and height (or b/t/h) must all be greater than 0");
     }
 
     // Calculate offset for centering
-    x_offset = center ? -b / 2 : 0;
-    y_offset = center ? -h / 2 : 0;
-  
+    x_offset = center ? -effective_b / 2 : 0;
+    y_offset = center ? -effective_h / 2 : 0;
+
+    // Create the trapezium
     polygon(points = [
-                      [x_offset, y_offset],
-                      [x_offset + b, y_offset],
-                      [x_offset + (b + t) / 2, y_offset + h],
-                      [x_offset + (b - t) / 2, y_offset + h]
-                      ]);
+        [x_offset, y_offset],
+        [x_offset + effective_b, y_offset],
+        [x_offset + (effective_b + effective_t) / 2, y_offset + effective_h],
+        [x_offset + (effective_b - effective_t) / 2, y_offset + effective_h]
+    ]);
 }
 
 // Create a rectangle trapezium with optional centering
-module rectangle_trapezium(base=0, top=0, height=0, center=false) {
-    b = base != 0 ? base : b;
-    t = top != 0 ? top : t;
-    h = height != 0 ? height : h;
+module rectangle_trapezium(b = 2, t = 1, h = 1, base = 0, top = 0, height = 0, center = false) {
+    // Resolve dimensions with meaningful defaults
+    effective_b = base > 0 ? base : b;  // Default to 2
+    effective_t = top > 0 ? top : t;    // Default to 1
+    effective_h = height > 0 ? height : h; // Default to 1
 
     // Assertions to ensure valid input
-    if (b <= 0 || t <= 0 || h <= 0) {
-        assert(false, "base, top or height must be greater than 0");
+    if (effective_b <= 0 || effective_t <= 0 || effective_h <= 0) {
+        assert(false, "base, top, and height (or b/t/h) must all be greater than 0");
     }
 
     // Calculate offset for centering
-    x_offset = center ? -b / 2 : 0;
-    y_offset = center ? -h / 2 : 0;
+    x_offset = center ? -effective_b / 2 : 0;
+    y_offset = center ? -effective_h / 2 : 0;
 
-    polygon(points=[
-                    [x_offset, y_offset],
-                    [x_offset + b, y_offset],
-                    [x_offset + t, y_offset + h],
-                    [x_offset, y_offset + h]
-                    ]);
+    // Create the trapezium
+    polygon(points = [
+        [x_offset, y_offset],
+        [x_offset + effective_b, y_offset],
+        [x_offset + effective_t, y_offset + effective_h],
+        [x_offset, y_offset + effective_h]
+    ]);
+}
+
+// Create an ellipse
+module ellipse(l = 2, w = 1, length = 0, width = 0) {
+    // Determine the effective width and length with consistent defaults
+    effective_w = width > 0 ? width : w;  // Default to 1
+    effective_l = length > 0 ? length : l; // Default to 2
+
+    // Assertions to ensure valid input
+    if (effective_l <= 0 || effective_w <= 0) {
+        assert(false, "length or width (or l/w) must be greater than 0");
+    }
+
+    // Create the ellipse
+    scale([1, effective_w / effective_l, 1]) circle(d = effective_l);
 }
 
 // Applies fillets on reflex corners to a 2D shape without altering its overall size.
