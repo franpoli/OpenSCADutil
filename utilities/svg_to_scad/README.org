@@ -114,32 +114,29 @@ For a complete list of options, consult the help menu:
 #+RESULTS:
 #+begin_example
 usage: svg_to_scad.py [-h] -i INPUT [-n NUMBER_SAMPLES] [-o OUTPUT] [-c]
-                      [-f {x,y}] [-s SCALE] [-r ROTATE] [-g]
+                      [-f {x,y}] [-s SCALE] [-r ROTATE] [-g] [-C]
 
 Convert SVG paths to a list of coordinates for use in OpenSCAD.
 
 options:
   -h, --help            show this help message and exit
-  -i INPUT, --input INPUT
-                        Path to the SVG file.
-  -n NUMBER_SAMPLES, --number-samples NUMBER_SAMPLES
+  -i, --input INPUT     Path to the SVG file.
+  -n, --number-samples NUMBER_SAMPLES
                         Number of samples for Bezier curves and arcs (default:
                         100).
-  -o OUTPUT, --output OUTPUT
-                        Output file name (default: coordinates.scad).
-  -c, --closed          Close the path by adding the first point to the end if
+  -o, --output OUTPUT   Output file name (default: coordinates.scad).
+  -c, --close           Close the path by adding the first point to the end if
                         not already closed.
-  -f {x,y}, --flip {x,y}
-                        Flip the coordinates either horizontally or
+  -f, --flip {x,y}      Flip the coordinates either horizontally or
                         vertically.
-  -s SCALE, --scale SCALE
-                        Scale the coordinates. Format: x:y, x:, or :y
-  -r ROTATE, --rotate ROTATE
-                        Rotate the coordinates by the specified angle (in
+  -s, --scale SCALE     Scale the coordinates. Format: x:y, x:, or :y
+  -r, --rotate ROTATE   Rotate the coordinates by the specified angle (in
                         degrees).
   -g, --center-of-gravity
                         Center the coordinates at the center of gravity of the
                         shape.
+  -C, --center          Center the shape at the origin based on the bounding
+                        rectangle.
 #+end_example
 
 ** Usage in OpenSCAD

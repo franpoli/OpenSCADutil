@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 Description: A python script to convert simple SVG files into a list of coordinates
 
-Updated: 2024-12-24T03:54:19+01:00
+Updated: 2024-12-24T04:03:51+01:00
 
 [Project Directory](./utilities/svg_to_scad)
 # libraries
