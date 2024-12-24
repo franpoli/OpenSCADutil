@@ -54,7 +54,12 @@ def parse_arguments():
         action='store_true', 
         help='Center the coordinates at the center of gravity of the shape.'
     )
-    
+    parser.add_argument(
+        '-C', '--center',
+        action='store_true',
+        help='Center the shape at the origin based on the bounding rectangle.'
+    )
+
     return parser.parse_args()
 
 def sample_segment(segment, num_samples):
@@ -116,7 +121,17 @@ def center_coordinates_at_gravity(coordinates):
     coordinates -= centroid
     return coordinates.tolist()
 
-def svg_to_coordinates(svg_file, num_samples, close, flip, scale, rotate, center_of_gravity):
+def center_coordinates_at_origin(coordinates):
+    coordinates = np.array(coordinates)
+    x_min, y_min = np.min(coordinates, axis=0)
+    x_max, y_max = np.max(coordinates, axis=0)
+    x_center = (x_min + x_max) / 2
+    y_center = (y_min + y_max) / 2
+    coordinates[:, 0] -= x_center
+    coordinates[:, 1] -= y_center
+    return coordinates.tolist()
+
+def svg_to_coordinates(svg_file, num_samples, close, flip, scale, rotate, center_of_gravity, center):
     paths, attributes, svg_attributes = svgpathtools.svg2paths2(svg_file)
     coordinates = []
     
@@ -157,9 +172,13 @@ def svg_to_coordinates(svg_file, num_samples, close, flip, scale, rotate, center
     if rotate is not None:
         coordinates = rotate_coordinates(np.array(coordinates), rotate)
 
-        # Center the coordinates at the center of gravity if requested
+    # Center the coordinates at the center of gravity if requested
     if center_of_gravity:
         coordinates = center_coordinates_at_gravity(coordinates)
+
+    # Center the coordinates at the origin based on the bounding rectangle if requested
+    if center:
+        coordinates = center_coordinates_at_origin(coordinates)
 
     return coordinates
 
@@ -205,7 +224,7 @@ def main():
     args = parse_arguments()
     
     # Convert the SVG to coordinates
-    coordinates = svg_to_coordinates(args.input, args.number_samples, args.close, args.flip, args.scale, args.rotate, args.center_of_gravity)
+    coordinates = svg_to_coordinates(args.input, args.number_samples, args.close, args.flip, args.scale, args.rotate, args.center_of_gravity, args.center)
 
     # Print the width and height
     coordinates_array = np.array(coordinates)
