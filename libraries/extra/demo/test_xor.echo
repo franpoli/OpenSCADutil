@@ -1,0 +1,4 @@
+ECHO: "A: ", true, " B: ", true, " XOR: ", false
+ECHO: "A: ", true, " B: ", false, " XOR: ", true
+ECHO: "A: ", false, " B: ", true, " XOR: ", true
+ECHO: "A: ", true, " B: ", true, " XOR: ", false

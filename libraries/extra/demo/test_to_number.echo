@@ -1,0 +1,6 @@
+ECHO: "Input: 12345 Result: 12345"
+ECHO: "Input: -98765 Result: -98765"
+ECHO: "Input: 0 Result: 0"
+ECHO: "Input: 000123 Result: 123"
+ECHO: "Input: -001234 Result: -1234"
+ECHO: "Input: 987654321 Result: 9.87654e+8"

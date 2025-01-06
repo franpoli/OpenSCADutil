@@ -271,14 +271,91 @@ function parallel_vector(point1, point2, distance) =
     )
     [p1, p2];
 
-// Function to calculate the projection of point onto a line defined by a vector
-function projection_point_on_vector(reference, line, point) =
-    let (
-         adjusted_point = vector_displacement(reference, point),
-         unit_line = unit_vector(line),
-         dot_product = dot(adjusted_point, unit_line)
-         )
-    [for (i = [0:2]) reference[i] + unit_line[i] * dot_product];
+// XOR operation for boolean values
+function xor(bool_a, bool_b) = 
+    assert_valid_boolean_input(bool_a) && assert_valid_boolean_input(bool_b) ? bool_a != bool_b : false;
+
+// Function to reduce a list of boolean values using XOR operation
+function reduce_xor(values) =
+    len(values) == 1
+    ? values[0]  // Base case: single value
+    : xor(values[0], reduce_xor(slice(values, 1, len(values))));  // Recursive XOR
+
+// Helper function to slice an array manually
+function slice(arr, start, end) =
+    [for (i = [start : end - 1]) arr[i]];
+
+// Assert function to validate boolean input (true '0' or false '1')
+function assert_valid_boolean_input(value) =
+    (value == true || value == false || value == 1 || value == 0) ? true : error("Invalid value: " + str(value));
+
+// Assert function to validate binary input (e.g., 0, 1, 10, 11, 100, etc.)
+function assert_valid_binary_input(value) =
+    (value >= 0 && floor(value) == value && is_binary_digits(value)) 
+    ? true 
+    : error("Invalid binary value: " + str(value));
+
+// Function to check if all digits in a number are binary (0 or 1)
+function is_binary_digits(value) =
+    let(digits = str(value))  // Convert the number to a string
+    // Check if all characters in the string are '0' or '1'
+    !any([for (c = [for (i = [0 : len(digits)-1]) digits[i]]) !(c == "0" || c == "1")]);
+
+// Main function to convert integer to binary
+function integer_to_binary(value) =
+    value == 0 ? "0" : reverse_binary(value);
+
+// Helper function to convert integer to binary
+function reverse_binary(value, result = "") =
+    value == 0 && result == "" ? "0" : ( // Base case: If value is 0 and result is empty, return "0"
+        value == 0 ? result :  // If value reaches 0, return the accumulated result
+        reverse_binary(floor(value / 2), str(value % 2, result))  // Correctly concatenate the binary string
+    );
+
+// Assert function to validate integer input (non-negative and no floating point)
+function assert_valid_integer_input(value) =
+    (value >= 0 && floor(value) == value) ? true : error("Invalid integer value: " + str(value));
+
+// Convert binary value to decimal
+function binary_to_decimal(binary) =
+    assert_valid_binary_input(binary) ? sum_binary_digits(binary) : error("Invalid binary value: " + str(binary));
+
+// Helper to calculate decimal value from binary
+function sum_binary_digits(binary) =
+    let(
+        digits = str(binary)  // Convert the binary number to a string
+    )
+    sum([for (i = [0 : len(digits) - 1]) 
+        (digits[i] == "1") * pow(2, len(digits) - 1 - i) // Calculate each digit's contribution
+    ]);
+
+// Helper function to accumulate the sum
+function accumulate_sum(arr, index, acc) =
+    index < len(arr) ? accumulate_sum(arr, index + 1, acc + arr[index]) : acc;
+
+// Main function to convert a string representing an integer to its numeric value
+function to_number(str) =
+    let(
+        // Convert the string into an array of characters
+        digits = [for (i = [0 : len(str)-1]) str[i]],
+
+        // Check if the number is negative
+        is_negative = (digits[0] == "-"),
+
+        // Exclude the minus sign if negative
+        abs_digits = is_negative ? [for (i = [1 : len(str)-1]) digits[i]] : digits,
+
+        // Assert that all characters in the string are valid digits
+        _ = [for (c = abs_digits) assert(ord(c) >= ord("0") && ord(c) <= ord("9"), str("String contains non-digit characters: ", str))],
+
+        // Create the array of numeric values with place values
+        temp_array = [for (i = [0 : len(abs_digits)-1]) (ord(abs_digits[i]) - ord("0")) * pow(10, (len(abs_digits)-i-1))],
+
+        // Calculate the sum using recursion
+        number = accumulate_sum(temp_array, 0, 0)
+    )
+    // Return the number, taking the sign into account
+    is_negative ? -number : number;
 
 /* Cartesian Coordinate System */
 

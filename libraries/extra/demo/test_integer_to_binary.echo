@@ -1,0 +1,5 @@
+ECHO: "Input: ", 5, " Expected: ", "101", " Got: ", "101"
+ECHO: "Input: ", 10, " Expected: ", "1010", " Got: ", "1010"
+ECHO: "Input: ", 0, " Expected: ", "0", " Got: ", "0"
+ECHO: "Input: ", 15, " Expected: ", "1111", " Got: ", "1111"
+ECHO: "Input: ", 8, " Expected: ", "1000", " Got: ", "1000"

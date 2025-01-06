@@ -5,7 +5,7 @@
 
 * Overview
 
-This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts.
+This library contains a collection of reusable modules and functions that can be used in various OpenSCAD projects. The modules are designed to perform common tasks, such as creating geometric shapes, transformations, and other useful operations. Each module is self-contained and can be easily integrated into other OpenSCAD scripts. Additionally, the library includes a section for experimental functions and techniques, which are used for testing new ideas and exploring different approaches in OpenSCAD scripting.
 
 * 2D
 ** Circle sector
@@ -932,3 +932,259 @@ Parameters:
 #+RESULTS: Lines intersecton demo
 [[file:./images/fig_lines_intersection_demo.png]]
 
+** XOR and reduce XOR functions
+
+#+NAME: XOR function
+#+begin_src scad
+  xor(bol_a, bol_b)
+#+end_src
+
+Parameters:
+
+~bool_a~: A boolean value ~true~ (1) or ~false~ (0).
+~bool_b~: A boolean value ~true~ (1) or ~false~ (0).
+
+#+NAME: Test XOR
+#+begin_src scad :file ./demo/test_xor.echo :tangle ./demo/test_xor.scad :results file :exports both
+  use<extra.scad>
+
+  function test_xor() = [
+      [true, true, xor(true, true)],    // Expected false
+      [true, false, xor(true, false)],  // Expected true
+      [false, true, xor(false, true)],  // Expected true
+      [true, true, xor(true, true)],    // Expected false
+  ];
+
+  // Print results
+  for (t = test_xor()) 
+      echo("A: ", t[0], " B: ", t[1], " XOR: ", t[2]);
+#+end_src
+
+#+RESULTS: Test XOR
+[[file:./demo/test_xor.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/test_xor.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "A: ", true, " B: ", true, " XOR: ", false
+: ECHO: "A: ", true, " B: ", false, " XOR: ", true
+: ECHO: "A: ", false, " B: ", true, " XOR: ", true
+: ECHO: "A: ", true, " B: ", true, " XOR: ", false
+
+#+NAME: Test reduce XOR
+#+begin_src scad :file ./demo/test_reduce_xor.echo :tangle ./demo/test_reduce_xor.scad :results file :exports both
+  use <extra.scad>
+
+  // Example test for reduce_xor
+  function test_reduce_xor() = [
+      [ [true, true], false ],          // true XOR true = false
+      [ [true, false], true ],          // true XOR false = true
+      [ [false, true], true ],          // false XOR true = true
+      [ [false, false], false ],        // false XOR false = false
+      [ [true, false, true], false ],   // (true XOR false) XOR true = false
+      [ [true, false, false], true ],   // (true XOR false) XOR false = true
+  ];
+
+  for (test = test_reduce_xor()) {
+      result = reduce_xor(test[0]);
+      echo("Input: ", test[0], " Expected: ", test[1], " Got: ", result);
+      assert(result == test[1], "Test failed!");
+   }
+#+end_src
+
+#+RESULTS: Test reduce XOR
+[[file:./demo/test_reduce_xor.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/test_reduce_xor.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Input: ", [true, true], " Expected: ", false, " Got: ", false
+: ECHO: "Input: ", [true, false], " Expected: ", true, " Got: ", true
+: ECHO: "Input: ", [false, true], " Expected: ", true, " Got: ", true
+: ECHO: "Input: ", [false, false], " Expected: ", false, " Got: ", false
+: ECHO: "Input: ", [true, false, true], " Expected: ", false, " Got: ", false
+: ECHO: "Input: ", [true, false, false], " Expected: ", true, " Got: ", true
+
+** Conversion functions
+
+#+NAME: Integer to binary
+#+begin_src scad :file ./demo/test_integer_to_binary.echo :tangle ./demo/test_integer_to_binary.scad :results file :exports both
+  use <extra.scad>;
+
+  // Test cases for integer to binary conversion
+  function test_integer_to_binary() = [
+      [5, "101"],       // 5 in binary
+      [10, "1010"],     // 10 in binary
+      [0, "0"],         // 0 in binary
+      [15, "1111"],     // 15 in binary
+      [8, "1000"]       // 8 in binary
+      //[3.14, "Error"] // Not an integer
+  ];
+
+  // Execute tests
+  for (test = test_integer_to_binary()) {
+      result = integer_to_binary(test[0]);
+      echo("Input: ", test[0], " Expected: ", test[1], " Got: ", result);
+      assert(result == test[1], "Test failed!");
+   }
+#+end_src
+
+#+RESULTS: Integer to binary
+[[file:./demo/test_integer_to_binary.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/test_integer_to_binary.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Input: ", 5, " Expected: ", "101", " Got: ", "101"
+: ECHO: "Input: ", 10, " Expected: ", "1010", " Got: ", "1010"
+: ECHO: "Input: ", 0, " Expected: ", "0", " Got: ", "0"
+: ECHO: "Input: ", 15, " Expected: ", "1111", " Got: ", "1111"
+: ECHO: "Input: ", 8, " Expected: ", "1000", " Got: ", "1000"
+
+#+NAME: String to number
+#+begin_src scad :file ./demo/test_to_number.echo :tangle ./demo/test_to_number.scad :results file :exports both
+  use <extra.scad>;
+
+  // Example test cases for the to_number function
+  test_cases = [
+      "12345",     // Positive number
+      "-98765",    // Negative number
+      "0",         // Zero
+      "000123",    // Leading zeros
+      "-001234",   // Negative with leading zeros
+      "987654321"  // Large number
+      //"123A5"  // Not a number
+      // "3.14"  // A float
+  ];
+
+  // Test the to_number function with each case
+  for (tc = test_cases) {
+      result = to_number(tc);
+      echo(str("Input: ", tc, " Result: ", result));  // Output the input and result
+   }
+#+end_src
+
+#+RESULTS: String to number
+[[file:./demo/test_to_number.echo]]
+
+#+begin_src bash :results output :exports both
+  cat ./demo/test_to_number.echo
+#+end_src
+
+#+RESULTS:
+: ECHO: "Input: 12345 Result: 12345"
+: ECHO: "Input: -98765 Result: -98765"
+: ECHO: "Input: 0 Result: 0"
+: ECHO: "Input: 000123 Result: 123"
+: ECHO: "Input: -001234 Result: -1234"
+: ECHO: "Input: 987654321 Result: 9.87654e+8"
+
+* Mathematical geometries
+** XOR patterns
+
+#+NAME: Parametric 3D Model Based on Binary Input
+#+begin_src scad :file ./images/fig_3d_model_based_on_binary_input_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>;
+
+  // Parametric settings
+  size = 10; // Grid size
+  cell_size = 5; // Size of each cell
+  binary_input = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1]; // Example binary input
+
+  // Function to visualize a cell based on its XOR state
+  function cell_state(i, j) = xor(binary_input[i % len(binary_input)], binary_input[j % len(binary_input)]); // Alternating pattern based on binary input
+
+  // Create a grid based on the binary input
+  for (i = [0 : size-1]) {
+      for (j = [0 : size-1]) {
+          // Calculate cell position based on row and column
+          x_pos = i * cell_size;
+          y_pos = j * cell_size;
+
+          // Use the XOR result to decide if the cell is visible
+          if (cell_state(i, j)) {
+              translate([x_pos, y_pos, 0])
+                  cube([cell_size, cell_size, 1]);  // Create a visible cell
+          }
+      }
+  }
+#+end_src
+
+#+RESULTS: Parametric 3D Model Based on Binary Input
+[[file:./images/fig_3d_model_based_on_binary_input_demo.png]]
+
+#+NAME: 3D Terrain Based on Binary Input
+#+begin_src scad :file ./images/fig_3d_terrain_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>;
+
+  // Parametric settings
+  size = 20; // Grid size
+  cell_size = 5; // Size of each cell
+  wave_speed = 2; // Wave speed (how fast the wave moves)
+  time = 10; // Simulation time to show propagation over multiple steps
+
+  // Function to simulate wave interference using XOR
+  function wave_interference(i, j, time) = 
+      xor(floor((i + time * sin(i / 3.0)) / wave_speed) % 2, floor((j + time * cos(j / 3.0)) / wave_speed) % 2);  // Wave with interference
+
+  // Create a grid based on the wave interference pattern
+  for (i = [0 : size-1]) {
+      for (j = [0 : size-1]) {
+          // Calculate cell position based on row and column
+          x_pos = i * cell_size;
+          y_pos = j * cell_size;
+          wave = wave_interference(i, j, time);  // Get wave interference pattern
+
+          // Create a visible cell based on the wave
+          if (wave) {
+              color("cyan")
+                  translate([x_pos, y_pos, 0])
+                      cube([cell_size, cell_size, 1]);  // Visible wave crest
+          } else {
+              color("magenta")
+                  translate([x_pos, y_pos, 0])
+                      cube([cell_size, cell_size, 1]);  // Visible wave trough
+          }
+      }
+  }
+#+end_src
+
+#+RESULTS: 3D Terrain Based on Binary Input
+[[file:./images/fig_3d_terrain_demo.png]]
+
+
+#+NAME: XOR lattice structure
+#+begin_src scad :file ./images/fig_xor_lattice_structure_demo.png :colorscheme Cornfield :size 400,400 :projection ortho :exports both
+  use <extra.scad>;
+
+  grid_size = 6; // Lattice size
+  spacing = 8;   // Spacing between lattice points
+
+  // Function to create lattice points using XOR logic
+  function lattice(x, y, z) = xor(x % 2, y % 2) && xor(y % 2, z % 2);  // XOR logic for 3D lattice
+
+  // Direct assert check for valid integer input
+  assert(grid_size >= 0 && floor(grid_size) == grid_size, "Invalid grid_size value");
+  assert(spacing >= 0 && floor(spacing) == spacing, "Invalid spacing value");
+
+  // Generate the lattice structure
+  for (x = [0 : grid_size-1]) {
+      for (y = [0 : grid_size-1]) {
+          for (z = [0 : grid_size-1]) {
+              if (lattice(x, y, z)) {
+                  translate([x * spacing, y * spacing, z * spacing])
+                      sphere(1);  // Lattice point visible by XOR rule
+              }
+          }
+      }
+   }
+#+end_src
+
+#+RESULTS: XOR lattice structure
+[[file:./images/fig_xor_lattice_structure_demo.png]]

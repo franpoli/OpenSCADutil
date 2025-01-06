@@ -1,0 +1,6 @@
+ECHO: "Input: ", [true, true], " Expected: ", false, " Got: ", false
+ECHO: "Input: ", [true, false], " Expected: ", true, " Got: ", true
+ECHO: "Input: ", [false, true], " Expected: ", true, " Got: ", true
+ECHO: "Input: ", [false, false], " Expected: ", false, " Got: ", false
+ECHO: "Input: ", [true, false, true], " Expected: ", false, " Got: ", false
+ECHO: "Input: ", [true, false, false], " Expected: ", true, " Got: ", true
