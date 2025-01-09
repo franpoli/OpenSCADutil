@@ -287,19 +287,9 @@ function slice(arr, start, end) =
 
 // Assert function to validate boolean input (true '0' or false '1')
 function assert_valid_boolean_input(value) =
-    (value == true || value == false || value == 1 || value == 0) ? true : error("Invalid value: " + str(value));
-
-// Assert function to validate binary input (e.g., 0, 1, 10, 11, 100, etc.)
-function assert_valid_binary_input(value) =
-    (value >= 0 && floor(value) == value && is_binary_digits(value)) 
-    ? true 
-    : error("Invalid binary value: " + str(value));
-
-// Function to check if all digits in a number are binary (0 or 1)
-function is_binary_digits(value) =
-    let(digits = str(value))  // Convert the number to a string
-    // Check if all characters in the string are '0' or '1'
-    !any([for (c = [for (i = [0 : len(digits)-1]) digits[i]]) !(c == "0" || c == "1")]);
+    (value == true || value == false || value == 1 || value == 0) 
+    ? true  // Return true if valid input
+    : assert(false, str("Invalid value: ", value));
 
 // Main function to convert integer to binary
 function integer_to_binary(value) =
@@ -312,26 +302,16 @@ function reverse_binary(value, result = "") =
         reverse_binary(floor(value / 2), str(value % 2, result))  // Correctly concatenate the binary string
     );
 
-// Assert function to validate integer input (non-negative and no floating point)
-function assert_valid_integer_input(value) =
-    (value >= 0 && floor(value) == value) ? true : error("Invalid integer value: " + str(value));
-
-// Convert binary value to decimal
-function binary_to_decimal(binary) =
-    assert_valid_binary_input(binary) ? sum_binary_digits(binary) : error("Invalid binary value: " + str(binary));
-
-// Helper to calculate decimal value from binary
-function sum_binary_digits(binary) =
+// Convert binary string to decimal
+function binary_to_integer(binary) =
     let(
-        digits = str(binary)  // Convert the binary number to a string
+        digits = str(binary),  // Convert the binary input to a string
+        _ = [for (c = digits) assert(c == "0" || c == "1", str("Invalid binary digit: ", c))],  // Validate binary digits
+        decimal_array = [for (i = [0 : len(digits) - 1]) 
+            (digits[i] == "1" ? 1 : 0) * pow(2, len(digits) - 1 - i)  // Explicitly convert boolean to numeric
+        ]
     )
-    sum([for (i = [0 : len(digits) - 1]) 
-        (digits[i] == "1") * pow(2, len(digits) - 1 - i) // Calculate each digit's contribution
-    ]);
-
-// Helper function to accumulate the sum
-function accumulate_sum(arr, index, acc) =
-    index < len(arr) ? accumulate_sum(arr, index + 1, acc + arr[index]) : acc;
+    accumulate_sum(decimal_array, 0, 0);  // Use existing accumulate_sum to sum contributions
 
 // Main function to convert a string representing an integer to its numeric value
 function to_number(str) =
@@ -356,6 +336,10 @@ function to_number(str) =
     )
     // Return the number, taking the sign into account
     is_negative ? -number : number;
+
+// Helper function to accumulate the sum
+function accumulate_sum(arr, index, acc) =
+    index < len(arr) ? accumulate_sum(arr, index + 1, acc + arr[index]) : acc;
 
 /* Cartesian Coordinate System */
 
