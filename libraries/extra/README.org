@@ -203,6 +203,35 @@ Parameters:
 #+RESULTS: Thickness demo
 [[file:./images/fig_thickness_demo.png]]
 
+** Sinusoidal Circle
+
+Generate a sinusoidal circle.
+
+#+NAME: Sinusoidal Circle example
+#+begin_example scad :eval no
+  sinusoidal_circle(radius, amplitude, frequency, segments);
+#+end_example
+
+Parameters:
+
+- ~radius~: The base radius of the circle, determining its average size.
+- ~amplitude~: The height of the sinusoidal waves, controlling how much the circle's radius fluctuates.
+- ~frequency~: The number of sinusoidal waves or oscillations around the circle. A higher frequency means more waves in the same circle.
+- ~segments~: The number of segments used to approximate the circle. A higher value results in a smoother curve.
+
+#+begin_src scad :file ./images/fig_sinusoidal_circle_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  sinusoidal_circle( 30,      // base radius
+                     3,       // wave amplitude
+                     10,      // wave frequency
+                     1000 );  // number of segments
+#+end_src
+
+#+RESULTS:
+[[file:./images/fig_sinusoidal_circle_demo.png]]
+
+  
 * 3D
 ** Cylinder Sector
 

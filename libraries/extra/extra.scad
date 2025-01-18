@@ -148,6 +148,24 @@ module thickness(width = -1) {
     }
 }
 
+// Module to generate a sinusoidal circle
+module sinusoidal_circle(radius = 10,
+                         amplitude = 0.5,
+                         frequency = 36,
+                         segments = 200) {
+    points = [for (segment_index = [0 : segments - 1])
+            let (angle = segment_index * 360 / segments) [
+                compute_radius_at_angle(radius,
+                                        amplitude,
+                                        frequency,
+                                        angle) * cos(angle),
+                compute_radius_at_angle(radius,
+                                        amplitude,
+                                        frequency,
+                                        angle) * sin(angle)]];
+    polygon(points);  // Create the polygon from the generated points (2D)
+}
+
 /* 3D */
 
 // Cylinder sector (3D) given an angle from 0 ecluded to 360 included: angle ∈ ] 0; 360 ]
@@ -182,6 +200,10 @@ function deg_to_rad(deg) = deg * PI / 180;
 
 // Function to convert radians to degrees
 function rad_to_deg(rad) = rad * 180 / PI;
+
+// Function to compute the radius at a given angle using sinusoidal variation
+function compute_radius_at_angle(radius, amplitude, frequency, angle) =
+    radius + amplitude * sin(frequency * angle);
 
 // Function that ensures a list has exactly three elements, padding with zeros if necessary
 function pad_to_three(point) = 
