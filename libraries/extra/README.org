@@ -230,7 +230,6 @@ Parameters:
 
 #+RESULTS:
 [[file:./images/fig_sinusoidal_circle_demo.png]]
-
   
 * 3D
 ** Cylinder Sector
@@ -1071,7 +1070,7 @@ Parameters:
 ** XOR and reduce XOR functions
 
 #+NAME: XOR function
-#+begin_src scad
+#+begin_src scad :eval no
   xor(bol_a, bol_b)
 #+end_src
 
@@ -1081,7 +1080,7 @@ Parameters:
 ~bool_b~: A boolean value ~true~ (1) or ~false~ (0).
 
 #+NAME: Test XOR
-#+begin_src scad :file ./demo/test_xor.echo :tangle ./demo/test_xor.scad :results file :exports both
+#+begin_src scad :file ./demo/test_xor.echo :tangle ./demo/test_xor.scad :results link :exports both
   use<extra.scad>
 
   function test_xor() = [

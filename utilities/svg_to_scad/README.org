@@ -2,6 +2,7 @@
 #+TITLE: svg_to_scad.py
 #+DESCRIPTION: A python script to convert simple SVG files into a list of coordinates
 #+LANGUAGE: us-en
+#+PROPERTY: header-args :results output :exports value :eval when-permitted
 
 * Features
 :PROPERTIES:
@@ -21,18 +22,18 @@
 
 ** SVG demo files
 
-#+caption: straight_lines_svg_rendering.png
-[[file:demo/straight_lines_svg_rendering.png]]
+#+NAAME: straight_lines.svg
+[[./demo/straight_lines.svg]]
 
-#+caption: bezier_curves_svg_rendering.png
-[[file:demo/bezier_curves_svg_rendering.png]]
+#+NAME: bezier_curves.svg
+[[./demo/bezier_curves.svg]]
 
 ** Input and output options
 :PROPERTIES:
 :CUSTOM_ID: input-and-output-options
 :END:
 
-#+begin_src bash :results output :exports both value
+#+begin_src bash
   python svg_to_scad.py --input demo/straight_lines.svg --output demo/straight_lines.json
 #+end_src
 
@@ -51,7 +52,7 @@ Graph:
 :CUSTOM_ID: close-option
 :END:
 
-#+begin_src bash :results output :exports both value
+#+begin_src bash
   python svg_to_scad.py -i demo/straight_lines.svg -o demo/straight_lines.json --close
 #+end_src
 
@@ -70,7 +71,7 @@ Graph:
 :CUSTOM_ID: sampling-option
 :END:
 
-#+begin_src bash :results output :exports both value
+#+begin_src bash
   python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad --number-samples 10
 #+end_src
 
@@ -86,7 +87,7 @@ Graph:
 
 ** Center of gravity
 
-#+begin_src bash :results output :exports both value
+#+begin_src bash
   python svg_to_scad.py -i demo/bezier_curves.svg -o demo/bezier_curves.scad -n 15 --center-of-gravity
 #+end_src
 
@@ -107,7 +108,7 @@ Graph:
 
 For a complete list of options, consult the help menu:
 
-#+begin_src bash :results output :exports both value
+#+begin_src bash
   python svg_to_scad.py --help
 #+end_src
 
@@ -144,7 +145,7 @@ options:
 :CUSTOM_ID: usage-in-openscad
 :END:
 
-#+begin_src scad :results output :exports both value :eval no
+#+begin_src scad :eval no
   // Load the generated SCAD files
   use <straight_lines.scad>
   use <bezier_curves.scad>
