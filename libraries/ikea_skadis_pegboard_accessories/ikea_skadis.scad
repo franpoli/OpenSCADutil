@@ -435,36 +435,43 @@ module skadis_o_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retaine
     }
 }
 
-/* A U-holder takes up to four parameters:
+/* A U-holder takes up to five parameters:
  * 1. d (numerical) - Inner diameter
- * 2. all_pegs (boolean)
- * 3. fullfill (boolean)
- * 4. retainer (boolean)
+ * 2. n (numerical) - Number of holders
+ * 3. all_pegs (boolean)
+ * 4. fullfill (boolean)
+ * 5. retainer (boolean)
  */
-module skadis_u_holder(d = 16, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
+module skadis_u_holder(d = 16, n = 1, all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
     union() {
-        difference() {
-            translate([0, -(3*pw+d)/2, pw/2]) {
-                cube(size = [d+2*pw, 3*pw+d, pw], center = true);
-            }
-            hull() {
-                translate([0, -d/2-2*pw, -extra]) {
-                    cylinder(h = pw + extra, d = d, center = false);
-                }
-                translate([0, -(3*pw+d), -extra]) {
-                    cylinder(h = pw + extra, d = d-8*lh, center = false);
-                }
-            }
-            hull() {
-                translate([0, -d/2-2*pw, pw-chamfer() + extra]) {
-                    cylinder(h = chamfer() + extra, d1 = d, d2 = d+8*lh, center = false);
-                }
-                translate([0, -(3*pw+d), pw-chamfer()]) {
-                    cylinder(h = chamfer() + extra, d1 = d-2*chamfer(), d2 = d, center = false);
+        translate([(-n * (d + 2 * pw) / 2) + (d + 2 * pw)/2, 0, 0]) { // Center the entire group
+            for (i = [0 : n - 1]) {
+                translate([i * (d + 2 * pw), 0, 0]) {
+                    difference() {
+                        translate([0, -(3 * pw + d) / 2, pw / 2]) {
+                            cube(size = [d + 2 * pw, 3 * pw + d, pw], center = true);
+                        }
+                        hull() {
+                            translate([0, -d / 2 - 2 * pw, -extra]) {
+                                cylinder(h = pw + extra, d = d, center = false);
+                            }
+                            translate([0, -(3 * pw + d), -extra]) {
+                                cylinder(h = pw + extra, d = d - 8 * lh, center = false);
+                            }
+                        }
+                        hull() {
+                            translate([0, -d / 2 - 2 * pw, pw - chamfer() + extra]) {
+                                cylinder(h = chamfer() + extra, d1 = d, d2 = d + 8 * lh, center = false);
+                            }
+                            translate([0, -(3 * pw + d), pw - chamfer()]) {
+                                cylinder(h = chamfer() + extra, d1 = d - 2 * chamfer(), d2 = d, center = false);
+                            }
+                        }
+                    }
                 }
             }
         }
-        skadis_pegs_position(length = d+2*pw, all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
+        skadis_pegs_position(length = n * (d + 2 * pw), all_pegs = all_pegs) skadis_peg(fullfill = fullfill, retainer = retainer);
     }
 }
 
@@ -955,6 +962,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //translate([75, 0, 0]) skadis_u_holder(d = 25, fullfill = false, retainer = true);
 //translate([120, 0, 0]) skadis_u_holder(d = 30);
 //translate([170, 0, 0]) skadis_u_holder(35);
+//translate([80, -80, 0]) skadis_u_holder(d = 16, n = 7, all_pegs = true);
 
 // Squared holders demo
 //skadis_squared_holder();
