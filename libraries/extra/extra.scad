@@ -193,6 +193,24 @@ module symmetry_plane(plane) {
     }
 }
 
+// Bulge extrusion: creates a 3D shape with middle bulge
+module bulge_extrude(height = 2, bulge = 1, steps = 5, layer = 0.01) {
+  // Generate bulge profile points
+  points = [for (z = [0:height/steps:height])
+      [z, bulge * sin(180 * (z/height))]];
+    
+  // Create smooth hulled transitions
+  for (i = [0:len(points)-2]) {
+    hull() {
+      for (k = [i, i+1])
+	translate([0,0,points[k][0]])
+	  linear_extrude(layer)
+	  offset(points[k][1])
+	  children(0);
+    }
+  }
+}
+
 /* Functions */
 
 // Function to convert degrees to radians

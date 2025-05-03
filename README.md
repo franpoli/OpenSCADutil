@@ -13,7 +13,7 @@ If you are looking for the official OpenSCAD git repository, please visit
 
 Description: A python script to convert simple SVG files into a list of coordinates
 
-Updated: 2025-02-01T02:29:46+01:00
+Updated: 2025-04-22T16:33:10+02:00
 
 [Project Directory](./utilities/svg_to_scad)
 # libraries
@@ -53,7 +53,7 @@ Updated: 2024-12-01T16:38:41+01:00
 
 Description: This is an OpenSCAD script to generate Milka's radius gauge with slight variations
 
-Updated: 2024-06-28T01:44:34+02:00
+Updated: 2025-02-08T18:53:32+01:00
 
 [Project Directory](./libraries/milka_s_radius_gauge)
 
@@ -85,7 +85,7 @@ Updated: 2024-06-09T17:16:51+02:00
 
 Description: Generates Ikea Skådis pegboard accessories
 
-Updated: 2024-06-28T01:44:34+02:00
+Updated: 2025-04-22T17:12:12+02:00
 
 [Project Directory](./libraries/ikea_skadis_pegboard_accessories)
 
@@ -109,7 +109,7 @@ Updated: 2024-12-15T07:11:38+01:00
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2025-02-01T03:21:03+01:00
+Updated: 2025-05-04T17:36:48+02:00
 
 [Project Directory](./libraries/extra)
 
@@ -128,6 +128,14 @@ Description: Generates simple, quick and easy to print TPU cable ties
 Updated: 2024-06-09T23:37:30+02:00
 
 [Project Directory](./libraries/cabletie)
+
+## Apple AirTag Accessories
+
+Description: OpenSCAD modules for designing Apple AirTag-compatible accessories
+
+Updated: 2025-05-04T19:52:55+02:00
+
+[Project Directory](./libraries/apple_airtag_accessories)
 
 ---
 

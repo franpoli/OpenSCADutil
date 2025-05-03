@@ -292,6 +292,32 @@ Parameters:
 #+RESULTS: Symetry plane demo
 [[file:./images/fig_symmetry_plane_demo.png]]
 
+** Bulge extrusion
+
+Creates a 3D shape with middle bulge
+
+#+NAME: Bulge Extrusion Example
+#+begin_example scad :eval no
+  bulge_extrude() children_2d_object();
+#+end_example
+
+Parameters:
+
+- ~height~: total extrusion height
+- ~bulge~: max bulge radius
+- ~steps~: number of interpolation steps
+- ~layer~: layer thickness for hull operations
+
+#+NAME: Bulge Extrusion Demo
+#+begin_src scad :file ./images/fig_bulge_extrusion_demo.png :colorscheme Cornfield :size 400,400 :exports both
+  use <extra.scad>
+
+  bulge_extrude(20, 3, 10, 0.01) ellipse(10, 5);
+#+end_src
+
+#+RESULTS: Bulge Extrusion Demo
+[[file:./images/fig_bulge_extrusion_demo.png]]
+
 ** XOR patterns
 *** Parametric 3D Model Based on Binary Input
 

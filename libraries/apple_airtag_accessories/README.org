@@ -1,0 +1,105 @@
+#+STARTUP: indent content
+#+TITLE: Apple AirTag Accessories
+#+DESCRIPTION: OpenSCAD modules for designing Apple AirTag-compatible accessories
+#+LANGUAGE: en
+
+* Overview
+
+This project provides reusable OpenSCAD modules for modeling Apple AirTag shapes and dimensions, based on [[https://developer.apple.com/accessories/Accessory-Design-Guidelines.pdf][publicly available specifications]] and adapted for practical use in OpenSCAD workflows.
+
+These modules are useful for designing 3D-printable accessories such as holders, mounts, and cases.
+
+* Features
+
+- 2D profile based on Apple documentation
+- Parametric revolve module for creating 3D shells
+- Configurable clearance for tolerance and fit adjustment
+- Companion utilities to compute bounding box and assist with design alignment
+
+* Usage
+
+Example usage to generate an AirTag 3D shape:
+
+#+NAME: Create AirTag instance
+#+HEADER: :file ./img/fig_airtag_clearance.png
+#+HEADER: header-args :camera "-50,-40,-30,0,0,0"
+#+HEADER: :size 400,400
+#+HEADER: :colorscheme Cornfield
+#+begin_src scad :exports both
+  include <apple_airtag.scad>;
+
+  airtag(0.2, false);
+#+end_src
+
+#+RESULTS: Create AirTag instance
+[[file:./img/fig_airtag_clearance.png]]
+
+Debug mode visualizing half the clearance envelope:
+
+#+NAME: Debug AirTag instance
+#+HEADER: :file ./img/fig_airtag_clearance_debug.png
+#+HEADER: header-args :camera "-50,-40,-30,0,0,0"
+#+HEADER: :size 400,400
+#+HEADER: :colorscheme Cornfield
+#+begin_src scad :exports both
+  include <apple_airtag.scad>;
+  
+  debug_airtag(0.2, false);
+#+end_src
+
+#+RESULTS: Debug AirTag instance
+[[file:./img/fig_airtag_clearance_debug.png]]
+
+Debug mode visualizing half the clearance envelope and also the boundary box:
+
+#+NAME: Debug AirTag instance visualizing boundary box
+#+HEADER: :file ./img/fig_airtag_clearance_boundary_box_debug.png
+#+HEADER: header-args :camera "-50,-40,-30,0,0,0"
+#+HEADER: :size 400,400
+#+HEADER: :colorscheme Cornfield
+#+begin_src scad :exports both
+  include <apple_airtag.scad>;
+  
+  debug_airtag(0.2, false, true);
+#+end_src
+
+#+RESULTS: Debug AirTag instance visualizing boundary box
+[[file:./img/fig_airtag_clearance_boundary_box_debug.png]]
+
+Dimensioning and positioning:
+
+#+NAME: Dimensioning and positioning
+#+HEADER: :file ./img/fig_airtag_dimensioning_and_positioning.png
+#+HEADER: header-args :camera "-50,-100,0,0,0,0"
+#+HEADER: :size 400,400
+#+HEADER: :colorscheme Cornfield
+#+begin_src scad :exports both
+  include <apple_airtag.scad>;
+
+  clearance = 0.2;
+  plate_size = get_airtag_width() * 1.2;
+  plate_height = get_airtag_v_seg_length();
+  z_position = get_airtag_h_seg_y_pos() - plate_height/2 - clearance;
+
+  difference() {
+    translate([0, 0, z_position])
+      cube(size = [plate_size, plate_size, plate_height], center = true);
+    airtag(clearance, false);
+  }
+
+  debug_airtag(clearance, false);
+#+end_src
+
+#+RESULTS: Dimensioning and positioning
+[[file:./img/fig_airtag_dimensioning_and_positioning.png]]
+
+* Customization example
+
+#+NAME: fig_low_footprint_airtag_keyring_case.gif
+[[./img/fig_low_footprint_airtag_keyring_case.gif]]
+
+* Files
+
+- [[./apple_airtag.scad][apple_airtag.scad]]: Main module and shape logic
+- [[./apple_airtag_data.scad][apple_airtag_data.scad]]: Raw 2D point data
+- [[./accessories/][accessories/]]: Sample accessories
