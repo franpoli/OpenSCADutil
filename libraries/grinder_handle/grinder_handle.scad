@@ -47,7 +47,8 @@ module main() {
       cyl(l = total_handle_length + grinder_thread_length + tolerance,
 	  d = bolt_thread_space_diameter,
 	  anchor=BOT, $fn=18)
-	position(TOP) cyl(h = total_handle_length-bolt_nominal_length + tolerance,
+	position(TOP) cyl(h = total_handle_length - bolt_nominal_length
+			  + tolerance + grinder_thread_length,
 			  d = bolt_head_space_diameter,
 			  anchor=TOP, $fn=6);
     }
@@ -78,7 +79,7 @@ module hand_guard(s = [2*guard_radius, 2*guard_radius,
       }
     }
     children();
-    }
+  }
 }
 
 // Attachable handle module on top and bottom

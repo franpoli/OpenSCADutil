@@ -109,7 +109,7 @@ Updated: 2024-12-15T07:11:38+01:00
 
 Description: generates a grinder handel
 
-Updated: 2025-08-19T12:00:40+02:00
+Updated: 2025-08-19T18:15:28+02:00
 
 [Project Directory](./libraries/grinder_handle)
 

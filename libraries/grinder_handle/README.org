@@ -55,3 +55,6 @@ A customizable, 3D-printable grinder handle designed for ergonomic grip and safe
 #+NAME: grinder_handle_openscad_1.jpg
 [[./img/grinder_handle_openscad_1.jpg]]
 
+#+NAME: grinder_handle_openscad_2.jpg
+[[./img/grinder_handle_openscad_2.jpg]]
+
