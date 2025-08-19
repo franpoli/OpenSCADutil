@@ -1,0 +1,57 @@
+#+STARTUP: indent content
+#+TITLE: grinder_handel.scad
+#+DESCRIPTION: generates a grinder handel
+#+LANGUAGE: us-en
+
+* Description
+
+A customizable, 3D-printable grinder handle designed for ergonomic grip and safety. This script uses [[https://openscad.org/][OpenSCAD]] and the [[https://github.com/BelfrySCAD/BOSL2][BOSL2 library]] for advanced features like textures, bezier curves, and modular attachments.
+
+* Features
+
+- *Modular design*: Easily adjust dimensions, textures, and bolt compatibility.
+- *Finger guard*: Protects fingers from the grinding surface or bolt.
+- *Custom textures*: Choose from diamond or pyramid patterns (convex/concave).
+- *Parameterized*: All dimensions are adjustable via variables at the top of the script.
+- *BOSL2-powered*: Uses advanced OpenSCAD features for smooth curves and textures.
+
+* Customization Options
+** Handle Parameters
+
+| Parameter                 | Description                                                           | Default Value |
+|---------------------------+-----------------------------------------------------------------------+---------------|
+| ~handle_grip_texture~     | Texture type: ~"divex"~, ~"dicav"~, ~"pyvex"~, ~"pycav"~, or ~"none"~ | ~"divex"~     |
+| ~fingers_guard_width~     | Width of the finger guard (mm)                                        | ~16~          |
+| ~handle_minimal_diameter~ | Minimum diameter of the handle (mm)                                   | ~30~          |
+| ~handle_length~           | Length of the handle (mm)                                             | ~100~         |
+| ~handle_cap_height~       | Height of the handle cap (mm)                                         | ~5~           |
+
+** Bolt Parameters
+
+| Parameter             | Description                         | Default Value |
+|-----------------------+-------------------------------------+---------------|
+| ~bolt_screw_diameter~ | Diameter of the bolt screw (mm)     | ~10~          |
+| ~bolt_head_width~     | Width of the bolt head (mm)         | ~14.98~       |
+| ~bolt_nominal_length~ | Nominal length of the bolt (mm)     | ~100~         |
+| ~grinder_thread_leng~ | Length of the threaded section (mm) | ~10~          |
+
+** Printer Settings
+
+| Parameter      | Description                 | Default Value |
+|----------------+-----------------------------+---------------|
+| ~nozzle_width~ | Printer nozzle width (mm)   | ~0.4~         |
+| ~tolerance~    | Tolerance for bolt fit (mm) | ~0.2~         |
+
+* Safety and Print Quality Disclaimer
+
+- *This design is provided as-is.* The user is solely responsible for ensuring the *print quality*, *material strength*, and *safe assembly* of the grinder handle.
+- *A poorly printed or weak handle can break during use*, posing a safety risk. Always use *adequate infill*, *material*, and *print settings* for functional parts.
+- For *increased strength*, consider using a *long bolt that spans the entire length of the handle*. This reinforces the structure and reduces the risk of failure.
+- *Test the handle* with your grinder before regular use. Ensure it is securely attached and can withstand the forces involved.
+- *Wear appropriate safety gear* (gloves, goggles, *wheel guard*) when operating any grinder. Always ensure the grinder's wheel guard is properly installed and used.
+
+* Examples
+
+#+NAME: grinder_handle_openscad_1.jpg
+[[./img/grinder_handle_openscad_1.jpg]]
+

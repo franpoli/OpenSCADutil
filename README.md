@@ -105,11 +105,19 @@ Updated: 2024-12-15T07:11:38+01:00
 
 [Project Directory](./libraries/hakko_fx_888d_magnetic_tips_holder)
 
+## grinder_handel.scad
+
+Description: generates a grinder handel
+
+Updated: 2025-08-19T12:00:40+02:00
+
+[Project Directory](./libraries/grinder_handle)
+
 ## extra.scad
 
 Description: OpenSCAD Reusable Modules and Function Library
 
-Updated: 2025-05-04T17:36:48+02:00
+Updated: 2025-05-04T20:01:19+02:00
 
 [Project Directory](./libraries/extra)
 
@@ -133,7 +141,7 @@ Updated: 2024-06-09T23:37:30+02:00
 
 Description: OpenSCAD modules for designing Apple AirTag-compatible accessories
 
-Updated: 2025-05-04T19:52:55+02:00
+Updated: 2025-05-04T20:01:19+02:00
 
 [Project Directory](./libraries/apple_airtag_accessories)
 
