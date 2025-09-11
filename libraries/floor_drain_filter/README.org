@@ -1,0 +1,18 @@
+#+STARTUP: indent content
+#+TITLE: floor_drain_filter.scad
+#+DESCRIPTION: Generates floor drain filters
+#+LANGUAGE: us-en
+
+* Overview
+
+This is a floor drain filter made for easy cleaning and to prevent pipes from getting clogged.
+
+* Illustration
+
+#+caption: floor_drain_filter_rendering.png
+[[./img/floor_drain_filter_rendering.png]]
+
+* Photograph
+
+#+caption: floor_drain_filter_photograph.png
+[[./img/floor_drain_filter_photograph.png]]
