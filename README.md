@@ -77,7 +77,7 @@ Updated: 2025-01-05T22:55:56+01:00
 
 Description: Barrel generator for the Kita-Boshi 2mm mechanical pencil
 
-Updated: 2024-06-09T17:16:51+02:00
+Updated: 2025-09-29T17:50:42+02:00
 
 [Project Directory](./libraries/kitaboshi)
 

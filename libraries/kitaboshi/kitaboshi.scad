@@ -14,7 +14,7 @@ cylindric = false;
 grip = false;
 
 // Printer tolerance
-printer_tolerance = 0.2;
+printer_tolerance = 0.25;
 
 /* [Hidden] */
 // Default barrel dimensions
