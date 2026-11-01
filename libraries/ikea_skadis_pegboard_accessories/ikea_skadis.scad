@@ -523,15 +523,57 @@ module skadis_squared_holder(l = 60, w = 20,  all_pegs = all_pegs, fullfill = fu
 }
 
 
-/* A plier takes up to six parameters:
+/* A plier takes up to seven parameters:
  * 1. l (numerical) - length
  * 2. w (numerical) - width
  * 3. filet (numerical)
  * 4. all_pegs (boolean)
  * 5. fullfill (boolean)
  * 6. retainer (boolean)
+ * 7. n (integer) - number of slots
  */
-module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pegs/5, filet = chamfer(), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer) {
+module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pegs/5, filet = chamfer(), all_pegs = all_pegs, fullfill = fullfill, retainer = retainer, n = 1) {
+    slot_count = max(1, floor(n));
+    slot_wall = (slot_count > 1 && l > slot_count*2*minimum_wall()) ? 2*minimum_wall() : 0;
+    slot_l = (l-(slot_count-1)*slot_wall)/slot_count;
+    module plier_slot(slot_l) {
+        slot_filet = filet_limits(slot_l, w, filet);
+        translate([0, -(w/2+2*pw), 0]) {
+            hull() for (y = [0:1:1]) {
+                mirror([0, y, 0]) for (x = [0:1:1]) {
+                    mirror([x, 0, 0]) {
+                        translate([slot_l/2-slot_filet, w/2-slot_filet, -extra]) {
+                            cylinder(h = pw + extra, r = slot_filet);
+                        }
+                    }
+                }
+            }
+        }
+        hull() {
+            translate([0, -(w/2+2*pw), 0]) {
+                hull() for (y = [0:1:1]) {
+                    mirror([0, y, 0]) for (x = [0:1:1]) {
+                        mirror([x, 0, 0]) {
+                            translate([slot_l/2-slot_filet, w/2-slot_filet, pw-chamfer()]) {
+                                cylinder(h = chamfer(), r = slot_filet);
+                            }
+                        }
+                    }
+                }
+            }
+            translate([0, -(w/2+2*pw), 0]) {
+                hull() for (y = [0:1:1]) {
+                    mirror([0, y, 0]) for (x = [0:1:1]) {
+                        mirror([x, 0, 0]) {
+                            translate([slot_l/2-slot_filet, w/2-slot_filet, pw]) {
+                                cylinder(h = chamfer(), r = slot_filet+chamfer());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     union() {
         difference() {
             hull() {
@@ -546,39 +588,9 @@ module skadis_plier(l = distance_between_pegs+pt-2*pw, w = 2*distance_between_pe
                     }
                 }
             }
-            translate([0, -(w/2+2*pw), 0]) {
-                hull() for (y = [0:1:1]) {
-                    mirror([0, y, 0]) for (x = [0:1:1]) {
-                        mirror([x, 0, 0]) {
-                            translate([l/2-filet_limits(l, w, filet), w/2-filet_limits(l, w, filet), -extra]) {
-                                cylinder(h = pw + extra, r = filet_limits(l, w, filet));
-                            }
-                        }
-                    }
-                }
-            }
-            hull() {
-                translate([0, -(w/2+2*pw), 0]) {
-                    hull() for (y = [0:1:1]) {
-                        mirror([0, y, 0]) for (x = [0:1:1]) {
-                            mirror([x, 0, 0]) {
-                                translate([l/2-filet_limits(l, w, filet), w/2-filet_limits(l, w, filet), pw-chamfer()]) {
-                                    cylinder(h = chamfer(), r = filet_limits(l, w, filet));
-                                }
-                            }
-                        }
-                    }
-                }
-                translate([0, -(w/2+2*pw), 0]) {
-                    hull() for (y = [0:1:1]) {
-                        mirror([0, y, 0]) for (x = [0:1:1]) {
-                            mirror([x, 0, 0]) {
-                                translate([l/2-filet_limits(l, w, filet), w/2-filet_limits(l, w, filet), pw]) {
-                                    cylinder(h = chamfer(), r = filet_limits(l, w, filet)+chamfer());
-                                }
-                            }
-                        }
-                    }
+            for (slot = [0:1:slot_count-1]) {
+                translate([-l/2+slot_l/2+slot*(slot_l+slot_wall), 0, 0]) {
+                    plier_slot(slot_l);
                 }
             }
         }
@@ -975,7 +987,7 @@ module skadis_bits_serie(h = 28, d = 2, step = 0, n = 12, facets = 36, angle = 0
 //skadis_plier(filet = 0);
 //translate([0, 65, 0]) skadis_plier(60, 35, fullfill = false);
 //translate([0, 135, 0]) skadis_plier(90, 40, filet = 8);
-//translate([0, 205, 0]) skadis_plier(90, 40, filet = 12  , all_pegs = true);
+//translate([0, 205, 0]) skadis_plier(90, 40, filet = 12  , all_pegs = true, n=4);
 
 // Plates demo
 //skadis_plate();

@@ -210,7 +210,7 @@ translate([210, 0, 0]) skadis_squared_holder(35);
 :PROPERTIES:
 :CUSTOM_ID: module-skadis_plier
 :END:
-Takes up to 6 paramaters:
+Takes up to 7 paramaters:
 
 1. *l* = [numerical]
 2. *w* = [numerical]
@@ -218,16 +218,18 @@ Takes up to 6 paramaters:
 4. *all_pegs* = [boolean]
 5. *fullfill* = [boolean]
 6. *retainer* = [boolean]
+7. *n* = [integer]
 
 Where *l* is the inner length and *w* is the inner width of the plier.
 The set value for the *filet* rounds the inner corners of the plier.
+The parameter *n* sets the number of evenly spaced slots.
 
 #+begin_example scad
 // Pliers demo
 skadis_plier();
 translate([0, 65, 0]) skadis_plier(60, 35, fullfill = false);
 translate([0, 135, 0]) skadis_plier(90, 40, filet = 8);
-translate([0, 205, 0]) skadis_plier(90, 40, filet = 12, all_pegs = true);
+translate([0, 205, 0]) skadis_plier(90, 40, filet = 12, all_pegs = true, n = 3);
 #+end_example
 
 #+caption: Ikea Skådis plier Demo
